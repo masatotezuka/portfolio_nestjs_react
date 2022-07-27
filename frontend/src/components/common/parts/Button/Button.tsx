@@ -3,7 +3,7 @@ import { StyledButton } from './styledButton';
 
 type Props = {
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
   type?: 'submit' | 'button' | 'reset';
 };
 
