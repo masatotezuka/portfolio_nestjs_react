@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { Card } from '../../../common/parts/Card/Card';
 
 export const LoginPage = () => {
   return (
@@ -16,6 +17,7 @@ export const LoginPage = () => {
           </InputContainer>
         </InputsContainer>
         <ButtonWrapper>
+          <Card path="/home" text="ログイン"></Card>
           <Button>ログイン</Button>
           <Button>パスワードを変更する</Button>
           <Button>管理者を登録</Button>
