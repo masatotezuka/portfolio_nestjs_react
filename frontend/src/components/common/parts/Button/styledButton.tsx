@@ -8,13 +8,8 @@ export const StyledButton = styled.button`
   text-align: center;
   border: none;
   text-decoration: none;
-  width: 300px;
-  height: 40px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: center;
-  padding: 10px 0px;
+  width: 100%;
+  height: 100%;
   &:hover {
     cursor: pointer;
   }
