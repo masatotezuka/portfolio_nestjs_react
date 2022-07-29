@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import { EmployeeListPage } from './components/admin/pages/employeeList';
+import { HomePage } from './components/admin/pages/home';
 import { LoginPage } from './components/admin/pages/login';
 import { RegisterOrganizationPage } from './components/admin/pages/registerOrganization';
-
 export const App = () => {
   return (
     <Routes>
@@ -12,6 +12,7 @@ export const App = () => {
         element={<RegisterOrganizationPage />}
       ></Route>
       <Route path="/employee" element={<EmployeeListPage />}></Route>
+      <Route path="/home" element={<HomePage />}></Route>
     </Routes>
   );
 };
