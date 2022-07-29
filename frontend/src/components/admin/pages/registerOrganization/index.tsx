@@ -12,26 +12,36 @@ export const RegisterOrganizationPage = () => {
               type="text"
               forName="organization"
               text="組織名"
+              inputWidth={'300px'}
+              labelWidth={'130px'}
             ></LabeledInputText>
             <LabeledInputText
               type="text"
               forName="firstName"
               text="姓"
+              inputWidth={'300px'}
+              labelWidth={'130px'}
             ></LabeledInputText>
             <LabeledInputText
               type="text"
               forName="lastName"
               text="名"
+              inputWidth={'300px'}
+              labelWidth={'130px'}
             ></LabeledInputText>
             <LabeledInputText
               type="email"
               forName="lastName"
               text="メールアドレス"
+              inputWidth={'300px'}
+              labelWidth={'130px'}
             ></LabeledInputText>
             <LabeledInputText
               type="password"
               forName="lastName"
               text="パスワード"
+              inputWidth={'300px'}
+              labelWidth={'130px'}
             ></LabeledInputText>
           </LabeledInputTextContainer>
           <ButtonContainer>

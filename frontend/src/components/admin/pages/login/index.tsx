@@ -12,11 +12,15 @@ export const LoginPage = () => {
             type="email"
             text="メールアドレス"
             forName="login_email"
+            inputWidth={'300px'}
+            labelWidth={'130px'}
           ></LabeledInputText>
           <LabeledInputText
             type="password"
             text="パスワード"
             forName="login_password"
+            inputWidth={'300px'}
+            labelWidth={'130px'}
           ></LabeledInputText>
         </InputsContainer>
         <ButtonWrapper>
