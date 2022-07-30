@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Button } from '../../../../common/parts/Button/Button';
 import { LabeledInputText } from '../../../../common/parts/InputText/LabeledInputText';
 
-export const ResetPasswordPage = () => {
+export const RequestResetPasswordPage = () => {
   return (
     <Container>
       <Text>メールアドレスを入力してください</Text>
