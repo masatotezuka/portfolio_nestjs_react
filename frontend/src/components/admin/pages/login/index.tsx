@@ -23,11 +23,17 @@ export const LoginPage = () => {
             labelWidth={'130px'}
           ></LabeledInputText>
         </InputsContainer>
-        <ButtonWrapper>
-          <Card path="/home" text="ログイン"></Card>
-          <Card path="/reset-password" text="パスワードを変更する"></Card>
-          <Card path="/register-organization" text="管理者を登録"></Card>
-        </ButtonWrapper>
+        <CardsWrapper>
+          <CardContainer>
+            <Card path="/home" text="ログイン"></Card>
+          </CardContainer>
+          <CardContainer>
+            <Card path="/reset-password" text="パスワードを変更する"></Card>
+          </CardContainer>
+          <CardContainer>
+            <Card path="/register-organization" text="管理者を登録"></Card>
+          </CardContainer>
+        </CardsWrapper>
       </Container>
     </Wrapper>
   );
@@ -49,12 +55,13 @@ const InputsContainer = styled.div`
   flex-direction: column;
 `;
 
-const ButtonWrapper = styled.div`
-  margin-top: 40px;
+const CardsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-content: center;
-  height: 250px;
+`;
+
+const CardContainer = styled.div`
+  width: 250px;
+  height: 40px;
+  margin: 30px auto;
 `;

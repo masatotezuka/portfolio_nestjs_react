@@ -8,24 +8,24 @@ export const HomePage = () => {
     <>
       <Header></Header>
       <Wrapper>
-        <ButtonContainer>
+        <CardContainer>
           <Card
             text="機器・ライセンス管理"
             path="/machine-license-lists"
           ></Card>
-        </ButtonContainer>
-        <ButtonContainer>
+        </CardContainer>
+        <CardContainer>
           <Card text="メール設定" path="/mail-setting"></Card>
-        </ButtonContainer>
-        <ButtonContainer>
+        </CardContainer>
+        <CardContainer>
           <Card text="社員管理" path="/employee-lists"></Card>
-        </ButtonContainer>
-        <ButtonContainer>
+        </CardContainer>
+        <CardContainer>
           <Card text="更新状況" path="/status"></Card>
-        </ButtonContainer>
-        <ButtonContainer>
+        </CardContainer>
+        <CardContainer>
           <Card text="パスワードを変更する" path="change-password"></Card>
-        </ButtonContainer>
+        </CardContainer>
       </Wrapper>
     </>
   );
@@ -38,6 +38,8 @@ const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
 `;
-const ButtonContainer = styled.div`
-  padding: 20px 0px;
+const CardContainer = styled.div`
+  padding: 30px 0px;
+  width: 250px;
+  height: 40px;
 `;
