@@ -9,8 +9,8 @@ export const StyledCard = styled(Link)`
   text-align: center;
   border: none;
   text-decoration: none;
-  width: 300px;
-  height: 40px;
+  max-width: 100%;
+  height: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
