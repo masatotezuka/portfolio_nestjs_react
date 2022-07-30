@@ -28,7 +28,10 @@ export const LoginPage = () => {
             <Card path="/home" text="ログイン"></Card>
           </CardContainer>
           <CardContainer>
-            <Card path="/reset-password" text="パスワードを変更する"></Card>
+            <Card
+              path="/reset-password/request"
+              text="パスワードを変更する"
+            ></Card>
           </CardContainer>
           <CardContainer>
             <Card path="/register-organization" text="管理者を登録"></Card>
