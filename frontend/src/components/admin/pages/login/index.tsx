@@ -12,17 +12,21 @@ export const LoginPage = () => {
             type="email"
             text="メールアドレス"
             forName="login_email"
+            inputWidth={'300px'}
+            labelWidth={'130px'}
           ></LabeledInputText>
           <LabeledInputText
             type="password"
             text="パスワード"
             forName="login_password"
+            inputWidth={'300px'}
+            labelWidth={'130px'}
           ></LabeledInputText>
         </InputsContainer>
         <ButtonWrapper>
           <Card path="/home" text="ログイン"></Card>
           <Card path="/reset-password" text="パスワードを変更する"></Card>
-          <Card path="/register" text="管理者を登録"></Card>
+          <Card path="/register-organization" text="管理者を登録"></Card>
         </ButtonWrapper>
       </Container>
     </Wrapper>
