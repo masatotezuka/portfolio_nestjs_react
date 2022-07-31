@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Card } from '../../../common/parts/Card/Card';
-import { LabeledInputText } from '../../../common/parts/InputText/LabeledInputText';
+import { Card } from '../../../common/parts/card/card';
+import { LabeledInputText } from '../../../common/parts/inputText/labeledInputText';
 
 export const LoginPage = () => {
   return (

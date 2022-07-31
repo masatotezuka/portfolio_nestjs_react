@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Button } from '../../../common/parts/Button/Button';
+import { Button } from '../../../common/parts/button/button';
 import { Header } from '../../parts/header';
 import { Link } from 'react-router-dom';
 import { Modal } from './components';

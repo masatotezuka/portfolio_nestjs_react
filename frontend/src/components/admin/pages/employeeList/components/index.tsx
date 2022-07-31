@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from '../../../../common/parts/Button/Button';
-import { LabeledInputText } from '../../../../common/parts/InputText/LabeledInputText';
+import { Button } from '../../../../common/parts/button/button';
+import { LabeledInputText } from '../../../../common/parts/inputText/labeledInputText';
 
 type Props = {
   showModal: boolean;

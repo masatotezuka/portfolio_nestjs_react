@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Button } from '../../../common/parts/Button/Button';
-import { LabeledInputText } from '../../../common/parts/InputText/LabeledInputText';
+import { Button } from '../../../common/parts/button/button';
+import { LabeledInputText } from '../../../common/parts/inputText/labeledInputText';
 
 export const RegisterOrganizationPage = () => {
   return (
