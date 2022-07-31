@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Card } from '../../../common/parts/card/card';
-import { Header } from '../../parts/header';
+import { Card } from '../../../../common/parts/card/card';
+import { Header } from '../../../parts/header';
 import { Lists } from './components/lists';
 
 export const MachineAndLicenseListsPage = () => {

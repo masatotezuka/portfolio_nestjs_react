@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from '../../../common/parts/button/button';
-import { LabeledInputText } from '../../../common/parts/inputText/labeledInputText';
-import { SelectBox } from '../../../common/parts/selectBox/selectBox';
-import { Header } from '../../parts/header';
+import { Button } from '../../../../common/parts/button/button';
+import { LabeledInputText } from '../../../../common/parts/inputText/labeledInputText';
+import { SelectBox } from '../../../../common/parts/selectBox/selectBox';
+import { Header } from '../../../parts/header';
 
 export const CreateMachineAndLicensePage = () => {
   const options = [{ value: 'pc', text: 'PC' }];
