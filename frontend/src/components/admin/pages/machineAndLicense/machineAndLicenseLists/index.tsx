@@ -16,9 +16,9 @@ export const MachineAndLicenseListsPage = () => {
         <Lists handleToggleTabIndex={handleToggleTabIndex}></Lists>
         <CardContainer>
           {tabIndex === 0 ? (
-            <Card text="新規登録" path="/machine/create"></Card>
+            <Card text="新規登録" path="/machine-license/create/machine"></Card>
           ) : (
-            <Card text="新規登録" path="/license/create"></Card>
+            <Card text="新規登録" path="/machine-license/create/license"></Card>
           )}
         </CardContainer>
       </Container>
