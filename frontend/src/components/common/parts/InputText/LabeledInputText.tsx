@@ -13,6 +13,8 @@ type Props = {
   value?: string;
   required?: boolean;
   register?: Object;
+  list?: string;
+  placeholder?: string;
 };
 
 export const LabeledInputText = (props: Props) => {
@@ -27,6 +29,8 @@ export const LabeledInputText = (props: Props) => {
           type={props.type}
           {...props.register}
           width={props.inputWidth}
+          list={props.list}
+          placeholder={props.placeholder}
         ></StyledInputText>
       </StyledInputContainer>
     </>
