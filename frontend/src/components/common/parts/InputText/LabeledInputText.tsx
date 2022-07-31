@@ -5,7 +5,7 @@ import {
 } from './styledLabeledInputText';
 
 type Props = {
-  type: 'text' | 'email' | 'password';
+  type: 'text' | 'email' | 'password' | 'Date';
   text: string;
   forName: string;
   inputWidth: string;
