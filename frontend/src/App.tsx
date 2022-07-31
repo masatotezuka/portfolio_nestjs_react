@@ -2,7 +2,8 @@ import { Route, Routes } from 'react-router-dom';
 import { EmployeeListPage } from './components/admin/pages/employeeList';
 import { HomePage } from './components/admin/pages/home';
 import { LoginPage } from './components/admin/pages/login';
-import { MachineAndLicenseListsPage } from './components/admin/pages/machineAndLicense';
+import { CreateMachineAndLicensePage } from './components/admin/pages/machineAndLicense/createMachineAndLicense';
+import { MachineAndLicenseListsPage } from './components/admin/pages/machineAndLicense/machineAndLicenseLists';
 import { ConfirmResetPasswordPage } from './components/admin/pages/password/confirmResetPassword';
 import { RequestResetPasswordPage } from './components/admin/pages/password/RequestResetPassword';
 import { RegisterOrganizationPage } from './components/admin/pages/registerOrganization';
@@ -23,6 +24,10 @@ export const App = () => {
       </Route>
       <Route path="machine-license">
         <Route path="list" element={<MachineAndLicenseListsPage />}></Route>
+        <Route
+          path="machine/create"
+          element={<CreateMachineAndLicensePage />}
+        ></Route>
       </Route>
     </Routes>
   );
