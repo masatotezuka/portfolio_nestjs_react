@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Card } from '../../../common/parts/Card/Card';
+import { Card } from '../../../common/parts/card/card';
 import { Header } from '../../parts/header';
 
 export const HomePage = () => {
@@ -9,10 +9,7 @@ export const HomePage = () => {
       <Header></Header>
       <Wrapper>
         <CardContainer>
-          <Card
-            text="機器・ライセンス管理"
-            path="/machine-license-lists"
-          ></Card>
+          <Card text="機器・ライセンス管理" path="/machine-license/list"></Card>
         </CardContainer>
         <CardContainer>
           <Card text="メール設定" path="/mail-setting"></Card>

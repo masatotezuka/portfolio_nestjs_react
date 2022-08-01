@@ -1,16 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from '../../../../common/parts/Button/Button';
-import { LabeledInputText } from '../../../../common/parts/InputText/LabeledInputText';
+import { Button } from '../../parts/button/button';
+import { LabeledInputText } from '../../parts/inputText/labeledInputText';
 
 type Props = {
   showModal: boolean;
+  employee: { id: number; firstName: string; lastName: string; email: string };
   handleSubmitEmployee: () => void;
   handleCloseModal: () => void;
 };
 
-export const Modal = ({
+export const EditEmployeeModal = ({
   showModal,
+  employee,
   handleSubmitEmployee,
   handleCloseModal,
 }: Props) => {
@@ -19,38 +21,40 @@ export const Modal = ({
       {showModal ? (
         <Wrapper>
           <Container>
-            <Title>社員登録</Title>
+            <Title>登録</Title>
             <LabeledInputTextWrapper>
+              <LabeledInputsTextContainer>
+                <LabeledInputTextContainer>
+                  <LabeledInputText
+                    type="text"
+                    text="性"
+                    forName="firstName"
+                    inputWidth={'130px'}
+                    labelWidth={'155px'}
+                    value={employee.firstName}
+                  ></LabeledInputText>
+                </LabeledInputTextContainer>
+                <LabeledInputTextContainer>
+                  <LabeledInputText
+                    type="text"
+                    text="名"
+                    forName="lastName"
+                    inputWidth={'130px'}
+                    labelWidth={'40px'}
+                    value={employee.lastName}
+                  ></LabeledInputText>
+                </LabeledInputTextContainer>
+              </LabeledInputsTextContainer>
               <LabeledInputTextContainer>
                 <LabeledInputText
-                  type="text"
-                  text="性"
-                  forName="firstName"
-                  inputWidth={'120px'}
+                  type="email"
+                  text="メールアドレス"
+                  forName="employee_email"
+                  inputWidth={'350px'}
                   labelWidth={'140px'}
-                ></LabeledInputText>
-                <LabeledInputText
-                  type="text"
-                  text="名"
-                  forName="lastName"
-                  inputWidth={'120px'}
-                  labelWidth={'20px'}
+                  value={employee.email}
                 ></LabeledInputText>
               </LabeledInputTextContainer>
-              <LabeledInputText
-                type="email"
-                text="メールアドレス"
-                forName="employee_email"
-                inputWidth={'300px'}
-                labelWidth={'140px'}
-              ></LabeledInputText>
-              <LabeledInputText
-                type="text"
-                text="パスワード"
-                forName="employee_password"
-                inputWidth={'300px'}
-                labelWidth={'140px'}
-              ></LabeledInputText>
             </LabeledInputTextWrapper>
             <ButtonWrapper>
               <ButtonContainer>
@@ -93,7 +97,7 @@ const Container = styled.div`
   left: 25%;
   right: 25%;
   z-index: 5;
-  padding: 20px 40px;
+  padding: 20px 50px;
   background-color: #ffffff;
 `;
 const Title = styled.h2`
@@ -105,9 +109,15 @@ const LabeledInputTextWrapper = styled.div`
   padding: 0px 50px;
 `;
 
+const LabeledInputsTextContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const LabeledInputTextContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
+  padding: 10px 0px;
 `;
 
 const ButtonWrapper = styled.div`

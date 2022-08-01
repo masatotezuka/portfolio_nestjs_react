@@ -1,13 +1,13 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Card } from '../../../common/parts/Card/Card';
-import { LabeledInputText } from '../../../common/parts/InputText/LabeledInputText';
+import { Card } from '../../../common/parts/card/card';
+import { LabeledInputText } from '../../../common/parts/inputText/labeledInputText';
 
 export const LoginPage = () => {
   return (
-    <Wrapper>
-      <Container>
-        <InputsContainer>
+    <Container>
+      <InputsContainer>
+        <InputContainer>
           <LabeledInputText
             type="email"
             text="メールアドレス"
@@ -15,6 +15,8 @@ export const LoginPage = () => {
             inputWidth={'300px'}
             labelWidth={'130px'}
           ></LabeledInputText>
+        </InputContainer>
+        <InputContainer>
           <LabeledInputText
             type="password"
             text="パスワード"
@@ -22,27 +24,25 @@ export const LoginPage = () => {
             inputWidth={'300px'}
             labelWidth={'130px'}
           ></LabeledInputText>
-        </InputsContainer>
-        <CardsWrapper>
-          <CardContainer>
-            <Card path="/home" text="ログイン"></Card>
-          </CardContainer>
-          <CardContainer>
-            <Card
-              path="/reset-password/request"
-              text="パスワードを変更する"
-            ></Card>
-          </CardContainer>
-          <CardContainer>
-            <Card path="/register-organization" text="管理者を登録"></Card>
-          </CardContainer>
-        </CardsWrapper>
-      </Container>
-    </Wrapper>
+        </InputContainer>
+      </InputsContainer>
+      <CardsWrapper>
+        <CardContainer>
+          <Card path="/home" text="ログイン"></Card>
+        </CardContainer>
+        <CardContainer>
+          <Card
+            path="/reset-password/request"
+            text="パスワードを変更する"
+          ></Card>
+        </CardContainer>
+        <CardContainer>
+          <Card path="/register-organization" text="管理者を登録"></Card>
+        </CardContainer>
+      </CardsWrapper>
+    </Container>
   );
 };
-
-const Wrapper = styled.div``;
 
 const Container = styled.div`
   max-width: 500px;
@@ -56,6 +56,13 @@ const InputsContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 0px;
 `;
 
 const CardsWrapper = styled.div`

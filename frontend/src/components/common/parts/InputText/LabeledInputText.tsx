@@ -5,7 +5,7 @@ import {
 } from './styledLabeledInputText';
 
 type Props = {
-  type: 'text' | 'email' | 'password';
+  type: 'text' | 'email' | 'password' | 'date';
   text: string;
   forName: string;
   inputWidth: string;
@@ -13,6 +13,8 @@ type Props = {
   value?: string;
   required?: boolean;
   register?: Object;
+  list?: string;
+  placeholder?: string;
 };
 
 export const LabeledInputText = (props: Props) => {
@@ -24,9 +26,12 @@ export const LabeledInputText = (props: Props) => {
         </StyledLabel>
         <StyledInputText
           id={props.forName}
+          value={props.value}
           type={props.type}
           {...props.register}
           width={props.inputWidth}
+          list={props.list}
+          placeholder={props.placeholder}
         ></StyledInputText>
       </StyledInputContainer>
     </>
