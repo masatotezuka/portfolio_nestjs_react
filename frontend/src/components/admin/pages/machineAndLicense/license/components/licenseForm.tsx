@@ -3,7 +3,18 @@ import { Button } from '../../../../../common/parts/button/button';
 import { LabeledInputText } from '../../../../../common/parts/inputText/labeledInputText';
 import { SelectBox } from '../../../../../common/parts/selectBox/selectBox';
 
-export const LicenseForm = () => {
+type Props = {
+  buttonText: string;
+  license: {
+    name: string;
+    purchasedAt: string;
+    expiredAt: string;
+    user: string;
+    usageStatus: string;
+  };
+};
+
+export const LicenseForm = ({ buttonText, license }: Props) => {
   const options = [
     { id: 1, value: 'pc', text: 'PC' },
     { id: 2, value: 'monitor', text: 'モニター' },
@@ -25,7 +36,8 @@ export const LicenseForm = () => {
             inputWidth="300px"
             labelWidth="180px"
             list="license_name"
-            placeholder="ライセンスを入力またはを選択してください"
+            placeholder={license.name}
+            value={license.name}
           ></LabeledInputText>
           <datalist id="license_name">
             {licenseOptions.map((option) => {
@@ -35,8 +47,9 @@ export const LicenseForm = () => {
         </InputContainer>
         <InputContainer>
           <LabeledInputText
-            type="Date"
+            type="date"
             text="購入日（任意）"
+            value={license.purchasedAt}
             forName="license_purchased_at"
             inputWidth="300px"
             labelWidth="130px"
@@ -44,8 +57,9 @@ export const LicenseForm = () => {
         </InputContainer>
         <InputContainer>
           <LabeledInputText
-            type="Date"
+            type="date"
             text="有効期限（必須）"
+            value={license.expiredAt}
             forName="license_expired_at"
             inputWidth="300px"
             labelWidth="130px"
@@ -55,7 +69,7 @@ export const LicenseForm = () => {
           <Text>利用者（任意）</Text>
           <SelectBox
             options={options}
-            firstDisplayName="利用者を選択してください"
+            firstDisplayName={license.user}
             name="user_name"
           ></SelectBox>
         </InputContainer>
@@ -63,12 +77,12 @@ export const LicenseForm = () => {
           <Text>ステータス（必須）</Text>
           <SelectBox
             options={options}
-            firstDisplayName="現在のステータスを選択してください"
+            firstDisplayName={license.usageStatus}
             name="usage_status"
           ></SelectBox>
         </InputContainer>
         <ButtonWrapper>
-          <Button type="submit" text="登録"></Button>
+          <Button type="submit" text={buttonText}></Button>
         </ButtonWrapper>
       </form>
     </>
