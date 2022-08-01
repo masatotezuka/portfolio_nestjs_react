@@ -1,13 +1,25 @@
-import React from 'react';
 import styled from 'styled-components';
 import { LabeledInputText } from '../../../../../common/parts/inputText/labeledInputText';
 import { SelectBox } from '../../../../../common/parts/selectBox/selectBox';
 import { Button } from '../../../../../common/parts/button/button';
-export const MachineForm = () => {
+
+type Props = {
+  buttonText: string;
+  machine: {
+    category: string;
+    name: string;
+    purchasedAt: Date | string;
+    user: string;
+    usageStatus: string;
+  };
+};
+
+export const MachineForm = ({ buttonText, machine }: Props) => {
   const options = [
     { id: 1, value: 'pc', text: 'PC' },
     { id: 2, value: 'monitor', text: 'モニター' },
   ];
+
   return (
     <>
       <form>
@@ -15,7 +27,7 @@ export const MachineForm = () => {
           <Text>種別（必須）</Text>
           <SelectBox
             options={options}
-            firstDisplayName="種別を選択してください"
+            firstDisplayName={machine.category}
             name="machine_category"
           ></SelectBox>
         </InputContainer>
@@ -23,16 +35,18 @@ export const MachineForm = () => {
           <LabeledInputText
             type="text"
             text="機器名（必須）"
-            forName="create_machine_name"
+            value={machine.name}
+            forName="machine_name"
             inputWidth="300px"
             labelWidth="120px"
           ></LabeledInputText>
         </InputContainer>
         <InputContainer>
           <LabeledInputText
-            type="Date"
+            type="date"
             text="購入日（必須）"
-            forName="create_machine_name"
+            value={machine.purchasedAt.toString()}
+            forName="machine_purchased_at"
             inputWidth="300px"
             labelWidth="120px"
           ></LabeledInputText>
@@ -41,7 +55,7 @@ export const MachineForm = () => {
           <Text>利用者（任意）</Text>
           <SelectBox
             options={options}
-            firstDisplayName="利用者を選択してください"
+            firstDisplayName={machine.user}
             name="user_name"
           ></SelectBox>
         </InputContainer>
@@ -49,13 +63,12 @@ export const MachineForm = () => {
           <Text>ステータス（必須）</Text>
           <SelectBox
             options={options}
-            firstDisplayName="現在のステータスを選択してください"
-            name="usage_status"
+            firstDisplayName={machine.usageStatus}
+            name="machine_usage_status"
           ></SelectBox>
         </InputContainer>
-
         <ButtonWrapper>
-          <Button type="submit" text="登録"></Button>
+          <Button type="submit" text={buttonText}></Button>
         </ButtonWrapper>
       </form>
     </>
