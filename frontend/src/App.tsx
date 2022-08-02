@@ -8,6 +8,7 @@ import { MachineAndLicenseListsPage } from './components/admin/pages/machineAndL
 import { ConfirmResetPasswordPage } from './components/admin/pages/password/confirmResetPassword';
 import { RequestResetPasswordPage } from './components/admin/pages/password/RequestResetPassword';
 import { RegisterOrganizationPage } from './components/admin/pages/initSetting/registerOrganization';
+import { EmployeePage } from './components/admin/pages/employee';
 
 export const App = () => {
   return (
@@ -33,6 +34,7 @@ export const App = () => {
         <Route path="license/create" element={<LicensePage />}></Route>
         <Route path="license/edit" element={<LicensePage />}></Route>
       </Route>
+      <Route path="employee" element={<EmployeePage />}></Route>
     </Routes>
   );
 };

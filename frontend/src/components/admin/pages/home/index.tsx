@@ -15,7 +15,7 @@ export const HomePage = () => {
           <Card text="メール設定" path="/mail-setting"></Card>
         </CardContainer>
         <CardContainer>
-          <Card text="社員管理" path="/employee-lists"></Card>
+          <Card text="社員管理" path="/employee"></Card>
         </CardContainer>
         <CardContainer>
           <Card text="更新状況" path="/status"></Card>

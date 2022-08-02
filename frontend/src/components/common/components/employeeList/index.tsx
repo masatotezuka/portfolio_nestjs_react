@@ -30,12 +30,7 @@ export const EmployeeList = () => {
     { id: 1, firstName: '田中', lastName: '太郎', email: 'test@gmail.com' },
     { id: 2, firstName: '山田', lastName: '二朗', email: 'test2@gmail.com' },
   ];
-  // const employee = {
-  //   id: 1,
-  //   firstName: '田中',
-  //   lastName: '太郎',
-  //   email: 'test@gmail.com',
-  // };
+
   const handleOpenCreateEmployeeModal = () => {
     setShowCreateEmployeeModal(true);
   };
