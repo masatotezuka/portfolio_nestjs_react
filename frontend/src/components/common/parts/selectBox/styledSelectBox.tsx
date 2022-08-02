@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 
-export const StyledSelectBox = styled.div`
+export const StyledSelectBox = styled.div<{ width: string }>`
   position: relative;
-  width: 314px;
+  width: ${(props) => props.width};
   margin: 0em 0em 0em 0em;
+  display: flex;
+  align-items: center;
   &::after {
     border: 4px solid transparent;
     border-top: 4.5px solid;

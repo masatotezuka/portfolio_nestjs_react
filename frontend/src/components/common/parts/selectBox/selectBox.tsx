@@ -5,12 +5,18 @@ type Props = {
   options: { id: number; value: string; text: string }[];
   firstDisplayName: string;
   name: string;
+  width: string;
 };
 
-export const SelectBox = ({ options, firstDisplayName, name }: Props) => {
+export const SelectBox = ({
+  options,
+  firstDisplayName,
+  name,
+  width,
+}: Props) => {
   return (
     <>
-      <StyledSelectBox>
+      <StyledSelectBox width={width}>
         <select name={name}>
           <option value="" key={0}>
             {firstDisplayName}
