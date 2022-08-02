@@ -71,6 +71,7 @@ export const LicenseForm = ({ buttonText, license }: Props) => {
             options={options}
             firstDisplayName={license.user}
             name="user_name"
+            width="314px"
           ></SelectBox>
         </InputContainer>
         <InputContainer>
@@ -79,6 +80,7 @@ export const LicenseForm = ({ buttonText, license }: Props) => {
             options={options}
             firstDisplayName={license.usageStatus}
             name="usage_status"
+            width="314px"
           ></SelectBox>
         </InputContainer>
         <ButtonWrapper>

@@ -29,6 +29,7 @@ export const MachineForm = ({ buttonText, machine }: Props) => {
             options={options}
             firstDisplayName={machine.category}
             name="machine_category"
+            width="314px"
           ></SelectBox>
         </InputContainer>
         <InputContainer>
@@ -57,6 +58,7 @@ export const MachineForm = ({ buttonText, machine }: Props) => {
             options={options}
             firstDisplayName={machine.user}
             name="user_name"
+            width="314px"
           ></SelectBox>
         </InputContainer>
         <InputContainer>
@@ -65,6 +67,7 @@ export const MachineForm = ({ buttonText, machine }: Props) => {
             options={options}
             firstDisplayName={machine.usageStatus}
             name="machine_usage_status"
+            width="314px"
           ></SelectBox>
         </InputContainer>
         <ButtonWrapper>
