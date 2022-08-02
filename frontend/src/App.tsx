@@ -9,6 +9,8 @@ import { ConfirmResetPasswordPage } from './components/admin/pages/password/conf
 import { RequestResetPasswordPage } from './components/admin/pages/password/RequestResetPassword';
 import { RegisterOrganizationPage } from './components/admin/pages/initSetting/registerOrganization';
 import { EmployeePage } from './components/admin/pages/employee';
+import { MailSettingPage } from './components/admin/pages/mailSetting';
+
 
 export const App = () => {
   return (
@@ -35,6 +37,7 @@ export const App = () => {
         <Route path="license/edit" element={<LicensePage />}></Route>
       </Route>
       <Route path="employee" element={<EmployeePage />}></Route>
+      <Route path="mail-setting" element={<MailSettingPage/>}> </Route>
     </Routes>
   );
 };
