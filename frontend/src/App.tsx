@@ -12,8 +12,9 @@ import { EmployeePage } from './components/admin/pages/employee';
 import { MailSettingPage } from './components/admin/pages/mail/mailSetting';
 import { MailSettingConfirm } from './components/admin/pages/mail/mailSettingConfirm';
 import { EmployeeStatus } from './components/admin/pages/employeeStatus';
-import { UserLoginPage } from './components/user/pages/login';
+import { UserLoginPage } from './components/user/pages/userLogin';
 import { UserRegisterPasswordPage } from './components/user/pages/userRegisterPassword';
+import { UserCheckStatusPage } from './components/user/pages/userCheckStatus';
 
 export const App = () => {
   return (
@@ -51,6 +52,7 @@ export const App = () => {
           path="register-password"
           element={<UserRegisterPasswordPage />}
         ></Route>
+        <Route path="check-status" element={<UserCheckStatusPage />}></Route>
       </Route>
     </Routes>
   );
