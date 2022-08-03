@@ -12,7 +12,7 @@ export const HomePage = () => {
           <Card text="機器・ライセンス管理" path="/machine-license/list"></Card>
         </CardContainer>
         <CardContainer>
-          <Card text="メール設定" path="/mail-setting"></Card>
+          <Card text="メール設定" path="/mail/setting"></Card>
         </CardContainer>
         <CardContainer>
           <Card text="社員管理" path="/employee"></Card>
