@@ -11,7 +11,7 @@ import { RegisterOrganizationPage } from './components/admin/pages/initSetting/r
 import { EmployeePage } from './components/admin/pages/employee';
 import { MailSettingPage } from './components/admin/pages/mail/mailSetting';
 import { MailSettingConfirm } from './components/admin/pages/mail/mailSettingConfirm';
-
+import { EmployeeStatus } from './components/admin/pages/employeeStatus';
 
 export const App = () => {
   return (
@@ -42,6 +42,7 @@ export const App = () => {
         <Route path="setting" element={<MailSettingPage />}></Route>
         <Route path="confirm" element={<MailSettingConfirm />}></Route>
       </Route>
+      <Route path="status" element={<EmployeeStatus />}></Route>
     </Routes>
   );
 };
