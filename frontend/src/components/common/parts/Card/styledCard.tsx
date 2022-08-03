@@ -15,7 +15,7 @@ export const StyledCard = styled(Link)`
   flex-wrap: wrap;
   justify-content: center;
   align-content: center;
-  padding: 10px 0px;
+  font-size: 16px;
   &:hover {
     cursor: pointer;
   }
