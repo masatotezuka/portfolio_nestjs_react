@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from '../../../common/parts/button/button';
-import { LabeledInputText } from '../../../common/parts/inputText/labeledInputText';
-import { SelectBox } from '../../../common/parts/selectBox/selectBox';
-import { LabeledTextarea } from '../../../common/parts/textarea/labeledTextarea';
-import { Header } from '../../parts/header';
+import { Button } from '../../../../common/parts/button/button';
+import { LabeledInputText } from '../../../../common/parts/inputText/labeledInputText';
+import { SelectBox } from '../../../../common/parts/selectBox/selectBox';
+import { LabeledTextarea } from '../../../../common/parts/textarea/labeledTextarea';
+import { Header } from '../../../parts/header';
 
 export const MailSettingPage = () => {
   const body = `{氏名}さま
