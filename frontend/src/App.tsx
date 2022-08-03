@@ -13,6 +13,7 @@ import { MailSettingPage } from './components/admin/pages/mail/mailSetting';
 import { MailSettingConfirm } from './components/admin/pages/mail/mailSettingConfirm';
 import { EmployeeStatus } from './components/admin/pages/employeeStatus';
 import { UserLoginPage } from './components/user/pages/login';
+import { UserRegisterPasswordPage } from './components/user/pages/userRegisterPassword';
 
 export const App = () => {
   return (
@@ -46,6 +47,10 @@ export const App = () => {
       <Route path="status" element={<EmployeeStatus />}></Route>
       <Route path="user">
         <Route path="login" element={<UserLoginPage />}></Route>
+        <Route
+          path="register-password"
+          element={<UserRegisterPasswordPage />}
+        ></Route>
       </Route>
     </Routes>
   );
