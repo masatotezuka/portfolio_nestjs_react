@@ -27,7 +27,7 @@ export const ConfirmModal = ({
               </ButtonContainer>
               <ButtonContainer>
                 <Button
-                  text="いいえ"
+                text="いいえ"
                   onClick={() => handleCloseModal()}
                   gray
                 ></Button>
