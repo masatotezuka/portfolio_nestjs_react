@@ -9,7 +9,8 @@ import { ConfirmResetPasswordPage } from './components/admin/pages/password/conf
 import { RequestResetPasswordPage } from './components/admin/pages/password/RequestResetPassword';
 import { RegisterOrganizationPage } from './components/admin/pages/initSetting/registerOrganization';
 import { EmployeePage } from './components/admin/pages/employee';
-import { MailSettingPage } from './components/admin/pages/mailSetting';
+import { MailSettingPage } from './components/admin/pages/mail/mailSetting';
+import { MailSettingConfirm } from './components/admin/pages/mail/mailSettingConfirm';
 
 
 export const App = () => {
@@ -37,7 +38,10 @@ export const App = () => {
         <Route path="license/edit" element={<LicensePage />}></Route>
       </Route>
       <Route path="employee" element={<EmployeePage />}></Route>
-      <Route path="mail-setting" element={<MailSettingPage/>}> </Route>
+      <Route path="mail">
+        <Route path="setting" element={<MailSettingPage />}></Route>
+        <Route path="confirm" element={<MailSettingConfirm />}></Route>
+      </Route>
     </Routes>
   );
 };
