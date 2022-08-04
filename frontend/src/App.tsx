@@ -1,20 +1,20 @@
 import { Route, Routes } from 'react-router-dom';
-import { RegisterEmployeePage } from './components/admin/pages/initSetting/registerEmployee';
-import { HomePage } from './components/admin/pages/home';
-import { LoginPage } from './components/admin/pages/login';
-import { LicensePage } from './components/admin/pages/machineAndLicense/license';
-import { MachinePage } from './components/admin/pages/machineAndLicense/machine';
-import { MachineAndLicenseListsPage } from './components/admin/pages/machineAndLicense/machineAndLicenseLists';
-import { ConfirmResetPasswordPage } from './components/admin/pages/password/confirmResetPassword';
-import { RequestResetPasswordPage } from './components/admin/pages/password/RequestResetPassword';
-import { RegisterOrganizationPage } from './components/admin/pages/initSetting/registerOrganization';
-import { EmployeePage } from './components/admin/pages/employee';
-import { MailSettingPage } from './components/admin/pages/mail/mailSetting';
-import { MailSettingConfirm } from './components/admin/pages/mail/mailSettingConfirm';
-import { EmployeeStatus } from './components/admin/pages/employeeStatus';
-import { UserLoginPage } from './components/user/pages/userLogin';
-import { UserRegisterPasswordPage } from './components/user/pages/userRegisterPassword';
-import { UserCheckStatusPage } from './components/user/pages/userCheckStatus';
+import { RegisterEmployeePage } from './components/pages/admin/initSetting/registerEmployee';
+import { HomePage } from './components/pages/admin//home';
+import { LoginPage } from './components/pages/admin/login';
+import { LicensePage } from './components/pages/admin/machineAndLicense/license';
+import { MachinePage } from './components/pages/admin/machineAndLicense/machine';
+import { MachineAndLicenseListsPage } from './components/pages/admin/machineAndLicense/machineAndLicenseLists';
+import { ConfirmResetPasswordPage } from './components/pages/admin/password/confirmResetPassword';
+import { RequestResetPasswordPage } from './components/pages/admin/password/RequestResetPassword';
+import { RegisterOrganizationPage } from './components/pages/admin/initSetting/registerOrganization';
+import { EmployeePage } from './components/pages/admin/employee';
+import { MailSettingPage } from './components/pages/admin/mail/mailSetting';
+import { MailSettingConfirm } from './components/pages/admin/mail/mailSettingConfirm';
+import { EmployeeStatus } from './components/pages/admin/employeeStatus';
+import { UserLoginPage } from './components/pages/user/userLogin';
+import { UserRegisterPasswordPage } from './components/pages/user/userRegisterPassword';
+import { UserCheckStatusPage } from './components/pages/user/userCheckStatus';
 
 export const App = () => {
   return (
