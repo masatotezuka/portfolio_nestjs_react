@@ -15,6 +15,7 @@ import { MachineHistory } from './machine-history.entity';
 import { Organization } from './organization.entity';
 import { UserLicense } from './user-license.entity';
 import { UserMachine } from './user-machine.entity';
+import { UserMonthlySurveyAnswer } from './user-monthly-survey-answer.entity';
 
 @Entity('users')
 @Unique(['email'])
@@ -28,17 +29,17 @@ export class User {
   @Column()
   lastName: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
   password: string;
 
   @Column({ nullable: true })
-  verificationToken: string;
+  verificationToken?: string | null;
 
-  @Column({ nullable: true })
-  verificationTokenExpiredAt: Date;
+  @Column({ type: 'timestamptz', nullable: true })
+  verificationTokenExpiredAt?: Date | null;
 
   @Column()
   isPasswordUpdated: boolean;
@@ -50,13 +51,13 @@ export class User {
   @JoinColumn()
   organization: Organization;
 
-  @DeleteDateColumn({ nullable: true })
-  deletedAt: Date;
+  @DeleteDateColumn({ type: 'timestamptz', nullable: true })
+  deletedAt?: Date | null;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'timestamptz' })
   updateAt: Date;
 
   @OneToMany(() => UserMachine, (userMachine) => userMachine.user)
@@ -70,4 +71,10 @@ export class User {
 
   @OneToMany(() => MachineHistory, (machineHistory) => machineHistory.user)
   machineHistories: MachineHistory[];
+
+  @OneToMany(
+    () => UserMonthlySurveyAnswer,
+    (userMonthlySurveyAnswer) => userMonthlySurveyAnswer.user,
+  )
+  userMonthlySurveyAnswers: UserMonthlySurveyAnswer[];
 }

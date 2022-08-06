@@ -15,15 +15,15 @@ export class MachineCategory {
   id: number;
 
   @Column()
-  name: string;
+  readonly name: string;
 
-  @DeleteDateColumn({ nullable: true })
-  deletedAt: Date;
+  @DeleteDateColumn({ type: 'timestamptz', nullable: true })
+  deletedAt?: Date | null;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'timestamptz' })
   updateAt: Date;
 
   @OneToMany(() => Machine, (machine) => machine.machineCategory)

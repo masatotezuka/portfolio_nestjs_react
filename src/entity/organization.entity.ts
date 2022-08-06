@@ -7,7 +7,9 @@ import {
   UpdateDateColumn,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
+import { OrganizationMailSetting } from './organization-mail-setting.entity';
 import { User } from './user.entity';
 
 @Entity('organizations')
@@ -18,16 +20,18 @@ export class Organization {
   @Column()
   name: string;
 
-  @DeleteDateColumn({ nullable: true })
-  deletedAt: Date;
+  @DeleteDateColumn({ type: 'timestamptz', nullable: true })
+  deletedAt?: Date | null;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'timestamptz' })
   updateAt: Date;
 
-  @OneToOne(() => User)
-  @JoinColumn()
-  users: User;
+  @OneToMany(
+    () => OrganizationMailSetting,
+    (organizationMailSetting) => organizationMailSetting.organization,
+  )
+  organizationMailSettings: OrganizationMailSetting[];
 }

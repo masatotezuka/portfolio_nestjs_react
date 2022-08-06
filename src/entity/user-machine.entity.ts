@@ -19,9 +19,9 @@ export class UserMachine {
   @ManyToOne(() => Machine, (machine) => machine.userMachines)
   machine: Machine;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'timestamptz' })
   updateAt: Date;
 }

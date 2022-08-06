@@ -21,11 +21,11 @@ export class Machine {
   @Column()
   name: string;
 
-  @Column()
-  purchasedAt: Date;
+  @Column({ type: 'date', nullable: true })
+  purchasedAt?: Date | null;
 
-  @DeleteDateColumn()
-  deletedAt: Date;
+  @DeleteDateColumn({ type: 'timestamptz', nullable: true })
+  deletedAt?: Date | null;
 
   @ManyToOne(
     () => MachineCategory,
@@ -36,10 +36,10 @@ export class Machine {
   @ManyToOne(() => UsageStatus, (usageStatus) => usageStatus.machines)
   usageStatus: UsageStatus;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'timestamptz' })
   updateAt: Date;
 
   @OneToMany(() => UserMachine, (userMachine) => userMachine.machine)

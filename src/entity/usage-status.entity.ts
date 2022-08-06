@@ -5,8 +5,9 @@ import {
   DeleteDateColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
+  OneToMany,
 } from 'typeorm';
+import { License } from './license.entity';
 import { Machine } from './machine.entity';
 
 @Entity('usage_statuses')
@@ -15,17 +16,20 @@ export class UsageStatus {
   id: number;
 
   @Column()
-  name: string;
+  readonly name: string;
 
-  @DeleteDateColumn({ nullable: true })
-  deletedAt: Date;
+  @DeleteDateColumn({ type: 'timestamptz', nullable: true })
+  deletedAt?: Date | null;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'timestamptz' })
   updateAt: Date;
 
-  @ManyToOne(() => Machine, (machine) => machine.usageStatus)
+  @OneToMany(() => Machine, (machine) => machine.usageStatus)
   machines: Machine[];
+
+  @OneToMany(() => License, (license) => license.usageStatus)
+  licenses: License[];
 }

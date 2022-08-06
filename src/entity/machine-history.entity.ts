@@ -8,7 +8,7 @@ import {
 import { Machine } from './machine.entity';
 import { User } from './user.entity';
 
-@Entity('machine_historie')
+@Entity('machine_histories')
 export class MachineHistory {
   @PrimaryGeneratedColumn()
   id: number;
@@ -19,9 +19,9 @@ export class MachineHistory {
   @ManyToOne(() => Machine, (machine) => machine.machineHistories)
   machine: Machine;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'timestamptz' })
   updateAt: Date;
 }

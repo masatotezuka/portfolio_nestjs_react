@@ -6,11 +6,13 @@ import {
   UpdateDateColumn,
   OneToMany,
   Column,
+  ManyToOne,
 } from 'typeorm';
 import { LicenseHistory } from './license-history.entity';
+import { UsageStatus } from './usage-status.entity';
 import { UserLicense } from './user-license.entity';
 
-@Entity('license')
+@Entity('licenses')
 export class License {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,19 +20,22 @@ export class License {
   @Column()
   name: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'date', nullable: true })
   purchasedAt: Date;
 
-  @Column({ nullable: true })
+  @Column({ type: 'date', nullable: true })
   expiredAt: Date;
 
-  @DeleteDateColumn({ nullable: true })
-  deletedAt: Date;
+  @ManyToOne(() => UsageStatus, (usageStatus) => usageStatus.licenses)
+  usageStatus: UsageStatus;
 
-  @CreateDateColumn()
+  @DeleteDateColumn({ type: 'timestamptz', nullable: true })
+  deletedAt?: Date | null;
+
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'timestamptz' })
   updateAt: Date;
 
   @OneToMany(() => UserLicense, (userLicense) => userLicense.license)

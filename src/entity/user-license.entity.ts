@@ -19,9 +19,9 @@ export class UserLicense {
   @ManyToOne(() => License, (license) => license.userLicenses)
   license: License;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'timestamptz' })
   updateAt: Date;
 }
