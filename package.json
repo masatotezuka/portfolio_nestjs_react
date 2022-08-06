@@ -25,7 +25,7 @@
     "migration:show": "npm run typeorm migration:show",
     "migration:run": "npm run typeorm migration:run",
     "migration:revert": "npm run typeorm migration:revert",
-    "migration:create": "typeorm-ts-node-commonjs migration:create -n"
+    "migration:create": "typeorm-ts-node-commonjs migration:create"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
