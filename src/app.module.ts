@@ -12,7 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       port: 5432,
       username: 'my_dev',
       password: undefined,
-      database: 'portfolio_app__development',
+      database: 'portfolio_app_development',
       synchronize: true,
       logging: ['query', 'error'],
       entities: ['./entity/*.ts'],
