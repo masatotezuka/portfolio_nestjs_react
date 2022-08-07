@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Card } from '../../../shared/parts/card/card';
-import { Header } from '../../parts/header';
+import { Header } from '../../../shared/layout/header';
 
 export const HomePage = () => {
   return (

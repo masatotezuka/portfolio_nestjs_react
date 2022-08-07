@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button } from '../../../../shared/parts/button/button';
-import { Header } from '../../../parts/header';
-
+import { Header } from '../../../../shared/layout/header';
 export const MailSettingConfirm = () => {
   const body = `{氏名}さま
 

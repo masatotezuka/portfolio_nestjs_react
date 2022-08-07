@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { Header } from '../../../parts/header';
+import { Header } from '../../../../shared/layout/header';
 import { LicenseForm } from './components/licenseForm';
 import { format } from 'date-fns';
 

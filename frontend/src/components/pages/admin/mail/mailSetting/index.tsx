@@ -4,8 +4,7 @@ import { Button } from '../../../../shared/parts/button/button';
 import { LabeledInputText } from '../../../../shared/parts/inputText/labeledInputText';
 import { SelectBox } from '../../../../shared/parts/selectBox/selectBox';
 import { LabeledTextarea } from '../../../../shared/parts/textarea/labeledTextarea';
-import { Header } from '../../../parts/header';
-
+import { Header } from '../../../../shared/layout/header';
 export const MailSettingPage = () => {
   const body = `{氏名}さま
 
