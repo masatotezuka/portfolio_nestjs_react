@@ -29,6 +29,7 @@ export class Organization {
   @OneToMany(
     () => OrganizationMailSetting,
     (organizationMailSetting) => organizationMailSetting.organization,
+    { cascade: true },
   )
   organizationMailSettings: OrganizationMailSetting[];
 }

@@ -63,18 +63,25 @@ export class User {
   @OneToMany(() => UserMachine, (userMachine) => userMachine.user)
   userMachines: UserMachine[];
 
-  @OneToMany(() => UserLicense, (userLicense) => userLicense.user)
+  @OneToMany(() => UserLicense, (userLicense) => userLicense.user, {
+    cascade: true,
+  })
   userLicenses: UserLicense[];
 
-  @OneToMany(() => LicenseHistory, (licenseHistory) => licenseHistory.user)
+  @OneToMany(() => LicenseHistory, (licenseHistory) => licenseHistory.user, {
+    cascade: true,
+  })
   licenseHistories: LicenseHistory[];
 
-  @OneToMany(() => MachineHistory, (machineHistory) => machineHistory.user)
+  @OneToMany(() => MachineHistory, (machineHistory) => machineHistory.user, {
+    cascade: true,
+  })
   machineHistories: MachineHistory[];
 
   @OneToMany(
     () => UserMonthlySurveyAnswer,
     (userMonthlySurveyAnswer) => userMonthlySurveyAnswer.user,
+    { cascade: true },
   )
   userMonthlySurveyAnswers: UserMonthlySurveyAnswer[];
 }
