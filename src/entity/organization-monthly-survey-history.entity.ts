@@ -32,6 +32,7 @@ export class OrganizationMonthlySurveyHistory {
     () => OrganizationMonthlySurveyCheck,
     (organizationMonthlySurveyCheck) =>
       organizationMonthlySurveyCheck.organizationMonthlySurveyHistory,
+    { cascade: true },
   )
   organizationMonthlySurveyChecks: OrganizationMonthlySurveyCheck[];
 

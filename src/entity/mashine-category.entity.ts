@@ -26,6 +26,8 @@ export class MachineCategory {
   @UpdateDateColumn({ type: 'timestamptz' })
   updateAt: Date;
 
-  @OneToMany(() => Machine, (machine) => machine.machineCategory)
+  @OneToMany(() => Machine, (machine) => machine.machineCategory, {
+    cascade: true,
+  })
   machines: Machine[];
 }

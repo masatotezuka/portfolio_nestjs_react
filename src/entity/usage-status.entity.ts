@@ -27,9 +27,9 @@ export class UsageStatus {
   @UpdateDateColumn({ type: 'timestamptz' })
   updateAt: Date;
 
-  @OneToMany(() => Machine, (machine) => machine.usageStatus)
+  @OneToMany(() => Machine, (machine) => machine.usageStatus, { cascade: true })
   machines: Machine[];
 
-  @OneToMany(() => License, (license) => license.usageStatus)
+  @OneToMany(() => License, (license) => license.usageStatus, { cascade: true })
   licenses: License[];
 }

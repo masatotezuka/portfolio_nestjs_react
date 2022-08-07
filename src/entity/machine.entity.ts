@@ -42,9 +42,13 @@ export class Machine {
   @UpdateDateColumn({ type: 'timestamptz' })
   updateAt: Date;
 
-  @OneToMany(() => UserMachine, (userMachine) => userMachine.machine)
+  @OneToMany(() => UserMachine, (userMachine) => userMachine.machine, {
+    cascade: true,
+  })
   userMachines: UserMachine[];
 
-  @OneToMany(() => MachineHistory, (machineHistory) => machineHistory.machine)
+  @OneToMany(() => MachineHistory, (machineHistory) => machineHistory.machine, {
+    cascade: true,
+  })
   machineHistories: MachineHistory[];
 }

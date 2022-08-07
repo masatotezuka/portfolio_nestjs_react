@@ -49,6 +49,7 @@ export class OrganizationMailSetting {
     () => OrganizationMonthlySurveyHistory,
     (organizationMonthlySurveyHistory) =>
       organizationMonthlySurveyHistory.organizationMailSetting,
+    { cascade: true },
   )
   organizationMonthlySurveyHistories: OrganizationMonthlySurveyHistory[];
 }

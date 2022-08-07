@@ -38,9 +38,13 @@ export class License {
   @UpdateDateColumn({ type: 'timestamptz' })
   updateAt: Date;
 
-  @OneToMany(() => UserLicense, (userLicense) => userLicense.license)
+  @OneToMany(() => UserLicense, (userLicense) => userLicense.license, {
+    cascade: true,
+  })
   userLicenses: UserLicense[];
 
-  @OneToMany(() => LicenseHistory, (licenseHistory) => licenseHistory.license)
+  @OneToMany(() => LicenseHistory, (licenseHistory) => licenseHistory.license, {
+    cascade: true,
+  })
   licenseHistories: LicenseHistory[];
 }
