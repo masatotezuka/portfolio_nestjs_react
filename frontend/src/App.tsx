@@ -15,6 +15,7 @@ import { EmployeeStatus } from './components/pages/admin/employeeStatus';
 import { UserLoginPage } from './components/pages/user/userLogin';
 import { UserRegisterPasswordPage } from './components/pages/user/userRegisterPassword';
 import { UserCheckStatusPage } from './components/pages/user/userCheckStatus';
+import { ChangePasswordPage } from './components/pages/admin/changePassword';
 
 export const App = () => {
   return (
@@ -29,6 +30,7 @@ export const App = () => {
         element={<RegisterEmployeePage />}
       ></Route>
       <Route path="/home" element={<HomePage />}></Route>
+
       <Route path="reset-password">
         <Route path="request" element={<RequestResetPasswordPage />}></Route>
         <Route path="confirm" element={<ConfirmResetPasswordPage />}></Route>
@@ -46,6 +48,7 @@ export const App = () => {
         <Route path="confirm" element={<MailSettingConfirm />}></Route>
       </Route>
       <Route path="status" element={<EmployeeStatus />}></Route>
+      <Route path="/password-change" element={<ChangePasswordPage />}></Route>
       <Route path="user">
         <Route path="login" element={<UserLoginPage />}></Route>
         <Route
