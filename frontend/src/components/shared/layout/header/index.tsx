@@ -6,7 +6,7 @@ export const Header = () => {
   return (
     <Wrapper>
       <Container>
-        <StyledLink to="/home">ホーム</StyledLink>
+        <StyledLink to="/admin">ホーム</StyledLink>
         <StyledButton>ログアウト</StyledButton>
       </Container>
     </Wrapper>

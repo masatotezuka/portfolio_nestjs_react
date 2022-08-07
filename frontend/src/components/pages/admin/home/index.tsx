@@ -9,19 +9,22 @@ export const HomePage = () => {
       <Header></Header>
       <Wrapper>
         <CardContainer>
-          <Card text="機器・ライセンス管理" path="/machine-license/list"></Card>
+          <Card
+            text="機器・ライセンス管理"
+            path="machine-license/list"
+          ></Card>
         </CardContainer>
         <CardContainer>
-          <Card text="メール設定" path="/mail/setting"></Card>
+          <Card text="メール設定" path="mail/setting"></Card>
         </CardContainer>
         <CardContainer>
-          <Card text="社員管理" path="/employee"></Card>
+          <Card text="社員管理" path="employee"></Card>
         </CardContainer>
         <CardContainer>
-          <Card text="更新状況" path="/status"></Card>
+          <Card text="更新状況" path="status"></Card>
         </CardContainer>
         <CardContainer>
-          <Card text="パスワードを変更する" path="/password-change"></Card>
+          <Card text="パスワードを変更する" path="password/change"></Card>
         </CardContainer>
       </Wrapper>
     </>
