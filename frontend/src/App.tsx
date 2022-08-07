@@ -16,6 +16,7 @@ import { UserLoginPage } from './components/pages/user/userLogin';
 import { UserRegisterPasswordPage } from './components/pages/user/userRegisterPassword';
 import { UserCheckStatusPage } from './components/pages/user/userCheckStatus';
 import { ChangePasswordPage } from './components/pages/admin/changePassword';
+import { NotFoundPage } from './components/shared/layout/notFound';
 
 export const App = () => {
   return (
@@ -59,6 +60,7 @@ export const App = () => {
         ></Route>
         <Route path="status/check" element={<UserCheckStatusPage />}></Route>
       </Route>
+      <Route path="*" element={<NotFoundPage />}></Route>
     </Routes>
   );
 };
