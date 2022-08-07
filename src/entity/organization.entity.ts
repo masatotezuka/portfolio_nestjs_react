@@ -5,12 +5,9 @@ import {
   DeleteDateColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
-  JoinColumn,
   OneToMany,
 } from 'typeorm';
 import { OrganizationMailSetting } from './organization-mail-setting.entity';
-import { User } from './user.entity';
 
 @Entity('organizations')
 export class Organization {
