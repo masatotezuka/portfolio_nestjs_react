@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Header } from '../../../parts/header';
+import { Header } from '../../../../shared/layout/header';
 import { Link } from 'react-router-dom';
 import { EmployeeList } from '../../../../shared/layout/employeeList';
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Card } from '../../../../shared/parts/card/card';
-import { Header } from '../../../parts/header';
+import { Header } from '../../../../shared/layout/header';
 import { Lists } from './components/lists';
 
 export const MachineAndLicenseListsPage = () => {
@@ -16,9 +16,15 @@ export const MachineAndLicenseListsPage = () => {
         <Lists handleToggleTabIndex={handleToggleTabIndex}></Lists>
         <CardContainer>
           {tabIndex === 0 ? (
-            <Card text="新規登録" path="/machine-license/machine/create"></Card>
+            <Card
+              text="新規登録"
+              path="/admin/machine-license/machine/create"
+            ></Card>
           ) : (
-            <Card text="新規登録" path="/machine-license/license/create"></Card>
+            <Card
+              text="新規登録"
+              path="/admin/machine-license/license/create"
+            ></Card>
           )}
         </CardContainer>
       </Container>

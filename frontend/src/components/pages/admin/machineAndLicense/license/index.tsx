@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { Header } from '../../../parts/header';
+import { Header } from '../../../../shared/layout/header';
 import { LicenseForm } from './components/licenseForm';
 import { format } from 'date-fns';
 
@@ -27,10 +27,10 @@ export const LicensePage = () => {
     <>
       <Header></Header>
       <Container>
-        {location.pathname === '/machine-license/license/create' && (
+        {location.pathname === '/admin/machine-license/license/create' && (
           <LicenseForm buttonText="登録" license={initLicense}></LicenseForm>
         )}
-        {location.pathname === '/machine-license/license/edit' && (
+        {location.pathname === '/admin/machine-license/license/edit' && (
           <LicenseForm buttonText="更新" license={license}></LicenseForm>
         )}
       </Container>

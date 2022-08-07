@@ -28,10 +28,10 @@ export const MachinePage = () => {
     <>
       <Header></Header>
       <Container>
-        {location.pathname === '/machine-license/machine/create' && (
+        {location.pathname === '/admin/machine-license/machine/create' && (
           <MachineForm buttonText="登録" machine={initMachine}></MachineForm>
         )}
-        {location.pathname === '/machine-license/machine/edit' && (
+        {location.pathname === '/admin/machine-license/machine/edit' && (
           <MachineForm buttonText="更新" machine={machine}></MachineForm>
         )}
       </Container>

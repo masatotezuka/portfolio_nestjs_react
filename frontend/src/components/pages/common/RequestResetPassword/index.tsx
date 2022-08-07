@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from '../../../../shared/parts/button/button';
-import { LabeledInputText } from '../../../../shared/parts/inputText/labeledInputText';
+import { Button } from '../../../shared/parts/button/button';
+import { LabeledInputText } from '../../../shared/parts/inputText/labeledInputText';
 
 export const RequestResetPasswordPage = () => {
   return (
