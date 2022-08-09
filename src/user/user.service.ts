@@ -1,7 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Organization } from 'src/entity/organization.entity';
 import { User } from 'src/entity/user.entity';
+import { Organization } from 'src/entity/organization.entity';
 import { Repository } from 'typeorm';
 import { CreateAdminDto } from './user.dto';
 import * as bcrypt from 'bcrypt';
@@ -29,8 +29,8 @@ export class UserService {
     if (result) {
       throw new HttpException('user already exists', HttpStatus.BAD_REQUEST);
     }
-
-    const hashPassword = bcrypt.hashSync(password, 10);
+    const salt = await bcrypt.genSalt();
+    const hashPassword = bcrypt.hashSync(password, salt);
 
     const user = this.userRepository.create({
       firstName: firstName,
@@ -43,8 +43,13 @@ export class UserService {
     const organization = this.organizationRepository.create({
       name: organizationName,
     });
+
     user.organization = organization;
     await this.organizationRepository.save(organization);
     await this.userRepository.save(user);
+  }
+
+  async findOne(email: string): Promise<User | undefined> {
+    return this.userRepository.findOne({ where: { email: email } });
   }
 }
