@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Button } from '../../../shared/parts/button/button';
 import { login } from '../../../../features/api';
 import { useCookies, Cookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 type Inputs = {
   email: string;
   password: string;
@@ -17,12 +18,11 @@ export const LoginPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-  const cookies = new Cookies();
-  console.log(cookies.get('token'));
-
+  const navigator = useNavigate();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const result = await login(data);
     setCookie('token', result.data.accessToken);
+    navigator('/admin');
   };
   return (
     <Container>
