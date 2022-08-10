@@ -1,7 +1,9 @@
 import {
+  Container,
   StyledInputContainer,
   StyledInputText,
   StyledLabel,
+  ErrorMessage,
 } from './styledLabeledInputText';
 
 type Props = {
@@ -13,6 +15,7 @@ type Props = {
   value?: string;
   required?: boolean;
   register?: Object;
+  errors?: string;
   list?: string;
   placeholder?: string;
 };
@@ -20,20 +23,31 @@ type Props = {
 export const LabeledInputText = (props: Props) => {
   return (
     <>
-      <StyledInputContainer>
-        <StyledLabel htmlFor={props.forName} width={props.labelWidth}>
-          {props.text}
-        </StyledLabel>
-        <StyledInputText
-          id={props.forName}
-          value={props.value}
-          type={props.type}
-          {...props.register}
-          width={props.inputWidth}
-          list={props.list}
-          placeholder={props.placeholder}
-        ></StyledInputText>
-      </StyledInputContainer>
+      <Container>
+        <StyledInputContainer>
+          <StyledLabel htmlFor={props.forName} width={props.labelWidth}>
+            {props.text}
+          </StyledLabel>
+          <StyledInputText
+            id={props.forName}
+            value={props.value}
+            type={props.type}
+            {...props.register}
+            width={props.inputWidth}
+            list={props.list}
+            placeholder={props.placeholder}
+            {...props.register}
+          ></StyledInputText>
+        </StyledInputContainer>
+        {props.errors === 'required' && (
+          <ErrorMessage>文字を入力して下さい</ErrorMessage>
+        )}
+        {props.errors === 'pattern' && (
+          <ErrorMessage>
+            英数字（大文字/小文字）8〜16字で入力して下さい
+          </ErrorMessage>
+        )}
+      </Container>
     </>
   );
 };

@@ -27,12 +27,12 @@ export const App = () => {
         <Route path="confirm" element={<ConfirmResetPasswordPage />}></Route>
       </Route>
       <Route path="admin">
+        <Route path="" element={<HomePage />}></Route>
         <Route path="create" element={<RegisterOrganizationPage />}></Route>
         <Route
           path="employee/create"
           element={<RegisterEmployeePage />}
         ></Route>
-        <Route path="" element={<HomePage />}></Route>
         <Route path="machine-license">
           <Route path="list" element={<MachineAndLicenseListsPage />}></Route>
           <Route path="machine">
