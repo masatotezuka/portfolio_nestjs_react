@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Button } from '../../../../shared/parts/button/button';
 import { LabeledInputText } from '../../../../shared/parts/inputText/labeledInputText';
 import { Admin } from '../../../../../features/types';
-import { createAdmin } from '../../../../../features/api';
+import { signUp } from '../../../../../features/api';
 import { useNavigate } from 'react-router-dom';
 import { useCookie } from '../../../../../hooks/useCookie';
 
@@ -17,7 +17,7 @@ export const RegisterOrganizationPage = () => {
   const { setAccessToken } = useCookie();
 
   const onSubmit: SubmitHandler<Admin> = async (data) => {
-    const token = await createAdmin(data);
+    const token = await signUp(data);
     setAccessToken(token);
     navigate('/admin');
   };

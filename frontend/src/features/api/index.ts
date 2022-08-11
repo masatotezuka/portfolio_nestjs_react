@@ -8,7 +8,7 @@ export const login = async (data: Login) => {
   return response.data.accessToken;
 };
 
-export const createAdmin = async (data: Admin) => {
+export const signUp = async (data: Admin) => {
   const response = await axios.post(
     `http://localhost:8000/user/create/admin`,
     data,
