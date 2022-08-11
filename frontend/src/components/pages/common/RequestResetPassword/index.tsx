@@ -1,23 +1,57 @@
-import React from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
 import { Button } from '../../../shared/parts/button/button';
 import { LabeledInputText } from '../../../shared/parts/inputText/labeledInputText';
+import { RequestResetPassword } from '../../../../features/types';
+import { requestResetPassword } from '../../../../features/api';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { ConfirmResetPasswordPage } from '../confirmResetPassword';
 
 export const RequestResetPasswordPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RequestResetPassword>();
+  const navigate = useNavigate();
+  const [userEmail, setEmail] = useState<string>('');
+  const onSubmit: SubmitHandler<RequestResetPassword> = async (data) => {
+    await requestResetPassword(data);
+    setEmail(data.email);
+    navigate('/');
+  };
+
   return (
-    <Container>
-      <Text>メールアドレスを入力してください</Text>
-      <LabeledInputText
-        type="email"
-        text="メールアドレス"
-        forName="reset_password_email"
-        inputWidth="300px"
-        labelWidth="120px"
-      ></LabeledInputText>
-      <ButtonWrapper>
-        <Button text="パスワードをリセット"></Button>
-      </ButtonWrapper>
-    </Container>
+    <>
+      {!userEmail ? (
+        <>
+          <Container>
+            <Text>メールアドレスを入力してください</Text>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <LabeledInputText
+                type="email"
+                text="メールアドレス"
+                forName="reset_password_email"
+                inputWidth="300px"
+                labelWidth="120px"
+                register={register('email', { required: true })}
+                errors={errors.email?.type}
+              ></LabeledInputText>
+              <ButtonWrapper>
+                <Button text="パスワードをリセット"></Button>
+              </ButtonWrapper>
+            </form>
+          </Container>
+        </>
+      ) : (
+        <>
+          <ConfirmResetPasswordPage
+            userEmail={userEmail}
+          ></ConfirmResetPasswordPage>
+        </>
+      )}
+    </>
   );
 };
 

@@ -5,7 +5,6 @@ import { LoginPage } from './components/pages/admin/login';
 import { LicensePage } from './components/pages/admin/machineAndLicense/license';
 import { MachinePage } from './components/pages/admin/machineAndLicense/machine';
 import { MachineAndLicenseListsPage } from './components/pages/admin/machineAndLicense/machineAndLicenseLists';
-import { ConfirmResetPasswordPage } from './components/pages/common/confirmResetPassword';
 import { RequestResetPasswordPage } from './components/pages/common/RequestResetPassword';
 import { RegisterOrganizationPage } from './components/pages/admin/initSetting/registerOrganization';
 import { EmployeePage } from './components/pages/admin/employee';
@@ -24,7 +23,6 @@ export const App = () => {
       <Route path="/" element={<LoginPage />}></Route>
       <Route path="reset-password">
         <Route path="request" element={<RequestResetPasswordPage />}></Route>
-        <Route path="confirm" element={<ConfirmResetPasswordPage />}></Route>
       </Route>
       <Route path="admin">
         <Route path="" element={<HomePage />}></Route>

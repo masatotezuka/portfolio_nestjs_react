@@ -10,3 +10,7 @@ export type Admin = {
   password: string;
   organizationName: string;
 };
+
+export type RequestResetPassword = {
+  email: string;
+};
