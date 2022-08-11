@@ -1,11 +1,15 @@
 import { useCookies } from 'react-cookie';
 
 export const useCookie = () => {
-  const [cookie, setCookie] = useCookies(['accessToken']);
+  const [cookie, setCookie, removeCookie] = useCookies(['accessToken']);
 
   const setAccessToken = (accessToken: string) => {
     setCookie('accessToken', accessToken);
   };
 
-  return { cookie, setAccessToken };
+  const removeAccessToken = () => {
+    removeCookie('accessToken');
+  };
+
+  return { cookie, setAccessToken, removeAccessToken };
 };
