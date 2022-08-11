@@ -1,16 +1,26 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  forwardRef,
+  Inject,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { Organization } from 'src/entity/organization.entity';
 import { Repository } from 'typeorm';
 import { CreateAdminDto } from './user.dto';
 import * as bcrypt from 'bcrypt';
+import { AuthService } from 'src/auth/auth.service';
+
 @Injectable()
 export class UserService {
   constructor(
+    @Inject(forwardRef(() => AuthService))
+    private readonly authService: AuthService,
+
     @InjectRepository(User)
     private userRepository: Repository<User>,
-
     @InjectRepository(Organization)
     private organizationRepository: Repository<Organization>,
   ) {}
@@ -47,6 +57,8 @@ export class UserService {
     user.organization = organization;
     await this.organizationRepository.save(organization);
     await this.userRepository.save(user);
+
+    return this.authService.login({ email, password });
   }
 
   async findOne(email: string): Promise<User | undefined> {
