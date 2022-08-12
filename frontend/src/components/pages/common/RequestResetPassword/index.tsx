@@ -2,8 +2,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
 import { Button } from '../../../shared/parts/button/button';
 import { LabeledInputText } from '../../../shared/parts/inputText/labeledInputText';
-import { RequestResetPassword } from '../../../../features/types';
-import { requestResetPassword } from '../../../../features/api';
+import { RequestPasswordReset } from '../../../../features/types';
+import { requestPasswordReset } from '../../../../features/api';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { ConfirmResetPasswordPage } from '../confirmResetPassword';
@@ -13,13 +13,12 @@ export const RequestResetPasswordPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RequestResetPassword>();
+  } = useForm<RequestPasswordReset>();
   const navigate = useNavigate();
   const [userEmail, setEmail] = useState<string>('');
-  const onSubmit: SubmitHandler<RequestResetPassword> = async (data) => {
-    await requestResetPassword(data);
+  const onSubmit: SubmitHandler<RequestPasswordReset> = async (data) => {
+    await requestPasswordReset(data);
     setEmail(data.email);
-    navigate('/');
   };
 
   return (

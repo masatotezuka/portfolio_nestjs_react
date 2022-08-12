@@ -11,6 +11,6 @@ export type Admin = {
   organizationName: string;
 };
 
-export type RequestResetPassword = {
+export type RequestPasswordReset = {
   email: string;
 };

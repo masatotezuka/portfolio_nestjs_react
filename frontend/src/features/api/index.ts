@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Login, Admin, RequestResetPassword } from '../types';
+import { Login, Admin, RequestPasswordReset } from '../types';
 
 axios.defaults.withCredentials = true;
 
@@ -16,7 +16,7 @@ export const signUp = async (data: Admin) => {
   return response.data.accessToken;
 };
 
-export const requestResetPassword = async (data: RequestResetPassword) => {
-  await axios.post(`http://localhost:8000/user/reset-password/request`, data);
+export const requestPasswordReset = async (data: RequestPasswordReset) => {
+  await axios.post(`http://localhost:8000/user/password-reset/request`, data);
   return;
 };
