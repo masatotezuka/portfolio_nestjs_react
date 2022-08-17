@@ -1,17 +1,16 @@
-import React from 'react';
 import styled from 'styled-components';
 
-export const ConfirmResetPasswordPage = () => {
+export const ConfirmPasswordReset = ({ userEmail }: { userEmail: string }) => {
   return (
     <>
       <TextContainer>
         <Text>
-          手塚　真斗様 下記のアドレスにメールの送信が完了しました。
+          下記のアドレスにメールの送信が完了しました。
           <br />
           <br />
-          XXXX@gmail.com <br />
+          {userEmail} <br />
           <br />
-          メールにしたがって、12時間以内にパスワードを設定してください。
+          メールにしたがって、1時間以内にパスワードを設定してください。
           <br />
           メールが届かない場合には、メールボックスをご確認いただくか、
           <br />

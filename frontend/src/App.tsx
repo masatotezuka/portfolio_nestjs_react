@@ -5,8 +5,7 @@ import { LoginPage } from './components/pages/admin/login';
 import { LicensePage } from './components/pages/admin/machineAndLicense/license';
 import { MachinePage } from './components/pages/admin/machineAndLicense/machine';
 import { MachineAndLicenseListsPage } from './components/pages/admin/machineAndLicense/machineAndLicenseLists';
-import { ConfirmResetPasswordPage } from './components/pages/common/confirmResetPassword';
-import { RequestResetPasswordPage } from './components/pages/common/RequestResetPassword';
+import { RequestResetPasswordPage } from './components/pages/common/requestPasswordReset';
 import { RegisterOrganizationPage } from './components/pages/admin/initSetting/registerOrganization';
 import { EmployeePage } from './components/pages/admin/employee';
 import { MailSettingPage } from './components/pages/admin/mail/mailSetting';
@@ -17,14 +16,18 @@ import { UserRegisterPasswordPage } from './components/pages/user/userRegisterPa
 import { UserCheckStatusPage } from './components/pages/user/userCheckStatus';
 import { ChangePasswordPage } from './components/pages/admin/changePassword';
 import { NotFoundPage } from './components/shared/layout/notFound';
+import { VerifyPasswordPage } from './components/pages/common/verifyPassword';
 
 export const App = () => {
   return (
     <Routes>
       <Route path="/" element={<LoginPage />}></Route>
-      <Route path="reset-password">
+      <Route path="password-reset">
         <Route path="request" element={<RequestResetPasswordPage />}></Route>
-        <Route path="confirm" element={<ConfirmResetPasswordPage />}></Route>
+        <Route
+          path="verification/:token"
+          element={<VerifyPasswordPage />}
+        ></Route>
       </Route>
       <Route path="admin">
         <Route path="" element={<HomePage />}></Route>
