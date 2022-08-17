@@ -5,10 +5,7 @@ import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
-  constructor(
-    private readonly userService: UserService,
-    private authService: AuthService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
   @Post('create/admin')
   async create(
     @Body() createAdminDto: CreateAdminDto,
