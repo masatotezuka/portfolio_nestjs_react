@@ -89,7 +89,7 @@ export class UserService {
     user.verificationTokenExpiredAt = verificationTokenExpiredAt;
     await this.userRepository.save(user);
 
-    const verificationTokenUrl = `http://localhost:3000/verification-password/${
+    const verificationTokenUrl = `http://localhost:3000/password-reset/verification/${
       user.verificationToken
     }-${format(verificationTokenExpiredAt, 'yyyy-MM-dd')}`;
 

@@ -59,7 +59,7 @@ export const LoginPage = () => {
       <CardsWrapper>
         <CardContainer>
           <Card
-            path="/reset-password/request"
+            path="/password-reset/request"
             text="パスワードを変更する"
           ></Card>
         </CardContainer>

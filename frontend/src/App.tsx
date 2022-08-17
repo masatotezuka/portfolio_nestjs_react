@@ -16,13 +16,18 @@ import { UserRegisterPasswordPage } from './components/pages/user/userRegisterPa
 import { UserCheckStatusPage } from './components/pages/user/userCheckStatus';
 import { ChangePasswordPage } from './components/pages/admin/changePassword';
 import { NotFoundPage } from './components/shared/layout/notFound';
+import { VerificationPasswordPage } from './components/pages/common/verificationPassword/indes';
 
 export const App = () => {
   return (
     <Routes>
       <Route path="/" element={<LoginPage />}></Route>
-      <Route path="reset-password">
+      <Route path="password-reset">
         <Route path="request" element={<RequestResetPasswordPage />}></Route>
+        <Route
+          path="verification"
+          element={<VerificationPasswordPage />}
+        ></Route>
       </Route>
       <Route path="admin">
         <Route path="" element={<HomePage />}></Route>
