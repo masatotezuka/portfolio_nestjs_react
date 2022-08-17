@@ -14,6 +14,9 @@ import * as bcrypt from 'bcrypt';
 import { AuthService } from 'src/auth/auth.service';
 import { v4 as uuid } from 'uuid';
 import { format, addHours } from 'date-fns';
+import { SendgridEmitter } from 'src/sendgrid/sendgrid.emitter';
+import { OnEvent } from '@nestjs/event-emitter';
+import { ResetPassword } from 'src/sendgrid/mails/resetPassword.mail';
 
 @Injectable()
 export class UserService {
@@ -25,6 +28,8 @@ export class UserService {
     private userRepository: Repository<User>,
     @InjectRepository(Organization)
     private organizationRepository: Repository<Organization>,
+
+    private sendgrid: SendgridEmitter,
   ) {}
   async createAdmin(createAdminDto: CreateAdminDto) {
     const { firstName, lastName, email, password, organizationName } =
@@ -81,14 +86,23 @@ export class UserService {
 
     const verificationTokenExpiredAt = addHours(new Date(), 1);
 
-    const token = `${uuid()}-${format(
-      verificationTokenExpiredAt,
-      'yyyy-MM-dd',
-    )}`;
-
-    user.verificationToken = token;
+    user.verificationToken = uuid();
     user.verificationTokenExpiredAt = verificationTokenExpiredAt;
     await this.userRepository.save(user);
-    //メール送信
+    
+    const verificationTokenUrl = `http://localhost:8000/${
+      user.verificationToken
+    }-${format(verificationTokenExpiredAt, 'yyyy-MM-dd')}`;
+
+    this.sendgrid.sendResetPassword(
+      user.email,
+      'tez.0731.mst@gmail.com',
+      verificationTokenUrl,
+    );
+  }
+
+  @OnEvent(ResetPassword.type)
+  sendMail(msg: ResetPassword) {
+    console.log('reset');
   }
 }
