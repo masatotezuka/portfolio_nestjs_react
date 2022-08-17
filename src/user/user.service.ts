@@ -13,7 +13,7 @@ import { CreateAdminDto } from './user.dto';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from 'src/auth/auth.service';
 import { v4 as uuid } from 'uuid';
-import { format, addHours } from 'date-fns';
+import { addHours } from 'date-fns';
 import { SendgridEmitter } from 'src/sendgrid/sendgrid.emitter';
 import { OnEvent } from '@nestjs/event-emitter';
 import { ResetPassword } from 'src/sendgrid/mails/resetPassword.mail';
@@ -31,6 +31,7 @@ export class UserService {
 
     private sendgrid: SendgridEmitter,
   ) {}
+
   async createAdmin(createAdminDto: CreateAdminDto) {
     const { firstName, lastName, email, password, organizationName } =
       createAdminDto;
@@ -67,6 +68,7 @@ export class UserService {
 
     return this.authService.login({ email, password });
   }
+  
   async findOne(email: string): Promise<User | undefined> {
     return this.userRepository.findOne({ where: { email: email } });
   }
@@ -75,7 +77,6 @@ export class UserService {
     if (!email) {
       throw new HttpException('invalid value', HttpStatus.BAD_REQUEST);
     }
-    console.log(email);
 
     const user = await this.findOne(email);
 
@@ -89,9 +90,7 @@ export class UserService {
     user.verificationTokenExpiredAt = verificationTokenExpiredAt;
     await this.userRepository.save(user);
 
-    const verificationTokenUrl = `http://localhost:3000/password-reset/verification/${
-      user.verificationToken
-    }-${format(verificationTokenExpiredAt, 'yyyy-MM-dd')}`;
+    const verificationTokenUrl = `http://localhost:3000/password-reset/verification/${user.verificationToken}`;
 
     this.sendgrid.sendResetPassword(
       user.email,
@@ -102,7 +101,5 @@ export class UserService {
   }
 
   @OnEvent(ResetPassword.type)
-  sendMail(msg: ResetPassword) {
-    console.log('reset');
-  }
+  sendMail(msg: ResetPassword) {}
 }
