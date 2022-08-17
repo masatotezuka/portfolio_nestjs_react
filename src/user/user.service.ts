@@ -78,7 +78,6 @@ export class UserService {
     console.log(email);
 
     const user = await this.findOne(email);
-    console.log(user);
 
     if (!user) {
       throw new HttpException('not found user', HttpStatus.NOT_FOUND);
@@ -89,7 +88,7 @@ export class UserService {
     user.verificationToken = uuid();
     user.verificationTokenExpiredAt = verificationTokenExpiredAt;
     await this.userRepository.save(user);
-    
+
     const verificationTokenUrl = `http://localhost:8000/${
       user.verificationToken
     }-${format(verificationTokenExpiredAt, 'yyyy-MM-dd')}`;
@@ -99,6 +98,7 @@ export class UserService {
       'tez.0731.mst@gmail.com',
       verificationTokenUrl,
     );
+    return;
   }
 
   @OnEvent(ResetPassword.type)

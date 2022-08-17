@@ -10,12 +10,14 @@ export class UserController {
     private authService: AuthService,
   ) {}
   @Post('create/admin')
-  async create(@Body() createAdminDto: CreateAdminDto) {
+  async create(
+    @Body() createAdminDto: CreateAdminDto,
+  ): Promise<{ accessToken: string }> {
     return await this.userService.createAdmin(createAdminDto);
   }
 
   @Post('password-reset/request')
-  async resetPassword(@Body() data: { email: string }) {
+  async resetPassword(@Body() data: { email: string }): Promise<void> {
     this.userService.createVerificationToken(data.email);
     return;
   }
