@@ -16,10 +16,14 @@ export const VerifyPasswordPage = () => {
   const { token } = useParams();
 
   const onSubmit: SubmitHandler<VerifyPassword> = async (data) => {
-    const patchData = { ...data, token: token };
-    await verifyPassword(patchData);
-    window.alert('パスワードがリセットされました。');
-    reset();
+    try {
+      const patchData = { ...data, token: token };
+      await verifyPassword(patchData);
+      window.alert('パスワードがリセットされました。');
+      reset();
+    } catch (error) {
+      window.alert('パスワードがリセットできませんでした。');
+    }
   };
 
   return (
@@ -28,7 +32,7 @@ export const VerifyPasswordPage = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <LabeledInputTextContainer>
             <LabeledInputText
-              type="text"
+              type="password"
               text="新しいパスワード"
               forName="new_password"
               inputWidth="300px"
@@ -43,7 +47,7 @@ export const VerifyPasswordPage = () => {
           </LabeledInputTextContainer>
           <LabeledInputTextContainer>
             <LabeledInputText
-              type="text"
+              type="password"
               text="パスワード（確認用）"
               forName="confirm_password"
               inputWidth="300px"
