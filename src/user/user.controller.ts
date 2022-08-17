@@ -2,10 +2,10 @@ import { Body, Controller, Post, Patch, Put } from '@nestjs/common';
 import { CreateAdminDto, VerifyPasswordDto } from './user.dto';
 import { UserService } from './user.service';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  @Post('create/admin')
+  @Post('admin')
   async create(
     @Body() createAdminDto: CreateAdminDto,
   ): Promise<{ accessToken: string }> {
@@ -14,14 +14,13 @@ export class UserController {
 
   @Put('password-reset/request')
   async resetPassword(@Body() data: { email: string }): Promise<void> {
-    this.userService.createVerificationToken(data.email);
-    return;
+    return await this.userService.createVerificationToken(data.email);
   }
 
   @Patch('password-reset/verification')
   async verificationPassword(
     @Body() verifyPasswordDto: VerifyPasswordDto,
   ): Promise<void> {
-    return this.userService.verifyPassword(verifyPasswordDto);
+    return await this.userService.verifyPassword(verifyPasswordDto);
   }
 }
