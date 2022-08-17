@@ -9,21 +9,19 @@ export const login = async (data: Login) => {
 };
 
 export const signUp = async (data: Admin) => {
-  const response = await axios.post(
-    `http://localhost:8000/users/admin`,
-    data,
-  );
+  const response = await axios.post(`http://localhost:8000/users/admin`, data);
   return response.data.accessToken;
 };
 
-//TODO:PUTにする
 export const requestPasswordReset = async (data: RequestPasswordReset) => {
-  await axios.put(`http://localhost:8000/users/password-reset/request`, data);
-  return;
+  return await axios.put(
+    `http://localhost:8000/users/password-reset/request`,
+    data,
+  );
 };
 
 export const verifyPassword = async (data: VerifyPassword) => {
-  await axios.patch(
+  return await axios.patch(
     `http://localhost:8000/users/password-reset/verification`,
     data,
   );
