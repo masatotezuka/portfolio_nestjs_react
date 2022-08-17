@@ -5,7 +5,7 @@ import { LabeledInputText } from '../../../shared/parts/inputText/labeledInputTe
 import { RequestPasswordReset } from '../../../../features/types';
 import { requestPasswordReset } from '../../../../features/api';
 import { useState } from 'react';
-import { ConfirmResetPasswordPage } from '../confirmResetPassword';
+import { ConfirmPasswordReset } from './components/confirmPasswordReset';
 
 export const RequestResetPasswordPage = () => {
   const {
@@ -43,9 +43,7 @@ export const RequestResetPasswordPage = () => {
         </>
       ) : (
         <>
-          <ConfirmResetPasswordPage
-            userEmail={userEmail}
-          ></ConfirmResetPasswordPage>
+          <ConfirmPasswordReset userEmail={userEmail}></ConfirmPasswordReset>
         </>
       )}
     </>

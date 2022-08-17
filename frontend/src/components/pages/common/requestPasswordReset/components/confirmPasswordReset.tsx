@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 
-export const ConfirmResetPasswordPage = ({
-  userEmail,
-}: {
-  userEmail: string;
-}) => {
+export const ConfirmPasswordReset = ({ userEmail }: { userEmail: string }) => {
   return (
     <>
       <TextContainer>
