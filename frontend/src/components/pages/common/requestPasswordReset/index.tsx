@@ -4,7 +4,6 @@ import { Button } from '../../../shared/parts/button/button';
 import { LabeledInputText } from '../../../shared/parts/inputText/labeledInputText';
 import { RequestPasswordReset } from '../../../../features/types';
 import { requestPasswordReset } from '../../../../features/api';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { ConfirmResetPasswordPage } from '../confirmResetPassword';
 
@@ -14,7 +13,6 @@ export const RequestResetPasswordPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<RequestPasswordReset>();
-  const navigate = useNavigate();
   const [userEmail, setEmail] = useState<string>('');
   const onSubmit: SubmitHandler<RequestPasswordReset> = async (data) => {
     await requestPasswordReset(data);
@@ -69,7 +67,7 @@ const Container = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  margin-top: 70px;
+  margin: 70px auto;
   height: 60px;
   width: 200px;
 `;
