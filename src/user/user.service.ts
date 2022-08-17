@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { Organization } from 'src/entity/organization.entity';
 import { Repository } from 'typeorm';
-import { CreateAdminDto } from './user.dto';
+import { CreateAdminDto, VerifyPasswordDto } from './user.dto';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from 'src/auth/auth.service';
 import { v4 as uuid } from 'uuid';
@@ -68,7 +68,7 @@ export class UserService {
 
     return this.authService.login({ email, password });
   }
-  
+
   async findOne(email: string): Promise<User | undefined> {
     return this.userRepository.findOne({ where: { email: email } });
   }
@@ -102,4 +102,28 @@ export class UserService {
 
   @OnEvent(ResetPassword.type)
   sendMail(msg: ResetPassword) {}
+
+  async verifyPassword(verifyPasswordDto: VerifyPasswordDto) {
+    const user = await this.userRepository.findOne({
+      where: {
+        verificationToken: verifyPasswordDto.token,
+      },
+    });
+    if (!user) {
+      throw new HttpException('not found user', HttpStatus.NOT_FOUND);
+    }
+
+    if (user.verificationTokenExpiredAt < new Date()) {
+      throw new HttpException('not acceptable', HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    const salt = await bcrypt.genSalt();
+    const hashPassword = bcrypt.hashSync(verifyPasswordDto.newPassword, salt);
+
+    user.verificationToken = null;
+    user.verificationTokenExpiredAt = null;
+    user.password = hashPassword;
+    await this.userRepository.save(user);
+    return;
+  }
 }

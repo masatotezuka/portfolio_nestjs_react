@@ -14,3 +14,9 @@ export type Admin = {
 export type RequestPasswordReset = {
   email: string;
 };
+
+export type VerifyPassword = {
+  newPassword: string;
+  confirmPassword: string;
+  token?: string;
+};

@@ -1,6 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { AuthService } from 'src/auth/auth.service';
-import { CreateAdminDto } from './user.dto';
+import { Body, Controller, Patch, Post } from '@nestjs/common';
+import { CreateAdminDto, VerifyPasswordDto } from './user.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -17,5 +16,12 @@ export class UserController {
   async resetPassword(@Body() data: { email: string }): Promise<void> {
     this.userService.createVerificationToken(data.email);
     return;
+  }
+
+  @Patch('password-reset/verification')
+  async verificationPassword(
+    @Body() verifyPasswordDto: VerifyPasswordDto,
+  ): Promise<void> {
+    return this.userService.verifyPassword(verifyPasswordDto);
   }
 }
