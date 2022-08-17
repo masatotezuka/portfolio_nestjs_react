@@ -1,4 +1,4 @@
-import { Body, Controller, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Post, Patch, Put } from '@nestjs/common';
 import { CreateAdminDto, VerifyPasswordDto } from './user.dto';
 import { UserService } from './user.service';
 
@@ -12,7 +12,7 @@ export class UserController {
     return await this.userService.createAdmin(createAdminDto);
   }
 
-  @Post('password-reset/request')
+  @Put('password-reset/request')
   async resetPassword(@Body() data: { email: string }): Promise<void> {
     this.userService.createVerificationToken(data.email);
     return;

@@ -18,7 +18,7 @@ export const signUp = async (data: Admin) => {
 
 //TODO:PUTにする
 export const requestPasswordReset = async (data: RequestPasswordReset) => {
-  await axios.post(`http://localhost:8000/user/password-reset/request`, data);
+  await axios.put(`http://localhost:8000/user/password-reset/request`, data);
   return;
 };
 
