@@ -28,7 +28,7 @@ export const VerifyPasswordPage = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <LabeledInputTextContainer>
             <LabeledInputText
-              type="text"
+              type="password"
               text="新しいパスワード"
               forName="new_password"
               inputWidth="300px"
@@ -43,7 +43,7 @@ export const VerifyPasswordPage = () => {
           </LabeledInputTextContainer>
           <LabeledInputTextContainer>
             <LabeledInputText
-              type="text"
+              type="password"
               text="パスワード（確認用）"
               forName="confirm_password"
               inputWidth="300px"
