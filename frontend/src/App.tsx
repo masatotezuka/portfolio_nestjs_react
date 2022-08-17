@@ -5,7 +5,7 @@ import { LoginPage } from './components/pages/admin/login';
 import { LicensePage } from './components/pages/admin/machineAndLicense/license';
 import { MachinePage } from './components/pages/admin/machineAndLicense/machine';
 import { MachineAndLicenseListsPage } from './components/pages/admin/machineAndLicense/machineAndLicenseLists';
-import { RequestResetPasswordPage } from './components/pages/common/RequestResetPassword';
+import { RequestResetPasswordPage } from './components/pages/common/requestPasswordReset';
 import { RegisterOrganizationPage } from './components/pages/admin/initSetting/registerOrganization';
 import { EmployeePage } from './components/pages/admin/employee';
 import { MailSettingPage } from './components/pages/admin/mail/mailSetting';
