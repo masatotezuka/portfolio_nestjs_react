@@ -1,10 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { RegisterEmployeePage } from './components/pages/admin/initSetting/registerEmployee';
 import { HomePage } from './components/pages/admin//home';
 import { LicensePage } from './components/pages/admin/machineAndLicense/license';
 import { MachinePage } from './components/pages/admin/machineAndLicense/machine';
 import { MachineAndLicenseListsPage } from './components/pages/admin/machineAndLicense/machineAndLicenseLists';
-import { RegisterOrganizationPage } from './components/pages/admin/initSetting/registerOrganization';
 import { EmployeePage } from './components/pages/admin/employee';
 import { MailSettingPage } from './components/pages/admin/mail/mailSetting';
 import { MailSettingConfirm } from './components/pages/admin/mail/mailSettingConfirm';
@@ -23,11 +21,6 @@ export const AuthRooter = () => {
         <>
           <Routes>
             <Route path="/" element={<HomePage />}></Route>
-            <Route path="create" element={<RegisterOrganizationPage />}></Route>
-            <Route
-              path="employee/create"
-              element={<RegisterEmployeePage />}
-            ></Route>
             <Route path="/machine-license">
               <Route
                 path="list"
