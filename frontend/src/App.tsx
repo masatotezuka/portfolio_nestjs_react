@@ -6,17 +6,33 @@ import { UserRegisterPasswordPage } from './components/pages/user/userRegisterPa
 import { UserCheckStatusPage } from './components/pages/user/userCheckStatus';
 import { NotFoundPage } from './components/shared/layout/notFound';
 import { VerifyPasswordPage } from './components/pages/common/verifyPassword';
-import { AuthRooter } from './rooter';
+import { AuthRooter, NoAuthRouter } from './rooter';
 
 export const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<LoginPage />}></Route>
+      <Route
+        path="/"
+        element={
+          <NoAuthRouter childrenComponent={<LoginPage />}></NoAuthRouter>
+        }
+      ></Route>
       <Route path="password-reset">
-        <Route path="request" element={<RequestResetPasswordPage />}></Route>
+        <Route
+          path="request"
+          element={
+            <NoAuthRouter
+              childrenComponent={<RequestResetPasswordPage />}
+            ></NoAuthRouter>
+          }
+        ></Route>
         <Route
           path="verification/:token"
-          element={<VerifyPasswordPage />}
+          element={
+            <NoAuthRouter
+              childrenComponent={<VerifyPasswordPage />}
+            ></NoAuthRouter>
+          }
         ></Route>
       </Route>
       <Route path="admin/*" element={<AuthRooter />}></Route>
@@ -30,7 +46,6 @@ export const App = () => {
         <Route path="status/check" element={<UserCheckStatusPage />}></Route>
       </Route>
       <Route path="*" element={<NotFoundPage />}></Route>
-      <Route path="/" element={<LoginPage />}></Route>
     </Routes>
   );
 };

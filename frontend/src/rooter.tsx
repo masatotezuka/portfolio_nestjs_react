@@ -62,3 +62,21 @@ export const AuthRooter = () => {
     </>
   );
 };
+
+export const NoAuthRouter = ({
+  childrenComponent,
+}: {
+  childrenComponent: React.ReactElement;
+}) => {
+  const { check } = useAuth();
+
+  if (!check.checked) {
+    return <div>loading...</div>;
+  }
+
+  if (check.isAuthenticated) {
+    return <Navigate to={'/admin'}></Navigate>;
+  }
+
+  return <>{childrenComponent}</>;
+};
