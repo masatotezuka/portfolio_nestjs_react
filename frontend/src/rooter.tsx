@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { RegisterEmployeePage } from './components/pages/admin/initSetting/registerEmployee';
 import { HomePage } from './components/pages/admin//home';
 import { LicensePage } from './components/pages/admin/machineAndLicense/license';
