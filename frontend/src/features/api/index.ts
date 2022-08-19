@@ -26,3 +26,19 @@ export const verifyPassword = async (data: VerifyPassword) => {
     data,
   );
 };
+
+export const verifyAccessToken = async (token: string) => {
+  try {
+    const response = await axios.get(
+      'http://localhost:8000/auth/verification',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.statusText;
+  } catch (error) {
+    return error;
+  }
+};

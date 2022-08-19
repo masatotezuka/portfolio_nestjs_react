@@ -18,7 +18,7 @@ export class UserController {
   }
 
   @Patch('password-reset/verification')
-  async verificationPassword(
+  async verifyPassword(
     @Body() verifyPasswordDto: VerifyPasswordDto,
   ): Promise<void> {
     return await this.userService.verifyPassword(verifyPasswordDto);
