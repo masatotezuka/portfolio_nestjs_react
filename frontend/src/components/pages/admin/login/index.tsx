@@ -64,7 +64,7 @@ export const LoginPage = () => {
           ></Card>
         </CardContainer>
         <CardContainer>
-          <Card path="/admin/create" text="管理者を登録"></Card>
+          <Card path="/organization-registration" text="管理者を登録"></Card>
         </CardContainer>
       </CardsWrapper>
     </Container>

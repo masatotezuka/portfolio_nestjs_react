@@ -7,6 +7,7 @@ import { UserCheckStatusPage } from './components/pages/user/userCheckStatus';
 import { NotFoundPage } from './components/shared/layout/notFound';
 import { VerifyPasswordPage } from './components/pages/common/verifyPassword';
 import { AuthRooter, NoAuthRouter } from './rooter';
+import { RegisterOrganizationPage } from './components/pages/admin/registerOrganization';
 
 export const App = () => {
   return (
@@ -35,6 +36,10 @@ export const App = () => {
           }
         ></Route>
       </Route>
+      <Route
+        path="organization-registration"
+        element={<RegisterOrganizationPage />}
+      ></Route>
       <Route path="admin/*" element={<AuthRooter />}></Route>
       {/* TODO: ユーザー側のコンポーネントでもAuthRooterをラップする */}
       <Route path="user">
