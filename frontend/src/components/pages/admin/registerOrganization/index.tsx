@@ -1,11 +1,11 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
-import { Button } from '../../../../shared/parts/button/button';
-import { LabeledInputText } from '../../../../shared/parts/inputText/labeledInputText';
-import { Admin } from '../../../../../features/types';
-import { signUp } from '../../../../../features/api';
+import { Button } from '../../../shared/parts/button/button';
+import { LabeledInputText } from '../../../shared/parts/inputText/labeledInputText';
+import { Admin } from '../../../../features/types';
+import { signUp } from '../../../../features/api';
 import { useNavigate } from 'react-router-dom';
-import { useCookie } from '../../../../../hooks/useCookie';
+import { useCookie } from '../../../../hooks/useCookie';
 
 export const RegisterOrganizationPage = () => {
   const {
@@ -20,6 +20,7 @@ export const RegisterOrganizationPage = () => {
     const token = await signUp(data);
     setAccessToken(token);
     navigate('/admin');
+    window.alert('まずは社員管理から社員を登録してください。');
   };
 
   return (
