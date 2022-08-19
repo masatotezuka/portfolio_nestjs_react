@@ -1,11 +1,44 @@
 import axios from 'axios';
+import { Login, Admin, RequestPasswordReset, VerifyPassword } from '../types';
+
 axios.defaults.withCredentials = true;
 
-type Login = {
-  email: string;
-  password: string;
+export const login = async (data: Login) => {
+  const response = await axios.post(`http://localhost:8000/auth/login`, data);
+  return response.data.accessToken;
 };
 
-export const login = async (data: Login) => {
-  return await axios.post(`http://localhost:8000/auth/login`, data);
+export const signUp = async (data: Admin) => {
+  const response = await axios.post(`http://localhost:8000/users/admin`, data);
+  return response.data.accessToken;
+};
+
+export const requestPasswordReset = async (data: RequestPasswordReset) => {
+  return await axios.put(
+    `http://localhost:8000/users/password-reset/request`,
+    data,
+  );
+};
+
+export const verifyPassword = async (data: VerifyPassword) => {
+  return await axios.patch(
+    `http://localhost:8000/users/password-reset/verification`,
+    data,
+  );
+};
+
+export const verifyAccessToken = async (token: string) => {
+  try {
+    const response = await axios.get(
+      'http://localhost:8000/auth/verification',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.statusText;
+  } catch (error) {
+    return error;
+  }
 };

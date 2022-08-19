@@ -20,3 +20,17 @@ export class CreateAdminDto {
   @IsNotEmpty()
   password: string;
 }
+
+export class VerifyPasswordDto {
+  @IsString()
+  @IsNotEmpty()
+  newPassword: string;
+
+  @IsString()
+  @IsNotEmpty()
+  confirmPassword: string;
+
+  @IsString()
+  @IsNotEmpty()
+  token: string;
+}

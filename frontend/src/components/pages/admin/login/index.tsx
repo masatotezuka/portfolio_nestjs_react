@@ -4,24 +4,21 @@ import { LabeledInputText } from '../../../shared/parts/inputText/labeledInputTe
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Button } from '../../../shared/parts/button/button';
 import { login } from '../../../../features/api';
-import { useCookies, Cookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-type Inputs = {
-  email: string;
-  password: string;
-};
+import { Login } from '../../../../features/types';
+import { useCookie } from '../../../../hooks/useCookie';
 
 export const LoginPage = () => {
-  const [cookie, setCookie] = useCookies(['token', 'test']);
+  const { setAccessToken } = useCookie();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Login>();
   const navigator = useNavigate();
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const result = await login(data);
-    setCookie('token', result.data.accessToken);
+  const onSubmit: SubmitHandler<Login> = async (data) => {
+    const token = await login(data);
+    setAccessToken(token);
     navigator('/admin');
   };
   return (
@@ -49,7 +46,7 @@ export const LoginPage = () => {
               placeholder="英数字（大文字/小文字）8〜16字"
               register={register('password', {
                 required: true,
-                pattern: /^[a-zA-Z\d]{8,16}/,
+                pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[\d])[a-zA-Z\d]{8,16}$/,
               })}
               errors={errors.password?.type}
             ></LabeledInputText>
@@ -62,7 +59,7 @@ export const LoginPage = () => {
       <CardsWrapper>
         <CardContainer>
           <Card
-            path="/reset-password/request"
+            path="/password-reset/request"
             text="パスワードを変更する"
           ></Card>
         </CardContainer>

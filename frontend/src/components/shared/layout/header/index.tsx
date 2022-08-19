@@ -1,13 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useCookie } from '../../../../hooks/useCookie';
+import { Button } from '../../parts/button/button';
 
 export const Header = () => {
+  const { removeAccessToken } = useCookie();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    removeAccessToken();
+    navigate('/');
+  };
   return (
     <Wrapper>
       <Container>
         <StyledLink to="/admin">ホーム</StyledLink>
-        <StyledButton>ログアウト</StyledButton>
+        <ButtonContainer>
+          <Button text="ログアウト" onClick={() => handleLogout()}></Button>{' '}
+        </ButtonContainer>
       </Container>
     </Wrapper>
   );
@@ -33,14 +43,6 @@ const StyledLink = styled(Link)`
   font-weight: bold;
 `;
 
-const StyledButton = styled.button`
-  background-color: rgba(255, 255, 255, 0);
-  border: none;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 0px 20px;
-  &:hover {
-    cursor: pointer;
-  }
+const ButtonContainer = styled.div`
+  margin-right: 30px;
 `;
