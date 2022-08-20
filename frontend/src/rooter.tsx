@@ -12,6 +12,7 @@ import { useAuth } from './hooks/useAuth';
 
 export const AuthRooter = () => {
   const { check } = useAuth();
+
   if (!check.checked) {
     return <div>Loading...</div>;
   }
@@ -21,7 +22,7 @@ export const AuthRooter = () => {
         <>
           <Routes>
             <Route path="/" element={<HomePage />}></Route>
-            <Route path="/machine-license">
+            <Route path="machine-license">
               <Route
                 path="list"
                 element={<MachineAndLicenseListsPage />}
