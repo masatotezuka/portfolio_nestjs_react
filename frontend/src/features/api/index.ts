@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { Login, Admin, RequestPasswordReset, VerifyPassword } from '../types';
+import {
+  Login,
+  Admin,
+  RequestPasswordReset,
+  VerifyPassword,
+  CreateMachine,
+  Machine,
+} from '../types';
 
 axios.defaults.withCredentials = true;
 
@@ -41,4 +48,11 @@ export const verifyAccessToken = async (token: string) => {
   } catch (error) {
     return error;
   }
+};
+
+export const createAdminMachines = async (
+  data: CreateMachine,
+): Promise<Machine> => {
+  const response = await axios.post(`http://localhost:8000/machines`, data);
+  return response.data;
 };
