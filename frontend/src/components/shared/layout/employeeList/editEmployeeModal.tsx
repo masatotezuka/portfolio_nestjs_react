@@ -21,7 +21,7 @@ export const EditEmployeeModal = ({
       {showModal ? (
         <Wrapper>
           <Container>
-            <Title>登録</Title>
+            <Title>編集</Title>
             <LabeledInputTextWrapper>
               <LabeledInputsTextContainer>
                 <LabeledInputTextContainer>
