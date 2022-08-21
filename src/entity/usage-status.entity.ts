@@ -7,7 +7,9 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
+import { LicenseHistory } from './license-history.entity';
 import { License } from './license.entity';
+import { MachineHistory } from './machine-history.entity';
 import { Machine } from './machine.entity';
 
 @Entity('usage_statuses')
@@ -27,9 +29,17 @@ export class UsageStatus {
   @UpdateDateColumn({ type: 'timestamptz' })
   updateAt: Date;
 
-  @OneToMany(() => Machine, (machine) => machine.usageStatus, { cascade: true })
-  machines: Machine[];
+  @OneToMany(
+    () => MachineHistory,
+    (machineHistory) => machineHistory.usageStatus,
+    { cascade: true },
+  )
+  machineHistories: MachineHistory[];
 
-  @OneToMany(() => License, (license) => license.usageStatus, { cascade: true })
-  licenses: License[];
+  @OneToMany(
+    () => LicenseHistory,
+    (licenseHistory) => licenseHistory.usageStatus,
+    { cascade: true },
+  )
+  licenseHistories: LicenseHistory[];
 }

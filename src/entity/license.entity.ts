@@ -26,9 +26,6 @@ export class License {
   @Column({ type: 'date', nullable: true })
   expiredAt: Date;
 
-  @ManyToOne(() => UsageStatus, (usageStatus) => usageStatus.licenses)
-  usageStatus: UsageStatus;
-
   @DeleteDateColumn({ type: 'timestamptz', nullable: true })
   deletedAt?: Date | null;
 

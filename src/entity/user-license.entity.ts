@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  DeleteDateColumn,
 } from 'typeorm';
 import { License } from './license.entity';
 import { User } from './user.entity';
@@ -24,4 +25,7 @@ export class UserLicense {
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updateAt: Date;
+
+  @DeleteDateColumn({ type: 'timestamptz', nullable: true })
+  deletedAt?: Date | null;
 }

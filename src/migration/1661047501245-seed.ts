@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class seed1659866679826 implements MigrationInterface {
+export class seed1661047501245 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `INSERT INTO machine_categories (name) VALUES('PC')`,

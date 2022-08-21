@@ -33,9 +33,6 @@ export class Machine {
   )
   machineCategory: MachineCategory;
 
-  @ManyToOne(() => UsageStatus, (usageStatus) => usageStatus.machines)
-  usageStatus: UsageStatus;
-
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
