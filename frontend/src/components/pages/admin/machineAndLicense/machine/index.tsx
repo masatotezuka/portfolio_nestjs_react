@@ -13,14 +13,16 @@ export const MachinePage = () => {
     category: '種別を選択してください',
     name: '',
     purchasedAt: Date(),
-    user: '利用者を選択してください',
+    user: { userId: 0, firstName: '', lastName: '' },
     usageStatus: '現在のステータスを選択してください',
   };
-  const machine = {
+
+  //TODO:機器の状態をストアから持ってくる
+  const userMachine = {
     category: 'PC',
     name: 'MacBook',
     purchasedAt: format(new Date(2022, 3 - 1, 2), 'yyyy-MM-dd'),
-    user: 'tezuka',
+    user: { userId: 1, firstName: 'tezuka', lastName: 'masato' },
     usageStatus: '使用中',
   };
 
@@ -29,10 +31,16 @@ export const MachinePage = () => {
       <Header></Header>
       <Container>
         {location.pathname === '/admin/machine-license/machine/create' && (
-          <MachineForm buttonText="登録" machine={initMachine}></MachineForm>
+          <MachineForm
+            buttonText="登録"
+            userMachine={initMachine}
+          ></MachineForm>
         )}
         {location.pathname === '/admin/machine-license/machine/edit' && (
-          <MachineForm buttonText="更新" machine={machine}></MachineForm>
+          <MachineForm
+            buttonText="更新"
+            userMachine={userMachine}
+          ></MachineForm>
         )}
       </Container>
     </>

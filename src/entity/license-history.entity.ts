@@ -4,8 +4,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  Column,
 } from 'typeorm';
 import { License } from './license.entity';
+
 import { User } from './user.entity';
 
 @Entity('license_histories')
@@ -13,7 +15,10 @@ export class LicenseHistory {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, (user) => user.licenseHistories)
+  @Column()
+  usageStatus:string
+
+  @ManyToOne(() => User, (user) => user.licenseHistories, { nullable: true })
   user: User;
 
   @ManyToOne(() => License, (license) => license.licenseHistories)

@@ -4,8 +4,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  Column,
 } from 'typeorm';
 import { Machine } from './machine.entity';
+
 import { User } from './user.entity';
 
 @Entity('machine_histories')
@@ -13,7 +15,10 @@ export class MachineHistory {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, (user) => user.machineHistories)
+  @Column()
+  usageStatus: string;
+
+  @ManyToOne(() => User, (user) => user.machineHistories, { nullable: true })
   user: User;
 
   @ManyToOne(() => Machine, (machine) => machine.machineHistories)

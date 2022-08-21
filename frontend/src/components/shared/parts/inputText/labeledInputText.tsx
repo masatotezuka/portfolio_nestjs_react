@@ -24,10 +24,10 @@ export const LabeledInputText = (props: Props) => {
   return (
     <>
       <Container>
+        <StyledLabel htmlFor={props.forName} width={props.labelWidth}>
+          {props.text}
+        </StyledLabel>
         <StyledInputContainer>
-          <StyledLabel htmlFor={props.forName} width={props.labelWidth}>
-            {props.text}
-          </StyledLabel>
           <StyledInputText
             id={props.forName}
             value={props.value}
@@ -38,15 +38,16 @@ export const LabeledInputText = (props: Props) => {
             placeholder={props.placeholder}
             {...props.register}
           ></StyledInputText>
+
+          {props.errors === 'required' && (
+            <ErrorMessage>文字を入力して下さい</ErrorMessage>
+          )}
+          {props.errors === 'pattern' && (
+            <ErrorMessage>
+              英数字（大文字/小文字）8〜16字で入力して下さい
+            </ErrorMessage>
+          )}
         </StyledInputContainer>
-        {props.errors === 'required' && (
-          <ErrorMessage>文字を入力して下さい</ErrorMessage>
-        )}
-        {props.errors === 'pattern' && (
-          <ErrorMessage>
-            英数字（大文字/小文字）8〜16字で入力して下さい
-          </ErrorMessage>
-        )}
       </Container>
     </>
   );
