@@ -4,8 +4,8 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { SendgridModule } from './sendgrid/sendgrid.module';
 import { ConfigModule } from '@nestjs/config';
+import { MachineModule } from './machine/machine.module';
 
 @Module({
   imports: [
@@ -24,6 +24,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot(),
     UserModule,
     AuthModule,
+    MachineModule,
   ],
   controllers: [AppController],
   providers: [AppService],
