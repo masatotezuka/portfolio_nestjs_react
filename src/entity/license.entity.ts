@@ -9,7 +9,6 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { LicenseHistory } from './license-history.entity';
-import { UsageStatus } from './usage-status.entity';
 import { UserLicense } from './user-license.entity';
 
 @Entity('licenses')

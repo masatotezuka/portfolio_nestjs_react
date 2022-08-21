@@ -6,17 +6,17 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-  ManyToOne,
 } from 'typeorm';
 import { MachineHistory } from './machine-history.entity';
-import { MachineCategory } from './mashine-category.entity';
-import { UsageStatus } from './usage-status.entity';
 import { UserMachine } from './user-machine.entity';
 
 @Entity('machines')
 export class Machine {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  category: string;
 
   @Column()
   name: string;
@@ -26,12 +26,6 @@ export class Machine {
 
   @DeleteDateColumn({ type: 'timestamptz', nullable: true })
   deletedAt?: Date | null;
-
-  @ManyToOne(
-    () => MachineCategory,
-    (machineCategory) => machineCategory.machines,
-  )
-  machineCategory: MachineCategory;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
