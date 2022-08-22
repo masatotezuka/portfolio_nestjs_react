@@ -6,7 +6,7 @@ import {
   VerifyPassword,
   CreateMachine,
   Machine,
-  User,
+  Employee,
 } from '../types';
 
 axios.defaults.withCredentials = true;
@@ -59,12 +59,12 @@ export const createAdminMachines = async (
   return response.data;
 };
 
-export const fetchUserAdmin = async () => {
+export const fetchEmployeesAdmin = async () => {
   const response = await axios.get(`http://localhost:8000/users`);
   return response.data;
 };
 
-export const createUserAdmin = async (data: User) => {
+export const createEmployeeAdmin = async (data: Employee) => {
   try {
     const response = await axios.post(`http://localhost:8000/users`, data);
     console.log('success');

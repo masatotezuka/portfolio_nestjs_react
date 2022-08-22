@@ -4,9 +4,9 @@ import { CreateEmployeeModal } from './createEmployeeModal';
 import { ConfirmModal } from '../../../../shared/layout/confirmModal';
 import { Button } from '../../../../shared/parts/button/button';
 import { EditEmployeeModal } from './editEmployeeModal';
-import { User } from '../../../../../features/types';
+import { Employee } from '../../../../../features/types';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks';
-import { fetchUser } from '../../../../../store/userSlice';
+import { fetchEmployees } from '../../../../../store/employeeSlice';
 
 export const EmployeeLists = () => {
   const [showCreateEmployeeModal, setShowCreateEmployeeModal] =
@@ -16,7 +16,7 @@ export const EmployeeLists = () => {
   const [showDeleteEmployeeModal, setShowDeleteEmployeeModal] =
     useState<boolean>(false);
 
-  const [targetEmployee, setEmployee] = useState<User>({
+  const [targetEmployee, setEmployee] = useState<Employee>({
     id: 0,
     firstName: '',
     lastName: '',
@@ -25,10 +25,10 @@ export const EmployeeLists = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchUser());
+    dispatch(fetchEmployees());
   }, [dispatch]);
 
-  const users = useAppSelector((state) => state.user.users);
+  const employees = useAppSelector((state) => state.employee.employees);
 
   const handleOpenCreateEmployeeModal = () => {
     setShowCreateEmployeeModal(true);
@@ -39,7 +39,7 @@ export const EmployeeLists = () => {
 
   const handleOpenEditEmployeeModal = (id: number) => {
     setShowEditEmployeeModal(true);
-    const employee = users.find((employee) => employee.id === id);
+    const employee = employees.find((employee) => employee.id === id);
     if (employee) {
       setEmployee(employee);
     }
@@ -51,7 +51,7 @@ export const EmployeeLists = () => {
 
   const handleOpenDeleteEmployeeModal = (id: number) => {
     setShowDeleteEmployeeModal(true);
-    const employee = users.find((employee) => employee.id === id);
+    const employee = employees.find((employee) => employee.id === id);
     if (employee) {
       setEmployee(employee);
     }
@@ -62,6 +62,10 @@ export const EmployeeLists = () => {
 
   //TODO:フォーム送信関数作成
   const handleSubmitEmployee = () => {
+    console.log('Employee Information');
+  };
+
+  const handleSubmitDeleteEmployee = () => {
     console.log('Employee Information');
   };
   return (
@@ -88,7 +92,7 @@ export const EmployeeLists = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((employee) => {
+              {employees.map((employee) => {
                 return (
                   <tr key={employee.id}>
                     <td>
@@ -134,7 +138,6 @@ export const EmployeeLists = () => {
       <CreateEmployeeModal
         showModal={showCreateEmployeeModal}
         handleCloseModal={handleCloseCreateEmployeeModal}
-        handleSubmitEmployee={handleSubmitEmployee}
       ></CreateEmployeeModal>
       <EditEmployeeModal
         showModal={showEditEmployeeModal}
