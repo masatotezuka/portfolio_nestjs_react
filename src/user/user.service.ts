@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { Organization } from 'src/entity/organization.entity';
 import { Repository } from 'typeorm';
-import { CreateAdminDto, VerifyPasswordDto } from './user.dto';
+import { CreateAdminDto, CreateUserDto, VerifyPasswordDto } from './user.dto';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from 'src/auth/auth.service';
 import { v4 as uuid } from 'uuid';
@@ -125,5 +125,37 @@ export class UserService {
     user.password = hashPassword;
     await this.userRepository.save(user);
     return;
+  }
+
+  async fetchUser() {
+    const user = await this.userRepository.find({
+      select: { id: true, firstName: true, lastName: true, email: true },
+      where: { role: 2 },
+    });
+
+    return user;
+  }
+
+  async createUser(createUserDto: CreateUserDto): Promise<User> {
+    const result = await this.findOne(createUserDto.email);
+
+    if (result) {
+      throw new HttpException('user already exists', HttpStatus.BAD_REQUEST);
+    }
+
+    const salt = await bcrypt.genSalt();
+    const hashPassword = bcrypt.hashSync(createUserDto.email, salt);
+
+    const user = this.userRepository.create({
+      firstName: createUserDto.firstName,
+      lastName: createUserDto.lastName,
+      email: createUserDto.email,
+      password: hashPassword,
+      isPasswordUpdated: false,
+      role: 2,
+    });
+    const newUser = await this.userRepository.save(user);
+
+    return newUser;
   }
 }

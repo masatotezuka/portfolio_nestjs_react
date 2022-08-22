@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from '../../parts/button/button';
-import { LabeledInputText } from '../../parts/inputText/labeledInputText';
+import { Button } from '../../../../shared/parts/button/button';
+import { LabeledInputText } from '../../../../shared/parts/inputText/labeledInputText';
 
 type Props = {
   showModal: boolean;
-  employee: { id: number; firstName: string; lastName: string; email: string };
+  employee: { id: number; firstName: string; lastName: string; email?: string };
   handleSubmitEmployee: () => void;
   handleCloseModal: () => void;
 };
@@ -21,7 +21,7 @@ export const EditEmployeeModal = ({
       {showModal ? (
         <Wrapper>
           <Container>
-            <Title>登録</Title>
+            <Title>編集</Title>
             <LabeledInputTextWrapper>
               <LabeledInputsTextContainer>
                 <LabeledInputTextContainer>

@@ -1,12 +1,13 @@
-import { Body, Controller, Post, Patch, Put } from '@nestjs/common';
-import { CreateAdminDto, VerifyPasswordDto } from './user.dto';
+import { Body, Controller, Post, Patch, Put, Get } from '@nestjs/common';
+import { User } from 'src/entity/user.entity';
+import { CreateAdminDto, CreateUserDto, VerifyPasswordDto } from './user.dto';
 import { UserService } from './user.service';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
   @Post('admin')
-  async create(
+  async createAdmin(
     @Body() createAdminDto: CreateAdminDto,
   ): Promise<{ accessToken: string }> {
     return await this.userService.createAdmin(createAdminDto);
@@ -22,5 +23,17 @@ export class UserController {
     @Body() verifyPasswordDto: VerifyPasswordDto,
   ): Promise<void> {
     return await this.userService.verifyPassword(verifyPasswordDto);
+  }
+
+  @Get()
+  async fetchUser(): Promise<User[]> {
+    return this.userService.fetchUser();
+  }
+
+  @Post()
+  async createUser(
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<User> {
+    return await this.userService.createUser(createUserDto);
   }
 }
