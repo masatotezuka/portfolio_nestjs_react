@@ -48,22 +48,22 @@ export const CreateEmployeeModal = ({
                     <LabeledInputText
                       type="text"
                       text="性"
-                      forName="firstName"
+                      forName="lastName"
                       inputWidth={'130px'}
                       labelWidth={'155px'}
-                      register={register('firstName', { required: true })}
-                      errors={errors.firstName?.type}
+                      register={register('lastName', { required: true })}
+                      errors={errors.lastName?.type}
                     ></LabeledInputText>
                   </LabeledInputTextContainer>
                   <LabeledInputTextContainer>
                     <LabeledInputText
                       type="text"
                       text="名"
-                      forName="lastName"
+                      forName="firstName"
                       inputWidth={'130px'}
                       labelWidth={'40px'}
-                      register={register('lastName', { required: true })}
-                      errors={errors.lastName?.type}
+                      register={register('firstName', { required: true })}
+                      errors={errors.firstName?.type}
                     ></LabeledInputText>
                   </LabeledInputTextContainer>
                 </LabeledInputsTextContainer>
