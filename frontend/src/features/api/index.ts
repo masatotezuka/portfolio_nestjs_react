@@ -11,6 +11,7 @@ import {
 
 axios.defaults.withCredentials = true;
 
+//返り値の型指定をするか
 export const login = async (data: Login) => {
   const response = await axios.post(`http://localhost:8000/auth/login`, data);
   return response.data.accessToken;
@@ -58,10 +59,15 @@ export const createAdminMachines = async (
   return response.data;
 };
 
+export const fetchUserAdmin = async () => {
+  const response = await axios.get(`http://localhost:8000/users`);
+  return response.data;
+};
+
 export const createUserAdmin = async (data: User) => {
   try {
     const response = await axios.post(`http://localhost:8000/users`, data);
-    console.log("success");
+    console.log('success');
     return response.data;
   } catch (error) {
     return error;

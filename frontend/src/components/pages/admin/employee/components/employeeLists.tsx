@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CreateEmployeeModal } from './createEmployeeModal';
 import { ConfirmModal } from '../../../../shared/layout/confirmModal';
 import { Button } from '../../../../shared/parts/button/button';
 import { EditEmployeeModal } from './editEmployeeModal';
 import { User } from '../../../../../features/types';
+import { useAppDispatch, useAppSelector } from '../../../../../hooks';
+import { fetchUser } from '../../../../../store/userSlice';
 type Employee = {
   id: number;
   firstName: string;
@@ -26,10 +28,14 @@ export const EmployeeLists = () => {
     lastName: '',
     email: '',
   });
-  const employees = [
-    { id: 1, firstName: '田中', lastName: '太郎', email: 'test@gmail.com' },
-    { id: 2, firstName: '山田', lastName: '二朗', email: 'test2@gmail.com' },
-  ];
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
+
+  const users = useAppSelector((state) => state.user.users);
+  console.log(users);
 
   const handleOpenCreateEmployeeModal = () => {
     setShowCreateEmployeeModal(true);
@@ -40,7 +46,7 @@ export const EmployeeLists = () => {
 
   const handleOpenEditEmployeeModal = (id: number) => {
     setShowEditEmployeeModal(true);
-    const employee = employees.find((employee) => employee.id === id);
+    const employee = users.find((employee) => employee.id === id);
     if (employee) {
       setEmployee(employee);
     }
@@ -52,7 +58,7 @@ export const EmployeeLists = () => {
 
   const handleOpenDeleteEmployeeModal = (id: number) => {
     setShowDeleteEmployeeModal(true);
-    const employee = employees.find((employee) => employee.id === id);
+    const employee = users.find((employee) => employee.id === id);
     if (employee) {
       setEmployee(employee);
     }
@@ -89,12 +95,14 @@ export const EmployeeLists = () => {
               </tr>
             </thead>
             <tbody>
-              {employees.map((employee) => {
+              {users.map((employee) => {
+                console.log(employee.id);
+
                 return (
                   <tr key={employee.id}>
                     <td>
-                      {employee.firstName}
                       {employee.lastName}
+                      {employee.firstName}
                     </td>
                     <td>{employee.email}</td>
                     <td>

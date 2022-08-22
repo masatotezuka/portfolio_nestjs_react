@@ -127,7 +127,16 @@ export class UserService {
     return;
   }
 
-  async createUser(createUserDto: CreateUserDto): Promise<CreateUserDto> {
+  async fetchUser() {
+    const user = await this.userRepository.find({
+      select: { id: true, firstName: true, lastName: true, email: true },
+      where: { role: 2 },
+    });
+
+    return user;
+  }
+
+  async createUser(createUserDto: CreateUserDto): Promise<User> {
     const result = await this.findOne(createUserDto.email);
 
     if (result) {
@@ -145,8 +154,8 @@ export class UserService {
       isPasswordUpdated: false,
       role: 2,
     });
-    const { firstName, lastName, email } = await this.userRepository.save(user);
+    const newUser = await this.userRepository.save(user);
 
-    return { firstName, lastName, email };
+    return newUser;
   }
 }

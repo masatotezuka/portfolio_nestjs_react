@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice, isRejectedWithValue } from '@reduxjs/toolkit';
-import { createUserAdmin } from '../../features/api';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createUserAdmin, fetchUserAdmin } from '../../features/api';
 import { User } from '../../features/types';
 
 type InitialState = {
@@ -15,9 +15,13 @@ const initialState: InitialState = {
 export const createUser = createAsyncThunk(
   'users/create',
   async (users: User) => {
-      return await createUserAdmin(users);
+    return await createUserAdmin(users);
   },
 );
+
+export const fetchUser = createAsyncThunk('users/fetch', async () => {
+  return await fetchUserAdmin();
+});
 
 const userSlice = createSlice({
   name: 'users',
@@ -31,7 +35,10 @@ const userSlice = createSlice({
       })
       .addCase(createUser.rejected, (state, action) => {
         state.status = 'rejected';
-        console.log('rejected');
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.users = action.payload;
       });
   },
 });
