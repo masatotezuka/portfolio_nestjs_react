@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { CreateEmployeeModal } from './createEmployeeModal';
-import { ConfirmModal } from '../confirmModal';
-import { Button } from '../../parts/button/button';
+import { ConfirmModal } from '../../../../shared/layout/confirmModal';
+import { Button } from '../../../../shared/parts/button/button';
 import { EditEmployeeModal } from './editEmployeeModal';
-
+import { User } from '../../../../../features/types';
 type Employee = {
   id: number;
   firstName: string;
@@ -12,7 +12,7 @@ type Employee = {
   email: string;
 };
 
-export const EmployeeList = () => {
+export const EmployeeLists = () => {
   const [showCreateEmployeeModal, setShowCreateEmployeeModal] =
     useState<boolean>(false);
   const [showEditEmployeeModal, setShowEditEmployeeModal] =
@@ -20,7 +20,7 @@ export const EmployeeList = () => {
   const [showDeleteEmployeeModal, setShowDeleteEmployeeModal] =
     useState<boolean>(false);
 
-  const [targetEmployee, setEmployee] = useState<Employee>({
+  const [targetEmployee, setEmployee] = useState<User>({
     id: 0,
     firstName: '',
     lastName: '',
