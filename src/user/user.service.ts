@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { Organization } from 'src/entity/organization.entity';
 import { Repository } from 'typeorm';
-import { CreateAdminDto, VerifyPasswordDto } from './user.dto';
+import { CreateAdminDto, CreateUserDto, VerifyPasswordDto } from './user.dto';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from 'src/auth/auth.service';
 import { v4 as uuid } from 'uuid';
@@ -125,5 +125,28 @@ export class UserService {
     user.password = hashPassword;
     await this.userRepository.save(user);
     return;
+  }
+
+  async createUser(createUserDto: CreateUserDto): Promise<CreateUserDto> {
+    const result = await this.findOne(createUserDto.email);
+
+    if (result) {
+      throw new HttpException('user already exists', HttpStatus.BAD_REQUEST);
+    }
+
+    const salt = await bcrypt.genSalt();
+    const hashPassword = bcrypt.hashSync(createUserDto.email, salt);
+
+    const user = this.userRepository.create({
+      firstName: createUserDto.firstName,
+      lastName: createUserDto.lastName,
+      email: createUserDto.email,
+      password: hashPassword,
+      isPasswordUpdated: false,
+      role: 2,
+    });
+    const { firstName, lastName, email } = await this.userRepository.save(user);
+
+    return { firstName, lastName, email };
   }
 }

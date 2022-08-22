@@ -31,7 +31,7 @@ export type Machine = {
 };
 
 export type User = {
-  id?: number;
+  id: number;
   firstName: string;
   lastName: string;
   email: string;

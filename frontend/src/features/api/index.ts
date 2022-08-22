@@ -6,6 +6,7 @@ import {
   VerifyPassword,
   CreateMachine,
   Machine,
+  User,
 } from '../types';
 
 axios.defaults.withCredentials = true;
@@ -55,4 +56,14 @@ export const createAdminMachines = async (
 ): Promise<Machine> => {
   const response = await axios.post(`http://localhost:8000/machines`, data);
   return response.data;
+};
+
+export const createUserAdmin = async (data: User) => {
+  try {
+    const response = await axios.post(`http://localhost:8000/users`, data);
+    console.log("success");
+    return response.data;
+  } catch (error) {
+    return error;
+  }
 };
