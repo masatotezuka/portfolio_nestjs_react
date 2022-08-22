@@ -7,12 +7,6 @@ import { EditEmployeeModal } from './editEmployeeModal';
 import { User } from '../../../../../features/types';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks';
 import { fetchUser } from '../../../../../store/userSlice';
-type Employee = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-};
 
 export const EmployeeLists = () => {
   const [showCreateEmployeeModal, setShowCreateEmployeeModal] =
@@ -35,7 +29,6 @@ export const EmployeeLists = () => {
   }, [dispatch]);
 
   const users = useAppSelector((state) => state.user.users);
-  console.log(users);
 
   const handleOpenCreateEmployeeModal = () => {
     setShowCreateEmployeeModal(true);
@@ -96,8 +89,6 @@ export const EmployeeLists = () => {
             </thead>
             <tbody>
               {users.map((employee) => {
-                console.log(employee.id);
-
                 return (
                   <tr key={employee.id}>
                     <td>
@@ -162,7 +153,7 @@ export const EmployeeLists = () => {
 };
 
 const Container = styled.div`
-  max-width: 600px;
+  max-width: 650px;
   margin: 0px auto;
 `;
 
@@ -172,7 +163,7 @@ const ButtonWrapper = styled.div`
   justify-content: center;
 `;
 const ButtonContainer = styled.div`
-  width: 50%;
+  width: 30%;
   height: 50px;
 `;
 
@@ -183,7 +174,7 @@ const TableContainer = styled.div`
 
 const ButtonContainerInTable = styled.div`
   margin: 0px auto;
-  width: 70px;
+  width: 60px;
   height: 35px;
 `;
 
@@ -202,7 +193,7 @@ const EmployeeTable = styled.table`
     text-align: center;
     tr {
       td {
-        padding: 7px 0px;
+        padding: 12px 0px;
       }
     }
   }
