@@ -1,4 +1,14 @@
-import { Body, Controller, Post, Patch, Put, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Patch,
+  Put,
+  Get,
+  Delete,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { User } from 'src/entity/user.entity';
 import { CreateAdminDto, CreateUserDto, VerifyPasswordDto } from './user.dto';
 import { UserService } from './user.service';
@@ -31,9 +41,14 @@ export class UserController {
   }
 
   @Post()
-  async createUser(
-    @Body() createUserDto: CreateUserDto,
-  ): Promise<User> {
+  async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
     return await this.userService.createUser(createUserDto);
+  }
+
+  @Delete(':userId')
+  async deleteUser(
+    @Param('userId', ParseIntPipe) userId: number,
+  ): Promise<number> {
+    return await this.userService.softDelete(userId);
   }
 }

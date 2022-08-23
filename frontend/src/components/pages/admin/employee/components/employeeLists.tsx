@@ -6,7 +6,10 @@ import { Button } from '../../../../shared/parts/button/button';
 import { EditEmployeeModal } from './editEmployeeModal';
 import { Employee } from '../../../../../features/types';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks';
-import { fetchEmployees } from '../../../../../store/employeeSlice';
+import {
+  deleteEmployees,
+  fetchEmployees,
+} from '../../../../../store/employeeSlice';
 
 export const EmployeeLists = () => {
   const [showCreateEmployeeModal, setShowCreateEmployeeModal] =
@@ -66,7 +69,8 @@ export const EmployeeLists = () => {
   };
 
   const handleSubmitDeleteEmployee = () => {
-    console.log('Employee Information');
+    dispatch(deleteEmployees(targetEmployee.id));
+    setShowDeleteEmployeeModal(false);
   };
   return (
     <>
@@ -149,7 +153,7 @@ export const EmployeeLists = () => {
         title="削除しますか？"
         showModal={showDeleteEmployeeModal}
         handleCloseModal={handleCloseDeleteEmployeeModal}
-        handleConfirm={handleSubmitEmployee}
+        handleConfirm={handleSubmitDeleteEmployee}
       ></ConfirmModal>
     </>
   );

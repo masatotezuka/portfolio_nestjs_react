@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createEmployeeAdmin, fetchEmployeesAdmin } from '../../features/api';
+import {
+  createEmployeeAdmin,
+  deleteEmployeeAdmin,
+  fetchEmployeesAdmin,
+} from '../../features/api';
 import { Employee } from '../../features/types';
 
 type InitialState = {
@@ -23,6 +27,13 @@ export const fetchEmployees = createAsyncThunk('employees/fetch', async () => {
   return await fetchEmployeesAdmin();
 });
 
+export const deleteEmployees = createAsyncThunk(
+  'employees/delete',
+  async (userId: number): Promise<number> => {
+    return await deleteEmployeeAdmin(userId);
+  },
+);
+
 const employeeSlice = createSlice({
   name: 'employees',
   initialState,
@@ -39,6 +50,13 @@ const employeeSlice = createSlice({
       .addCase(fetchEmployees.fulfilled, (state, action) => {
         state.status = 'fulfilled';
         state.employees = action.payload;
+      })
+      .addCase(deleteEmployees.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        const deletedUserId = action.payload;
+        state.employees = state.employees.filter(
+          (employee) => deletedUserId !== employee.id,
+        );
       });
   },
 });

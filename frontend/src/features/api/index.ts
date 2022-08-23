@@ -73,3 +73,8 @@ export const createEmployeeAdmin = async (data: Employee) => {
     return error;
   }
 };
+
+export const deleteEmployeeAdmin = async (userId: number) => {
+  const response = await axios.delete(`http://localhost:8000/users/${userId}`);
+  return response.data;
+};
