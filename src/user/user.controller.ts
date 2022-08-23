@@ -8,7 +8,9 @@ import {
   Delete,
   Param,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { User } from 'src/entity/user.entity';
 import { CreateAdminDto, CreateUserDto, VerifyPasswordDto } from './user.dto';
 import { UserService } from './user.service';
@@ -36,16 +38,19 @@ export class UserController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   async fetchUser(): Promise<User[]> {
     return this.userService.fetchUser();
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
     return await this.userService.createUser(createUserDto);
   }
 
   @Delete(':userId')
+  @UseGuards(JwtAuthGuard)
   async deleteUser(
     @Param('userId', ParseIntPipe) userId: number,
   ): Promise<number> {
