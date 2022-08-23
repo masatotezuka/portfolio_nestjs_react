@@ -8,8 +8,18 @@ import {
   Machine,
   Employee,
 } from '../types';
+import { getAccessTokenFromCookie } from '../util';
 
 axios.defaults.withCredentials = true;
+axios.interceptors.request.use((config) => {
+  const accessToken = getAccessTokenFromCookie();
+  if (config.headers) {
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+  }
+  return config;
+});
 
 //返り値の型指定をするか
 export const login = async (data: Login) => {
@@ -37,19 +47,12 @@ export const verifyPassword = async (data: VerifyPassword) => {
 };
 
 export const verifyAccessToken = async (token: string) => {
-  try {
-    const response = await axios.get(
-      'http://localhost:8000/auth/verification',
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
-    return response.statusText;
-  } catch (error) {
-    return error;
-  }
+  const response = await axios.get('http://localhost:8000/auth/verification', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.statusText;
 };
 
 export const createAdminMachines = async (
