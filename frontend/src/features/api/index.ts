@@ -46,12 +46,8 @@ export const verifyPassword = async (data: VerifyPassword) => {
   );
 };
 
-export const verifyAccessToken = async (token: string) => {
-  const response = await axios.get('http://localhost:8000/auth/verification', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const verifyAccessToken = async () => {
+  const response = await axios.get('http://localhost:8000/auth/verification');
   return response.statusText;
 };
 
