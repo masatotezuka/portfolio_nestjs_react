@@ -9,7 +9,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { Organization } from 'src/entity/organization.entity';
 import { Repository } from 'typeorm';
-import { CreateAdminDto, CreateUserDto, VerifyPasswordDto } from './user.dto';
+import {
+  CreateAdminDto,
+  CreateUserDto,
+  VerifyPasswordDto,
+  UserDto,
+} from './user.dto';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from 'src/auth/auth.service';
 import { v4 as uuid } from 'uuid';
@@ -163,5 +168,16 @@ export class UserService {
     const user = this.userRepository.create({ id: userId });
     await this.userRepository.softDelete(user);
     return userId;
+  }
+
+  async updateUser(updateUserDto: UserDto) {
+    const user = this.userRepository.create({
+      id: updateUserDto.id,
+      firstName: updateUserDto.firstName,
+      lastName: updateUserDto.lastName,
+      email: updateUserDto.email,
+    });
+    await this.userRepository.save(user);
+    return user;
   }
 }

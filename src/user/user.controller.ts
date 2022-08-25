@@ -12,7 +12,12 @@ import {
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { User } from 'src/entity/user.entity';
-import { CreateAdminDto, CreateUserDto, VerifyPasswordDto } from './user.dto';
+import {
+  CreateAdminDto,
+  CreateUserDto,
+  UserDto,
+  VerifyPasswordDto,
+} from './user.dto';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -55,5 +60,11 @@ export class UserController {
     @Param('userId', ParseIntPipe) userId: number,
   ): Promise<number> {
     return await this.userService.softDelete(userId);
+  }
+
+  @Patch()
+  @UseGuards(JwtAuthGuard)
+  async updateUser(@Body()updateUserDto: UserDto): Promise<UserDto> {
+    return await this.userService.updateUser(updateUserDto);
   }
 }
