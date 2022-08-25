@@ -63,15 +63,11 @@ export const EmployeeLists = () => {
     setShowDeleteEmployeeModal(false);
   };
 
-  //TODO:フォーム送信関数作成
-  const handleSubmitEmployee = () => {
-    console.log('Employee Information');
-  };
-
   const handleSubmitDeleteEmployee = () => {
     dispatch(deleteEmployees(targetEmployee.id));
     setShowDeleteEmployeeModal(false);
   };
+
   return (
     <>
       <Container>
@@ -132,6 +128,13 @@ export const EmployeeLists = () => {
                         </>
                       }
                     </td>
+                    <td>
+                      <EditEmployeeModal
+                        showModal={showEditEmployeeModal}
+                        employee={employee}
+                        handleCloseModal={handleCloseEditEmployeeModal}
+                      ></EditEmployeeModal>
+                    </td>
                   </tr>
                 );
               })}
@@ -143,12 +146,6 @@ export const EmployeeLists = () => {
         showModal={showCreateEmployeeModal}
         handleCloseModal={handleCloseCreateEmployeeModal}
       ></CreateEmployeeModal>
-      <EditEmployeeModal
-        showModal={showEditEmployeeModal}
-        employee={targetEmployee}
-        handleCloseModal={handleCloseEditEmployeeModal}
-        handleSubmitEmployee={handleSubmitEmployee}
-      ></EditEmployeeModal>
       <ConfirmModal
         title="削除しますか？"
         showModal={showDeleteEmployeeModal}

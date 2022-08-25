@@ -3,6 +3,7 @@ import {
   createEmployeeAdmin,
   deleteEmployeeAdmin,
   fetchEmployeesAdmin,
+  updateEmployeeAdmin,
 } from '../../features/api';
 import { Employee } from '../../features/types';
 
@@ -18,8 +19,8 @@ const initialState: InitialState = {
 
 export const createEmployee = createAsyncThunk(
   'employees/create',
-  async (employees: Employee) => {
-    return await createEmployeeAdmin(employees);
+  async (employee: Employee) => {
+    return await createEmployeeAdmin(employee);
   },
 );
 
@@ -31,6 +32,13 @@ export const deleteEmployees = createAsyncThunk(
   'employees/delete',
   async (userId: number): Promise<number> => {
     return await deleteEmployeeAdmin(userId);
+  },
+);
+
+export const updateEmployee = createAsyncThunk(
+  'employees/update',
+  async (employee: Employee): Promise<Employee> => {
+    return await updateEmployeeAdmin(employee);
   },
 );
 
@@ -57,6 +65,15 @@ const employeeSlice = createSlice({
         state.employees = state.employees.filter(
           (employee) => deletedUserId !== employee.id,
         );
+      })
+      .addCase(updateEmployee.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        const index = state.employees.findIndex(
+          (employee) => employee.id === action.payload.id,
+        );
+        state.employees[index].firstName = action.payload.firstName;
+        state.employees[index].lastName = action.payload.lastName;
+        state.employees[index].email = action.payload.email;
       });
   },
 });

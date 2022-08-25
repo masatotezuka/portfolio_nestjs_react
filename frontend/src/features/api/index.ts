@@ -77,3 +77,8 @@ export const deleteEmployeeAdmin = async (userId: number) => {
   const response = await axios.delete(`http://localhost:8000/users/${userId}`);
   return response.data;
 };
+
+export const updateEmployeeAdmin = async (data: Employee) => {
+  const response = await axios.patch(`http://localhost:8000/users`, data);
+  return response.data;
+};
