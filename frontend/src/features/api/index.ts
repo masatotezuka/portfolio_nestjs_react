@@ -6,10 +6,20 @@ import {
   VerifyPassword,
   CreateMachine,
   Machine,
-  User,
+  Employee,
 } from '../types';
+import { getAccessTokenFromCookie } from '../util';
 
 axios.defaults.withCredentials = true;
+axios.interceptors.request.use((config) => {
+  const accessToken = getAccessTokenFromCookie();
+  if (config.headers) {
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+  }
+  return config;
+});
 
 //返り値の型指定をするか
 export const login = async (data: Login) => {
@@ -36,20 +46,9 @@ export const verifyPassword = async (data: VerifyPassword) => {
   );
 };
 
-export const verifyAccessToken = async (token: string) => {
-  try {
-    const response = await axios.get(
-      'http://localhost:8000/auth/verification',
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
-    return response.statusText;
-  } catch (error) {
-    return error;
-  }
+export const verifyAccessToken = async () => {
+  const response = await axios.get('http://localhost:8000/auth/verification');
+  return response.statusText;
 };
 
 export const createAdminMachines = async (
@@ -59,12 +58,12 @@ export const createAdminMachines = async (
   return response.data;
 };
 
-export const fetchUserAdmin = async () => {
+export const fetchEmployeesAdmin = async () => {
   const response = await axios.get(`http://localhost:8000/users`);
   return response.data;
 };
 
-export const createUserAdmin = async (data: User) => {
+export const createEmployeeAdmin = async (data: Employee) => {
   try {
     const response = await axios.post(`http://localhost:8000/users`, data);
     console.log('success');
@@ -72,4 +71,14 @@ export const createUserAdmin = async (data: User) => {
   } catch (error) {
     return error;
   }
+};
+
+export const deleteEmployeeAdmin = async (userId: number) => {
+  const response = await axios.delete(`http://localhost:8000/users/${userId}`);
+  return response.data;
+};
+
+export const updateEmployeeAdmin = async (data: Employee) => {
+  const response = await axios.patch(`http://localhost:8000/users`, data);
+  return response.data;
 };

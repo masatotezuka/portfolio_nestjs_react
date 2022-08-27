@@ -1,6 +1,23 @@
-import { Body, Controller, Post, Patch, Put, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Patch,
+  Put,
+  Get,
+  Delete,
+  Param,
+  ParseIntPipe,
+  UseGuards,
+} from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { User } from 'src/entity/user.entity';
-import { CreateAdminDto, CreateUserDto, VerifyPasswordDto } from './user.dto';
+import {
+  CreateAdminDto,
+  CreateUserDto,
+  UserDto,
+  VerifyPasswordDto,
+} from './user.dto';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -26,14 +43,28 @@ export class UserController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   async fetchUser(): Promise<User[]> {
     return this.userService.fetchUser();
   }
 
   @Post()
-  async createUser(
-    @Body() createUserDto: CreateUserDto,
-  ): Promise<User> {
+  @UseGuards(JwtAuthGuard)
+  async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
     return await this.userService.createUser(createUserDto);
+  }
+
+  @Delete(':userId')
+  @UseGuards(JwtAuthGuard)
+  async deleteUser(
+    @Param('userId', ParseIntPipe) userId: number,
+  ): Promise<number> {
+    return await this.userService.softDelete(userId);
+  }
+
+  @Patch()
+  @UseGuards(JwtAuthGuard)
+  async updateUser(@Body()updateUserDto: UserDto): Promise<UserDto> {
+    return await this.userService.updateUser(updateUserDto);
   }
 }

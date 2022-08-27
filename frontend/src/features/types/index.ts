@@ -26,11 +26,11 @@ export type Machine = {
   category: string;
   name: string;
   purchasedAt?: Date | string;
-  user: User;
+  user: Employee;
   usageStatus: string;
 };
 
-export type User = {
+export type Employee = {
   id: number;
   firstName: string;
   lastName: string;

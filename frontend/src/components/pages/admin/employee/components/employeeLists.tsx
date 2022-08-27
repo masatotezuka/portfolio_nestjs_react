@@ -4,15 +4,13 @@ import { CreateEmployeeModal } from './createEmployeeModal';
 import { ConfirmModal } from '../../../../shared/layout/confirmModal';
 import { Button } from '../../../../shared/parts/button/button';
 import { EditEmployeeModal } from './editEmployeeModal';
-import { User } from '../../../../../features/types';
+import { Employee } from '../../../../../features/types';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks';
-import { fetchUser } from '../../../../../store/userSlice';
-type Employee = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-};
+import {
+  deleteEmployees,
+  fetchEmployees,
+} from '../../../../../store/employeeSlice';
+import { ErrorPage } from '../../../common/errorPage';
 
 export const EmployeeLists = () => {
   const [showCreateEmployeeModal, setShowCreateEmployeeModal] =
@@ -22,7 +20,7 @@ export const EmployeeLists = () => {
   const [showDeleteEmployeeModal, setShowDeleteEmployeeModal] =
     useState<boolean>(false);
 
-  const [targetEmployee, setEmployee] = useState<User>({
+  const [targetEmployee, setEmployee] = useState<Employee>({
     id: 0,
     firstName: '',
     lastName: '',
@@ -31,12 +29,11 @@ export const EmployeeLists = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchUser());
+    dispatch(fetchEmployees());
   }, [dispatch]);
 
-  const users = useAppSelector((state) => state.user.users);
-  console.log(users);
-
+  const employees = useAppSelector((state) => state.employee.employees);
+  const status = useAppSelector((state) => state.employee.status);
   const handleOpenCreateEmployeeModal = () => {
     setShowCreateEmployeeModal(true);
   };
@@ -46,7 +43,7 @@ export const EmployeeLists = () => {
 
   const handleOpenEditEmployeeModal = (id: number) => {
     setShowEditEmployeeModal(true);
-    const employee = users.find((employee) => employee.id === id);
+    const employee = employees.find((employee) => employee.id === id);
     if (employee) {
       setEmployee(employee);
     }
@@ -58,7 +55,7 @@ export const EmployeeLists = () => {
 
   const handleOpenDeleteEmployeeModal = (id: number) => {
     setShowDeleteEmployeeModal(true);
-    const employee = users.find((employee) => employee.id === id);
+    const employee = employees.find((employee) => employee.id === id);
     if (employee) {
       setEmployee(employee);
     }
@@ -67,10 +64,18 @@ export const EmployeeLists = () => {
     setShowDeleteEmployeeModal(false);
   };
 
-  //TODO:フォーム送信関数作成
-  const handleSubmitEmployee = () => {
-    console.log('Employee Information');
+  const handleSubmitDeleteEmployee = () => {
+    dispatch(deleteEmployees(targetEmployee.id));
+    setShowDeleteEmployeeModal(false);
   };
+  if (status === 'rejected') {
+    return (
+      <>
+        <ErrorPage></ErrorPage>
+      </>
+    );
+  }
+
   return (
     <>
       <Container>
@@ -95,9 +100,7 @@ export const EmployeeLists = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((employee) => {
-                console.log(employee.id);
-
+              {employees.map((employee) => {
                 return (
                   <tr key={employee.id}>
                     <td>
@@ -133,6 +136,13 @@ export const EmployeeLists = () => {
                         </>
                       }
                     </td>
+                    <td>
+                      <EditEmployeeModal
+                        showModal={showEditEmployeeModal}
+                        employee={employee}
+                        handleCloseModal={handleCloseEditEmployeeModal}
+                      ></EditEmployeeModal>
+                    </td>
                   </tr>
                 );
               })}
@@ -143,26 +153,19 @@ export const EmployeeLists = () => {
       <CreateEmployeeModal
         showModal={showCreateEmployeeModal}
         handleCloseModal={handleCloseCreateEmployeeModal}
-        handleSubmitEmployee={handleSubmitEmployee}
       ></CreateEmployeeModal>
-      <EditEmployeeModal
-        showModal={showEditEmployeeModal}
-        employee={targetEmployee}
-        handleCloseModal={handleCloseEditEmployeeModal}
-        handleSubmitEmployee={handleSubmitEmployee}
-      ></EditEmployeeModal>
       <ConfirmModal
         title="削除しますか？"
         showModal={showDeleteEmployeeModal}
         handleCloseModal={handleCloseDeleteEmployeeModal}
-        handleConfirm={handleSubmitEmployee}
+        handleConfirm={handleSubmitDeleteEmployee}
       ></ConfirmModal>
     </>
   );
 };
 
 const Container = styled.div`
-  max-width: 600px;
+  max-width: 650px;
   margin: 0px auto;
 `;
 
@@ -172,7 +175,7 @@ const ButtonWrapper = styled.div`
   justify-content: center;
 `;
 const ButtonContainer = styled.div`
-  width: 50%;
+  width: 30%;
   height: 50px;
 `;
 
@@ -183,7 +186,7 @@ const TableContainer = styled.div`
 
 const ButtonContainerInTable = styled.div`
   margin: 0px auto;
-  width: 70px;
+  width: 60px;
   height: 35px;
 `;
 
@@ -202,7 +205,7 @@ const EmployeeTable = styled.table`
     text-align: center;
     tr {
       td {
-        padding: 7px 0px;
+        padding: 12px 0px;
       }
     }
   }

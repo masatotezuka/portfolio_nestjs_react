@@ -4,7 +4,7 @@ import { RequestResetPasswordPage } from './components/pages/common/requestPassw
 import { UserLoginPage } from './components/pages/user/userLogin';
 import { UserRegisterPasswordPage } from './components/pages/user/userRegisterPassword';
 import { UserCheckStatusPage } from './components/pages/user/userCheckStatus';
-import { NotFoundPage } from './components/shared/layout/notFound';
+import { NotFoundPage } from './components/pages/common/notFound';
 import { VerifyPasswordPage } from './components/pages/common/verifyPassword';
 import { AuthRooter, NoAuthRouter } from './rooter';
 import { RegisterOrganizationPage } from './components/pages/admin/registerOrganization';

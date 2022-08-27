@@ -1,76 +1,100 @@
-import React from 'react';
+import { useEffect } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
+import { Employee } from '../../../../../features/types';
+import { useAppDispatch } from '../../../../../hooks';
+import { updateEmployee } from '../../../../../store/employeeSlice';
 import { Button } from '../../../../shared/parts/button/button';
 import { LabeledInputText } from '../../../../shared/parts/inputText/labeledInputText';
 
 type Props = {
   showModal: boolean;
-  employee: { id: number; firstName: string; lastName: string; email?: string };
-  handleSubmitEmployee: () => void;
+  employee: Employee;
   handleCloseModal: () => void;
 };
 
 export const EditEmployeeModal = ({
   showModal,
   employee,
-  handleSubmitEmployee,
   handleCloseModal,
 }: Props) => {
+  const dispatch = useAppDispatch();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Employee>({
+    defaultValues: {
+      id: employee.id,
+      lastName: employee.lastName,
+      firstName: employee.firstName,
+      email: employee.email,
+    },
+  });
+
+  const onSubmit: SubmitHandler<Employee> = (data) => {
+    dispatch(updateEmployee(data));
+    handleCloseModal();
+  };
+
   return (
     <>
       {showModal ? (
         <Wrapper>
           <Container>
-            <Title>編集</Title>
-            <LabeledInputTextWrapper>
-              <LabeledInputsTextContainer>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Title>編集</Title>
+              <LabeledInputTextWrapper>
+                <input type="hidden" {...register('id')} />
+                <LabeledInputsTextContainer>
+                  <LabeledInputTextContainer>
+                    <LabeledInputText
+                      type="text"
+                      text="性"
+                      forName="lastName"
+                      inputWidth={'130px'}
+                      labelWidth={'155px'}
+                      register={register('lastName', { required: true })}
+                      errors={errors.lastName?.type}
+                    ></LabeledInputText>
+                  </LabeledInputTextContainer>
+                  <LabeledInputTextContainer>
+                    <LabeledInputText
+                      type="text"
+                      text="名"
+                      forName="firstName"
+                      inputWidth={'130px'}
+                      labelWidth={'40px'}
+                      register={register('firstName', { required: true })}
+                      errors={errors.firstName?.type}
+                    ></LabeledInputText>
+                  </LabeledInputTextContainer>
+                </LabeledInputsTextContainer>
                 <LabeledInputTextContainer>
                   <LabeledInputText
-                    type="text"
-                    text="性"
-                    forName="firstName"
-                    inputWidth={'130px'}
-                    labelWidth={'155px'}
-                    value={employee.firstName}
+                    type="email"
+                    text="メールアドレス"
+                    forName="employee_email"
+                    inputWidth={'350px'}
+                    labelWidth={'140px'}
+                    register={register('email', { required: true })}
+                    errors={errors.email?.type}
                   ></LabeledInputText>
                 </LabeledInputTextContainer>
-                <LabeledInputTextContainer>
-                  <LabeledInputText
-                    type="text"
-                    text="名"
-                    forName="lastName"
-                    inputWidth={'130px'}
-                    labelWidth={'40px'}
-                    value={employee.lastName}
-                  ></LabeledInputText>
-                </LabeledInputTextContainer>
-              </LabeledInputsTextContainer>
-              <LabeledInputTextContainer>
-                <LabeledInputText
-                  type="email"
-                  text="メールアドレス"
-                  forName="employee_email"
-                  inputWidth={'350px'}
-                  labelWidth={'140px'}
-                  value={employee.email}
-                ></LabeledInputText>
-              </LabeledInputTextContainer>
-            </LabeledInputTextWrapper>
-            <ButtonWrapper>
-              <ButtonContainer>
-                <Button
-                  text="登録"
-                  onClick={() => handleSubmitEmployee()}
-                ></Button>
-              </ButtonContainer>
-              <ButtonContainer>
-                <Button
-                  text="戻る"
-                  onClick={() => handleCloseModal()}
-                  gray
-                ></Button>
-              </ButtonContainer>
-            </ButtonWrapper>
+              </LabeledInputTextWrapper>
+              <ButtonWrapper>
+                <ButtonContainer>
+                  <Button text="更新" type="submit"></Button>
+                </ButtonContainer>
+                <ButtonContainer>
+                  <Button
+                    text="戻る"
+                    onClick={() => handleCloseModal()}
+                    gray
+                  ></Button>
+                </ButtonContainer>
+              </ButtonWrapper>
+            </form>
           </Container>
         </Wrapper>
       ) : (

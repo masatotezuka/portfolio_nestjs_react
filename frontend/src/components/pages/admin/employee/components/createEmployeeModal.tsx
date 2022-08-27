@@ -3,19 +3,18 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
 import { Button } from '../../../../shared/parts/button/button';
 import { LabeledInputText } from '../../../../shared/parts/inputText/labeledInputText';
-import { User } from '../../../../../features/types';
+import { Employee } from '../../../../../features/types';
 import { useAppDispatch } from '../../../../../hooks';
-import { createUser } from '../../../../../store/userSlice';
+import { createEmployee } from '../../../../../store/employeeSlice';
 
 type Props = {
   showModal: boolean;
-  handleSubmitEmployee: () => void;
   handleCloseModal: () => void;
 };
 
 export const CreateEmployeeModal = ({
   showModal,
-  handleSubmitEmployee,
+
   handleCloseModal,
 }: Props) => {
   const dispatch = useAppDispatch();
@@ -25,10 +24,10 @@ export const CreateEmployeeModal = ({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<User>();
-  const onSubmit: SubmitHandler<User> = async (data) => {
+  } = useForm<Employee>();
+  const onSubmit: SubmitHandler<Employee> = async (data) => {
     try {
-      dispatch(createUser(data));
+      dispatch(createEmployee(data));
       reset();
     } catch (error) {
       console.log(error);
@@ -78,22 +77,15 @@ export const CreateEmployeeModal = ({
                     errors={errors.email?.type}
                   ></LabeledInputText>
                 </LabeledInputTextContainer>
-                {/* <LabeledInputTextContainer>
-                <LabeledInputText
-                  type="text"
-                  text="パスワード"
-                  forName="employee_password"
-                  inputWidth={'350px'}
-                  labelWidth={'140px'}
-                ></LabeledInputText>
-              </LabeledInputTextContainer> */}
+                <p>
+                  初期パスワードはメールアドレスになります。
+                  <br />
+                  社員に初回ログイン時にパスワード更新するように依頼してください。
+                </p>
               </LabeledInputTextWrapper>
               <ButtonWrapper>
                 <ButtonContainer>
-                  <Button
-                    text="登録"
-                    onClick={() => handleSubmitEmployee()}
-                  ></Button>
+                  <Button text="登録" type="submit"></Button>
                 </ButtonContainer>
                 <ButtonContainer>
                   <Button
@@ -129,9 +121,8 @@ const Container = styled.div`
   top: 150px;
   max-width: 600px;
   left: 25%;
-  /* right: 25%; */
   z-index: 5;
-  padding: 20px 50px;
+  padding: 20px 40px;
   background-color: #ffffff;
 `;
 const Title = styled.h2`
@@ -140,7 +131,7 @@ const Title = styled.h2`
 `;
 
 const LabeledInputTextWrapper = styled.div`
-  padding: 0px 50px;
+  padding: 0px 30px;
 `;
 
 const LabeledInputsTextContainer = styled.div`
@@ -157,7 +148,7 @@ const LabeledInputTextContainer = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 30px 100px;
+  padding: 30px 70px;
 `;
 
 const ButtonContainer = styled.div`
