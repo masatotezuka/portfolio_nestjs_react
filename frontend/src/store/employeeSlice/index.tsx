@@ -59,12 +59,18 @@ const employeeSlice = createSlice({
         state.status = 'fulfilled';
         state.employees = action.payload;
       })
+      .addCase(fetchEmployees.rejected, (state, action) => {
+        state.status = 'rejected';
+      })
       .addCase(deleteEmployees.fulfilled, (state, action) => {
         state.status = 'fulfilled';
         const deletedUserId = action.payload;
         state.employees = state.employees.filter(
           (employee) => deletedUserId !== employee.id,
         );
+      })
+      .addCase(deleteEmployees.rejected, (state, action) => {
+        state.status = 'rejected';
       })
       .addCase(updateEmployee.fulfilled, (state, action) => {
         state.status = 'fulfilled';
@@ -74,6 +80,9 @@ const employeeSlice = createSlice({
         state.employees[index].firstName = action.payload.firstName;
         state.employees[index].lastName = action.payload.lastName;
         state.employees[index].email = action.payload.email;
+      })
+      .addCase(updateEmployee.rejected, (state, action) => {
+        state.status = 'rejected';
       });
   },
 });

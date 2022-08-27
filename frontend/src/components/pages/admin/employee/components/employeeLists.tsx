@@ -10,6 +10,7 @@ import {
   deleteEmployees,
   fetchEmployees,
 } from '../../../../../store/employeeSlice';
+import { ErrorPage } from '../../../common/errorPage';
 
 export const EmployeeLists = () => {
   const [showCreateEmployeeModal, setShowCreateEmployeeModal] =
@@ -32,7 +33,7 @@ export const EmployeeLists = () => {
   }, [dispatch]);
 
   const employees = useAppSelector((state) => state.employee.employees);
-
+  const status = useAppSelector((state) => state.employee.status);
   const handleOpenCreateEmployeeModal = () => {
     setShowCreateEmployeeModal(true);
   };
@@ -67,6 +68,13 @@ export const EmployeeLists = () => {
     dispatch(deleteEmployees(targetEmployee.id));
     setShowDeleteEmployeeModal(false);
   };
+  if (status === 'rejected') {
+    return (
+      <>
+        <ErrorPage></ErrorPage>
+      </>
+    );
+  }
 
   return (
     <>
