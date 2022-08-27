@@ -78,9 +78,9 @@ export const CreateEmployeeModal = ({
                   ></LabeledInputText>
                 </LabeledInputTextContainer>
                 <p>
-                  初期のパスワードはメールアドレスになります。
+                  初期パスワードはメールアドレスになります。
                   <br />
-                  社員にパスワード更新をするように依頼してください。
+                  社員に初回ログイン時にパスワード更新するように依頼してください。
                 </p>
               </LabeledInputTextWrapper>
               <ButtonWrapper>
@@ -121,9 +121,8 @@ const Container = styled.div`
   top: 150px;
   max-width: 600px;
   left: 25%;
-  /* right: 25%; */
   z-index: 5;
-  padding: 20px 50px;
+  padding: 20px 40px;
   background-color: #ffffff;
 `;
 const Title = styled.h2`
@@ -132,7 +131,7 @@ const Title = styled.h2`
 `;
 
 const LabeledInputTextWrapper = styled.div`
-  padding: 0px 50px;
+  padding: 0px 30px;
 `;
 
 const LabeledInputsTextContainer = styled.div`
@@ -149,7 +148,7 @@ const LabeledInputTextContainer = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 30px 100px;
+  padding: 30px 70px;
 `;
 
 const ButtonContainer = styled.div`
