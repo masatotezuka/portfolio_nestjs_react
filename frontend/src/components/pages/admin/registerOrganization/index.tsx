@@ -116,7 +116,7 @@ const LabeledInputTextContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  margin-top: 30px;
+  margin: 30px auto;
   width: 250px;
   height: 50px;
 `;
