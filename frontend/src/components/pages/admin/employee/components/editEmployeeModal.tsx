@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
 import { Employee } from '../../../../../features/types';

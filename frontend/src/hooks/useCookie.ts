@@ -8,8 +8,6 @@ export const useCookie = () => {
   };
 
   const removeAccessToken = () => {
-    console.log(cookie.accessToken);
-
     removeCookie('accessToken', { path: '/' });
   };
 
