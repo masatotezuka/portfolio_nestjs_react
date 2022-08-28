@@ -7,6 +7,8 @@ import { login } from '../../../../features/api';
 import { useNavigate } from 'react-router-dom';
 import { Login } from '../../../../features/types';
 import { useCookie } from '../../../../hooks/useCookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const LoginPage = () => {
   const { setAccessToken } = useCookie();
@@ -17,57 +19,72 @@ export const LoginPage = () => {
   } = useForm<Login>();
   const navigator = useNavigate();
   const onSubmit: SubmitHandler<Login> = async (data) => {
-    const token = await login(data);
-    setAccessToken(token);
-    navigator('/admin');
+    try {
+      const token = await login(data);
+      setAccessToken(token);
+      navigator('/admin');
+    } catch (error) {
+      toast.error('メールアドレスまたはパスワードが間違っています。', {
+        position: 'top-left',
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+      });
+    }
   };
   return (
-    <Container>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <InputsContainer>
-          <InputContainer>
-            <LabeledInputText
-              type="email"
-              text="メールアドレス"
-              forName="login_email"
-              inputWidth={'300px'}
-              labelWidth={'130px'}
-              register={register('email', { required: true })}
-              errors={errors.email?.type}
-            ></LabeledInputText>
-          </InputContainer>
-          <InputContainer>
-            <LabeledInputText
-              type="password"
-              text="パスワード"
-              forName="login_password"
-              inputWidth={'300px'}
-              labelWidth={'130px'}
-              placeholder="英数字（大文字/小文字）8〜16字"
-              register={register('password', {
-                required: true,
-                pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[\d])[a-zA-Z\d]{8,16}$/,
-              })}
-              errors={errors.password?.type}
-            ></LabeledInputText>
-          </InputContainer>
-        </InputsContainer>
-        <ButtonContainer>
-          <Button text="ログイン" type="submit"></Button>
-        </ButtonContainer>
-      </form>
-      <CardsWrapper>
-        <CardContainer>
-          <Card
-            path="/password-reset/request"
-            text="パスワードを変更する"
-          ></Card>
-        </CardContainer>
-        <CardContainer>
-          <Card path="/organization-registration" text="管理者を登録"></Card>
-        </CardContainer>
-      </CardsWrapper>
-    </Container>
+    <>
+      <ToastContainer />
+      <Container>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <InputsContainer>
+            <InputContainer>
+              <LabeledInputText
+                type="email"
+                text="メールアドレス"
+                forName="login_email"
+                inputWidth={'300px'}
+                labelWidth={'130px'}
+                register={register('email', { required: true })}
+                errors={errors.email?.type}
+              ></LabeledInputText>
+            </InputContainer>
+            <InputContainer>
+              <LabeledInputText
+                type="password"
+                text="パスワード"
+                forName="login_password"
+                inputWidth={'300px'}
+                labelWidth={'130px'}
+                placeholder="英数字（大文字/小文字）8〜16字"
+                register={register('password', {
+                  required: true,
+                  pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[\d])[a-zA-Z\d]{8,16}$/,
+                })}
+                errors={errors.password?.type}
+              ></LabeledInputText>
+            </InputContainer>
+          </InputsContainer>
+          <ButtonContainer>
+            <Button text="ログイン" type="submit"></Button>
+          </ButtonContainer>
+        </form>
+        <CardsWrapper>
+          <CardContainer>
+            <Card
+              path="/password-reset/request"
+              text="パスワードを変更する"
+            ></Card>
+          </CardContainer>
+          <CardContainer>
+            <Card path="/organization-registration" text="管理者を登録"></Card>
+          </CardContainer>
+        </CardsWrapper>
+      </Container>
+    </>
   );
 };
 
