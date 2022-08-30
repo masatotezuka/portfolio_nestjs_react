@@ -39,6 +39,7 @@ export type Employee = {
 
 export type CreateMachine = {
   id?: number;
+  symbol: string;
   category: string;
   name: string;
   purchasedAt: Date | string;

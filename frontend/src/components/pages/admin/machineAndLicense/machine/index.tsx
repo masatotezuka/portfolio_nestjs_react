@@ -11,6 +11,7 @@ export const MachinePage = () => {
   //型は同じ、APIを変える
   const initMachine = {
     category: '種別を選択してください',
+    symbol: '',
     name: '',
     purchasedAt: Date(),
     user: { userId: 0, firstName: '', lastName: '' },
@@ -20,6 +21,7 @@ export const MachinePage = () => {
   //TODO:機器の状態をストアから持ってくる
   const userMachine = {
     category: 'PC',
+    symbol: '1122ITEST',
     name: 'MacBook',
     purchasedAt: format(new Date(2022, 3 - 1, 2), 'yyyy-MM-dd'),
     user: { userId: 1, firstName: 'tezuka', lastName: 'masato' },

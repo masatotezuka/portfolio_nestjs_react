@@ -18,6 +18,7 @@ type Props = {
 
 type UserMachine = {
   id?: number;
+  symbol: string;
   category: string;
   name: string;
   purchasedAt: Date | string;
@@ -62,6 +63,17 @@ export const MachineForm = ({ buttonText, userMachine }: Props) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <InputContainer>
+          <LabeledInputText
+            type="text"
+            text="機器ID（必須）"
+            forName="machine_symbol"
+            inputWidth="300px"
+            labelWidth="120px"
+            register={register('symbol', { required: true })}
+            errors={errors.symbol?.type}
+          ></LabeledInputText>
+        </InputContainer>
         <InputContainer>
           <Text>種別（必須）</Text>
           <SelectBox
