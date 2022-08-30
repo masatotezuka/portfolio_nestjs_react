@@ -6,6 +6,17 @@ import { Admin } from '../../../../features/types';
 import { signUp } from '../../../../features/api';
 import { useNavigate } from 'react-router-dom';
 import { useCookie } from '../../../../hooks/useCookie';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const ToastMessage = () => {
+  return (
+    <p>
+      管理者登録が完了しました。
+      <br /> まずは「社員管理」から社員登録してください。
+    </p>
+  );
+};
 
 export const RegisterOrganizationPage = () => {
   const {
@@ -17,10 +28,21 @@ export const RegisterOrganizationPage = () => {
   const { setAccessToken } = useCookie();
 
   const onSubmit: SubmitHandler<Admin> = async (data) => {
-    const token = await signUp(data);
-    setAccessToken(token);
-    navigate('/admin');
-    window.alert('まずは社員管理から社員を登録してください。');
+    try {
+      const token = await signUp(data);
+      setAccessToken(token);
+      toast.success(<ToastMessage />, {
+        position: 'top-left',
+        hideProgressBar: true,
+        autoClose: 4000,
+      });
+      navigate('/admin');
+    } catch (error) {
+      toast.error('入力された情報に不備があります。', {
+        position: 'top-left',
+        hideProgressBar: true,
+      });
+    }
   };
 
   return (
@@ -116,7 +138,7 @@ const LabeledInputTextContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  margin-top: 30px;
+  margin: 30px auto;
   width: 250px;
   height: 50px;
 `;

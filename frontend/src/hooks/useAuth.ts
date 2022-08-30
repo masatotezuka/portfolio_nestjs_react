@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { verifyAccessToken } from '../features/api';
-import { useCookie } from './useCookie';
 
 export const useAuth = () => {
   const [check, setCheck] = useState<{
