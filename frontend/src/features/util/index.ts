@@ -7,8 +7,9 @@ export function getAccessTokenFromCookie() {
       const data = temp[i].split('=');
       let key = data[0];
       let value = data[1];
-      if (key === 'accessToken') {
+      if (key.trim() === 'accessToken') {
         cookie.accessToken = value;
+        return cookie.accessToken;
       }
     }
   }
