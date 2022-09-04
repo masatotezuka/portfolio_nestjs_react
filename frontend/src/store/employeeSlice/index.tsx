@@ -1,4 +1,9 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from '@reduxjs/toolkit';
+import { RootState } from '..';
 import {
   createEmployeeAdmin,
   deleteEmployeeAdmin,
@@ -86,5 +91,18 @@ const employeeSlice = createSlice({
       });
   },
 });
+export const employeeSelector = (state: RootState) => state.employee.employees;
+
+export const employeeFormOptionsSelector = createSelector(
+  employeeSelector,
+  (employees) =>
+    employees.map((employee) => {
+      return {
+        id: employee.id,
+        value: employee.id,
+        text: employee.lastName + employee.firstName,
+      };
+    }),
+);
 
 export default employeeSlice.reducer;
