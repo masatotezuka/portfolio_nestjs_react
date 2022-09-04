@@ -26,6 +26,58 @@ export class MachineService {
     private AppDataSource: DataSource,
   ) {}
 
+  async fetchMachines(): Promise<MachineItems[]> {
+    const results = await this.machineRepository.find({
+      select: {
+        id: true,
+        symbol: true,
+        name: true,
+        category: true,
+        purchasedAt: true,
+        machineHistories: { usageStatus: true, updateAt: true },
+        userMachines: {
+          id: true,
+          user: { id: true, firstName: true, lastName: true },
+        },
+      },
+      relations: { machineHistories: true, userMachines: { user: true } },
+    });
+
+    const response = results.map((result) => {
+      if (!result.userMachines[0]) {
+        return {
+          id: result.id,
+          symbol: result.symbol,
+          name: result.name,
+          category: result.category,
+          purchasedAt: result.purchasedAt,
+          usageStatus: result.machineHistories[0].usageStatus,
+          updatedAt: result.machineHistories[0].updateAt,
+          user: {
+            id: 0,
+            firstName: '',
+            lastName: '',
+          },
+        };
+      }
+      return {
+        id: result.id,
+        symbol: result.symbol,
+        name: result.name,
+        category: result.category,
+        purchasedAt: result.purchasedAt,
+        usageStatus: result.machineHistories[0].usageStatus,
+        updatedAt: result.machineHistories[0].updateAt,
+        user: {
+          id: result.userMachines[0].user.id,
+          firstName: result.userMachines[0].user.firstName,
+          lastName: result.userMachines[0].user.lastName,
+        },
+      };
+    });
+    return response;
+  }
+
   async createMachine(
     createMachineDto: CreateMachineDto,
   ): Promise<MachineItems> {
@@ -96,7 +148,7 @@ export class MachineService {
         category: result.category,
         purchasedAt: result.purchasedAt,
         usageStatus: result.machineHistories[0].usageStatus,
-        updateAt: result.machineHistories[0].updateAt,
+        updatedAt: result.machineHistories[0].updateAt,
       };
       return response;
     }
@@ -108,7 +160,7 @@ export class MachineService {
       category: result.category,
       purchasedAt: result.purchasedAt,
       usageStatus: result.machineHistories[0].usageStatus,
-      updateAt: result.machineHistories[0].updateAt,
+      updatedAt: result.machineHistories[0].updateAt,
       user: {
         id: result.userMachines[0].user.id,
         firstName: result.userMachines[0].user.firstName,

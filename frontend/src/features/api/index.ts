@@ -5,7 +5,7 @@ import {
   RequestPasswordReset,
   VerifyPassword,
   CreateMachine,
-  Machine,
+  MachineItem,
   Employee,
 } from '../types';
 import { getAccessTokenFromCookie } from '../utils/getAccessTokenFromCookie';
@@ -51,10 +51,15 @@ export const verifyAccessToken = async () => {
   return response.statusText;
 };
 
-export const createAdminMachines = async (
+export const createAdminMachine = async (
   data: CreateMachine,
-): Promise<Machine> => {
+): Promise<MachineItem> => {
   const response = await axios.post(`http://localhost:8000/machines`, data);
+  return response.data;
+};
+
+export const fetchAdminMachines = async (): Promise<MachineItem[]> => {
+  const response = await axios.get(`http://localhost:8000/machines`);
   return response.data;
 };
 

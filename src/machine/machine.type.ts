@@ -7,6 +7,6 @@ export type MachineItems = {
   category: string;
   purchasedAt: Date;
   usageStatus: string;
-  updateAt: Date;
+  updatedAt: Date;
   user?: User;
 };
