@@ -1,6 +1,6 @@
-import { User } from 'src/user/user.interface';
+import { User } from 'src/user/user.type';
 
-export interface MachineItems {
+export type MachineItems = {
   id: number;
   symbol: string;
   name: string;
@@ -9,4 +9,4 @@ export interface MachineItems {
   usageStatus: string;
   updateAt: Date;
   user?: User;
-}
+};

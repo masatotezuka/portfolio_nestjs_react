@@ -6,7 +6,7 @@ import { UserMachine } from 'src/entity/user-machine.entity';
 import { User } from 'src/entity/user.entity';
 import { DataSource, Repository } from 'typeorm';
 import { CreateMachineDto } from './machine.dto';
-import { MachineItems } from './machine.interface';
+import { MachineItems } from './machine.type';
 
 @Injectable()
 export class MachineService {
