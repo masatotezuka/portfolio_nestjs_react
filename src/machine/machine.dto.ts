@@ -2,6 +2,9 @@ import { IsNotEmpty } from 'class-validator';
 
 export class CreateMachineDto {
   @IsNotEmpty()
+  symbol: string;
+
+  @IsNotEmpty()
   category: string;
 
   @IsNotEmpty()
