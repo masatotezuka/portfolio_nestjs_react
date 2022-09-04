@@ -7,8 +7,7 @@ import { login } from '../../../../features/api';
 import { useNavigate } from 'react-router-dom';
 import { Login } from '../../../../features/types';
 import { useCookie } from '../../../../hooks/useCookie';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { StyledToastContainer } from '../../../shared/parts/toast';
 
 export const LoginPage = () => {
