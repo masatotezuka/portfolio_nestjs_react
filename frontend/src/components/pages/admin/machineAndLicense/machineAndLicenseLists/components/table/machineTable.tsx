@@ -1,11 +1,16 @@
 import styled from 'styled-components';
-
-export const MachineTable = () => {
+import { MachineItem } from '../../../../../../../features/types';
+import { format } from 'date-fns';
+type Props = {
+  machineItems: MachineItem[];
+};
+export const MachineTable = ({ machineItems }: Props) => {
   return (
     <>
       <StyledMachineTable>
         <thead>
           <tr>
+            <th>機器ID</th>
             <th>種別</th>
             <th>機器名</th>
             <th>購入日</th>
@@ -15,14 +20,20 @@ export const MachineTable = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-          </tr>
+          {machineItems.map((item) => {
+            const updatedAt = item.updatedAt.substring(0, 10);
+            return (
+              <tr key={item.id}>
+                <td>{item.symbol}</td>
+                <td>{item.category} </td>
+                <td>{item.name}</td>
+                <td>{item.purchasedAt?.toString()}</td>
+                <td>{item.user.firstName + item.user.lastName}</td>
+                <td>{updatedAt} </td>
+                <td>{item.usageStatus}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </StyledMachineTable>
     </>

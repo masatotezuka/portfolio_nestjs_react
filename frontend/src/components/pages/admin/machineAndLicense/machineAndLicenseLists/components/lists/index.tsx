@@ -1,5 +1,12 @@
+import { useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import styled from 'styled-components';
+import { useAppDispatch, useAppSelector } from '../../../../../../../hooks';
+import {
+  fetchMachines,
+  machineItemsSelector,
+} from '../../../../../../../store/machineSlice';
+import { ErrorPage } from '../../../../../common/errorPage';
 import { LicenseTable } from '../table/licenseTable';
 import { MachineTable } from '../table/machineTable';
 
@@ -8,6 +15,22 @@ type Props = {
 };
 
 export const Lists = ({ handleToggleTabIndex }: Props) => {
+  const machineItems = useAppSelector(machineItemsSelector);
+  const status = useAppSelector((state) => state.machine.status);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchMachines());
+  }, []);
+
+  if (status === 'rejected') {
+    return (
+      <>
+        <ErrorPage></ErrorPage>
+      </>
+    );
+  }
+
   return (
     <>
       <StyledTabs
@@ -24,7 +47,7 @@ export const Lists = ({ handleToggleTabIndex }: Props) => {
           </Tab>
         </TabList>
         <TabPanel>
-          <MachineTable></MachineTable>
+          <MachineTable machineItems={machineItems}></MachineTable>
         </TabPanel>
         <TabPanel>
           <LicenseTable></LicenseTable>
