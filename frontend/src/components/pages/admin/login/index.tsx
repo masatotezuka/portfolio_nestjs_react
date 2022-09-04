@@ -9,6 +9,7 @@ import { Login } from '../../../../features/types';
 import { useCookie } from '../../../../hooks/useCookie';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { StyledToastContainer } from '../../../shared/parts/toast';
 
 export const LoginPage = () => {
   const { setAccessToken } = useCookie();
@@ -24,20 +25,12 @@ export const LoginPage = () => {
       setAccessToken(token);
       navigator('/admin');
     } catch (error) {
-      toast.error('メールアドレスまたはパスワードが間違っています。', {
-        position: 'top-left',
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-      });
+      toast.error('メールアドレスまたはパスワードが間違っています。');
     }
   };
   return (
     <>
-      <ToastContainer />
+      <StyledToastContainer />
       <Container>
         <form onSubmit={handleSubmit(onSubmit)}>
           <InputsContainer>
