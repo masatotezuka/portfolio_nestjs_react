@@ -16,6 +16,9 @@ export class Machine {
   id: number;
 
   @Column()
+  symbol: string;
+
+  @Column()
   category: string;
 
   @Column()

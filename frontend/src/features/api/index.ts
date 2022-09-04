@@ -8,7 +8,7 @@ import {
   Machine,
   Employee,
 } from '../types';
-import { getAccessTokenFromCookie } from '../util';
+import { getAccessTokenFromCookie } from '../utils/getAccessTokenFromCookie';
 
 axios.defaults.withCredentials = true;
 axios.interceptors.request.use((config) => {

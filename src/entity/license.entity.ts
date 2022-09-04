@@ -17,6 +17,9 @@ export class License {
   id: number;
 
   @Column()
+  symbol: string;
+
+  @Column()
   name: string;
 
   @Column({ type: 'date', nullable: true })

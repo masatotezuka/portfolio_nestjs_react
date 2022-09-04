@@ -9,7 +9,13 @@ import {
   usageStatusOptions,
 } from '../../../../../../features/constants/formOptions';
 import { createMachine } from '../../../../../../store/machineSlice';
-import { useAppDispatch } from '../../../../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../../../../hooks';
+import { useEffect } from 'react';
+import {
+  employeeFormOptionsSelector,
+  fetchEmployees,
+} from '../../../../../../store/employeeSlice';
+import { toast } from 'react-toastify';
 
 type Props = {
   buttonText: string;
@@ -18,6 +24,7 @@ type Props = {
 
 type UserMachine = {
   id?: number;
+  symbol: string;
   category: string;
   name: string;
   purchasedAt: Date | string;
@@ -34,10 +41,10 @@ type User = {
 
 export const MachineForm = ({ buttonText, userMachine }: Props) => {
   const userName = userMachine.user.firstName + userMachine.user.lastName;
-
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<CreateMachine>({
     defaultValues: {
@@ -46,22 +53,36 @@ export const MachineForm = ({ buttonText, userMachine }: Props) => {
     },
   });
 
+  const employeeOptions = useAppSelector(employeeFormOptionsSelector);
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchEmployees());
+  }, []);
 
   const onSubmit: SubmitHandler<CreateMachine> = (data) => {
-    dispatch(createMachine(data));
-    window.alert('登録完了');
+    try {
+      dispatch(createMachine(data));
+      toast.success('登録完了');
+      reset();
+    } catch (error) {
+      toast.error('予期せぬエラーが起こりましt。');
+    }
   };
-
-  //TODO: 利用者のデータをfetch
-  const userOptions = [
-    { id: 1, value: 1, text: 'Tezuka' },
-    { id: 2, value: 2, text: 'Yamada' },
-  ];
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <InputContainer>
+          <LabeledInputText
+            type="text"
+            text="機器ID（必須）"
+            forName="machine_symbol"
+            inputWidth="300px"
+            labelWidth="120px"
+            register={register('symbol', { required: true })}
+            errors={errors.symbol?.type}
+          ></LabeledInputText>
+        </InputContainer>
         <InputContainer>
           <Text>種別（必須）</Text>
           <SelectBox
@@ -98,7 +119,7 @@ export const MachineForm = ({ buttonText, userMachine }: Props) => {
         <InputContainer>
           <Text>利用者（任意）</Text>
           <SelectBox
-            options={userOptions}
+            options={employeeOptions}
             firstDisplayName={userName}
             name="user_name"
             width="314px"

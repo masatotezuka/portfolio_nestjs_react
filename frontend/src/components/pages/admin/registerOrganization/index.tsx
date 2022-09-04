@@ -7,7 +7,6 @@ import { signUp } from '../../../../features/api';
 import { useNavigate } from 'react-router-dom';
 import { useCookie } from '../../../../hooks/useCookie';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const ToastMessage = () => {
   return (
@@ -31,17 +30,10 @@ export const RegisterOrganizationPage = () => {
     try {
       const token = await signUp(data);
       setAccessToken(token);
-      toast.success(<ToastMessage />, {
-        position: 'top-left',
-        hideProgressBar: true,
-        autoClose: 4000,
-      });
+      toast.success(<ToastMessage />);
       navigate('/admin');
     } catch (error) {
-      toast.error('入力された情報に不備があります。', {
-        position: 'top-left',
-        hideProgressBar: true,
-      });
+      toast.error('入力された情報に不備があります。');
     }
   };
 
