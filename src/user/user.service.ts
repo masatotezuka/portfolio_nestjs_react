@@ -75,7 +75,10 @@ export class UserService {
   }
 
   async findOne(email: string): Promise<User | undefined> {
-    return this.userRepository.findOne({ where: { email: email } });
+    return this.userRepository.findOne({
+      where: { email: email },
+      relations: { organization: true },
+    });
   }
 
   async createVerificationToken(email: string) {
