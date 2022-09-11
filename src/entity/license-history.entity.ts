@@ -16,7 +16,7 @@ export class LicenseHistory {
   id: number;
 
   @Column()
-  usageStatus:string
+  usageStatus: string;
 
   @ManyToOne(() => User, (user) => user.licenseHistories, { nullable: true })
   user: User;
