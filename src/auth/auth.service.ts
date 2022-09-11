@@ -27,14 +27,18 @@ export class AuthService {
 
   async login(
     credentialsDto: CredentialsDto,
-  ): Promise<{ accessToken: string }> {
+  ): Promise<{ accessToken: string; userId: number }> {
     const { email, password } = credentialsDto;
 
     const user = await this.userService.findOne(email);
     if (user && (await bcrypt.compare(password, user.password))) {
-      const payload = { id: user.id, username: user.firstName + user.lastName };
+      const payload = {
+        id: user.organization.id,
+        username: user.firstName + user.lastName,
+      };
       const accessToken = this.jwtService.sign(payload);
-      return { accessToken };
+      const userId = payload.id;
+      return { accessToken, userId };
     }
     throw new UnauthorizedException();
   }
