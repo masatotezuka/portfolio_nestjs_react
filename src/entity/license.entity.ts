@@ -9,6 +9,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { LicenseHistory } from './license-history.entity';
+import { Organization } from './organization.entity';
 import { UserLicense } from './user-license.entity';
 
 @Entity('licenses')
@@ -46,4 +47,7 @@ export class License {
     cascade: true,
   })
   licenseHistories: LicenseHistory[];
+
+  @ManyToOne(() => Organization, (organization) => organization.license)
+  organization: Organization;
 }

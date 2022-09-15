@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import { StyledToastContainer } from '../../../shared/parts/toast';
 
 export const LoginPage = () => {
-  const { setAccessToken } = useCookie();
+  const { setAccessToken, setAdminId } = useCookie();
   const {
     register,
     handleSubmit,
@@ -20,8 +20,9 @@ export const LoginPage = () => {
   const navigator = useNavigate();
   const onSubmit: SubmitHandler<Login> = async (data) => {
     try {
-      const token = await login(data);
-      setAccessToken(token);
+      const { accessToken, userId } = await login(data);
+      setAccessToken(accessToken);
+      setAdminId(userId);
       navigator('/admin');
     } catch (error) {
       toast.error('メールアドレスまたはパスワードが間違っています。');

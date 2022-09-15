@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MachineHistory } from 'src/entity/machine-history.entity';
 import { Machine } from 'src/entity/machine.entity';
+import { Organization } from 'src/entity/organization.entity';
 import { UserMachine } from 'src/entity/user-machine.entity';
 import { User } from 'src/entity/user.entity';
 import { DataSource, Repository } from 'typeorm';
@@ -23,10 +24,13 @@ export class MachineService {
     @InjectRepository(UserMachine)
     private userMachineRepository: Repository<UserMachine>,
 
+    @InjectRepository(Organization)
+    private organizationRepository: Repository<Organization>,
+
     private AppDataSource: DataSource,
   ) {}
 
-  async fetchMachines(): Promise<MachineItems[]> {
+  async fetchMachinesByUserId(adminId: number): Promise<MachineItems[]> {
     const results = await this.machineRepository.find({
       select: {
         id: true,
@@ -39,8 +43,12 @@ export class MachineService {
           id: true,
           user: { id: true, firstName: true, lastName: true },
         },
+        organization: {
+          id: true,
+        },
       },
       relations: { machineHistories: true, userMachines: { user: true } },
+      where: { organization: { id: adminId } },
     });
 
     const response = results.map((result) => {
@@ -75,11 +83,14 @@ export class MachineService {
         },
       };
     });
+    console.log(response);
+
     return response;
   }
 
   async createMachine(
     createMachineDto: CreateMachineDto,
+    adminId: number,
   ): Promise<MachineItems> {
     const { symbol, category, name, purchasedAt, userId, usageStatus } =
       createMachineDto;
@@ -91,10 +102,14 @@ export class MachineService {
       purchasedAt: purchasedAt,
     });
 
+    const organization = this.organizationRepository.create({
+      id: adminId,
+    });
     const machineHistory = this.machineHistoryRepository.create({
       usageStatus: usageStatus,
     });
     const userMachine = this.userMachineRepository.create();
+    machine.organization = organization;
     machineHistory.machine = machine;
     userMachine.machine = machine;
 

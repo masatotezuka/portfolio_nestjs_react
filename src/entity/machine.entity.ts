@@ -6,8 +6,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToOne,
 } from 'typeorm';
 import { MachineHistory } from './machine-history.entity';
+import { Organization } from './organization.entity';
 import { UserMachine } from './user-machine.entity';
 
 @Entity('machines')
@@ -45,4 +47,7 @@ export class Machine {
     cascade: true,
   })
   machineHistories: MachineHistory[];
+
+  @ManyToOne(() => Organization, (organization) => organization.machine)
+  organization: Organization;
 }

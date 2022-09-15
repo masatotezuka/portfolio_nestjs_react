@@ -9,6 +9,7 @@ import {
   Employee,
 } from '../types';
 import { getAccessTokenFromCookie } from '../utils/getAccessTokenFromCookie';
+import { getAdminIdFromCookie } from '../utils/getAdminIdFromCookie';
 
 axios.defaults.withCredentials = true;
 axios.interceptors.request.use((config) => {
@@ -21,10 +22,14 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
+const adminId = getAdminIdFromCookie();
+
 //返り値の型指定をするか
-export const login = async (data: Login) => {
+export const login = async (
+  data: Login,
+): Promise<{ accessToken: string; userId: number }> => {
   const response = await axios.post(`http://localhost:8000/auth/login`, data);
-  return response.data.accessToken;
+  return response.data;
 };
 
 export const signUp = async (data: Admin) => {
@@ -54,12 +59,15 @@ export const verifyAccessToken = async () => {
 export const createAdminMachine = async (
   data: CreateMachine,
 ): Promise<MachineItem> => {
-  const response = await axios.post(`http://localhost:8000/machines`, data);
+  const response = await axios.post(
+    `http://localhost:8000/machines/${adminId}`,
+    data,
+  );
   return response.data;
 };
 
-export const fetchAdminMachines = async (): Promise<MachineItem[]> => {
-  const response = await axios.get(`http://localhost:8000/machines`);
+export const fetchAdminMachinesByUserId = async (): Promise<MachineItem[]> => {
+  const response = await axios.get(`http://localhost:8000/machines/${adminId}`);
   return response.data;
 };
 

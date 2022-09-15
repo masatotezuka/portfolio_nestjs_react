@@ -7,6 +7,8 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
+import { License } from './license.entity';
+import { Machine } from './machine.entity';
 import { OrganizationMailSetting } from './organization-mail-setting.entity';
 
 @Entity('organizations')
@@ -32,4 +34,14 @@ export class Organization {
     { cascade: true },
   )
   organizationMailSettings: OrganizationMailSetting[];
+
+  @OneToMany(() => Machine, (machine) => machine.organization, {
+    cascade: true,
+  })
+  machine: Machine;
+
+  @OneToMany(() => License, (license) => license.organization, {
+    cascade: true,
+  })
+  license: License;
 }

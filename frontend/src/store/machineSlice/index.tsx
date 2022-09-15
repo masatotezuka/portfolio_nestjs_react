@@ -4,7 +4,10 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 import { RootState } from '..';
-import { createAdminMachine, fetchAdminMachines } from '../../features/api';
+import {
+  createAdminMachine,
+  fetchAdminMachinesByUserId,
+} from '../../features/api';
 import { MachineItem, CreateMachine } from '../../features/types';
 
 type InitialState = {
@@ -27,7 +30,7 @@ export const createMachine = createAsyncThunk(
 export const fetchMachines = createAsyncThunk(
   'machine/fetch',
   async (): Promise<MachineItem[]> => {
-    return await fetchAdminMachines();
+    return await fetchAdminMachinesByUserId();
   },
 );
 
