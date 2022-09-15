@@ -22,7 +22,6 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-
 const adminId = getAdminIdFromCookie();
 
 //返り値の型指定をするか
@@ -60,7 +59,10 @@ export const verifyAccessToken = async () => {
 export const createAdminMachine = async (
   data: CreateMachine,
 ): Promise<MachineItem> => {
-  const response = await axios.post(`http://localhost:8000/machines`, data);
+  const response = await axios.post(
+    `http://localhost:8000/machines/${adminId}`,
+    data,
+  );
   return response.data;
 };
 
