@@ -28,7 +28,7 @@ export type MachineItem = {
   name: string;
   purchasedAt?: Date | string;
   updatedAt: string;
-  user: Employee;
+  user?: Employee;
   usageStatus: string;
 };
 

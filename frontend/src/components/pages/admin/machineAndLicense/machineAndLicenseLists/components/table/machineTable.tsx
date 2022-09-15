@@ -28,7 +28,9 @@ export const MachineTable = ({ machineItems }: Props) => {
                 <td>{item.category} </td>
                 <td>{item.name}</td>
                 <td>{item.purchasedAt?.toString()}</td>
-                <td>{item.user.firstName + item.user.lastName}</td>
+                <td>
+                  {item.user ? item.user.firstName + item.user.lastName : ''}
+                </td>
                 <td>{updatedAt} </td>
                 <td>{item.usageStatus}</td>
               </tr>
