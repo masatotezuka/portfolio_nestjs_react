@@ -71,3 +71,17 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
+## add migration
+
+Fix entity
+
+```zsh
+$ npm run migration:generate [file]
+
+# drop all schema
+$ npm run schema:drop
+
+$ npm run migration:run
+```
