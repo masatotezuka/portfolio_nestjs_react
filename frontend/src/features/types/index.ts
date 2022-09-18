@@ -21,12 +21,12 @@ export type VerifyPassword = {
   token?: string;
 };
 
-export type MachineItem = {
-  id?: number;
+export type Machine = {
+  id: number;
   symbol: string;
   category: string;
   name: string;
-  purchasedAt?: Date | string;
+  purchasedAt?: string;
   updatedAt: string;
   user?: Employee;
   usageStatus: string;
