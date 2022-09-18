@@ -1,9 +1,11 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { MachineItem } from '../../../../../../../features/types';
-import { format } from 'date-fns';
+import { Machine } from '../../../../../../../features/types';
+
 type Props = {
-  machineItems: MachineItem[];
+  machineItems: Machine[];
 };
+
 export const MachineTable = ({ machineItems }: Props) => {
   return (
     <>
@@ -24,7 +26,11 @@ export const MachineTable = ({ machineItems }: Props) => {
             const updatedAt = item.updatedAt.substring(0, 10);
             return (
               <tr key={item.id}>
-                <td>{item.symbol}</td>
+                <td>
+                  <Link to={`/admin/machine-license/machine/edit/${item.id}`}>
+                    {item.symbol}
+                  </Link>
+                </td>
                 <td>{item.category} </td>
                 <td>{item.name}</td>
                 <td>{item.purchasedAt?.toString()}</td>
