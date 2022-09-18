@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../../../../../../hooks';
 import {
   fetchMachines,
-  machineItemsSelector,
+  selectAllMachines,
 } from '../../../../../../../store/machineSlice';
 import { ErrorPage } from '../../../../../common/errorPage';
 import { LicenseTable } from '../table/licenseTable';
@@ -14,23 +14,18 @@ type Props = {
   handleToggleTabIndex: (index: number) => void;
 };
 
-export const Lists = ({ handleToggleTabIndex }: Props) => {
-  const machineItems = useAppSelector(machineItemsSelector);
-  const status = useAppSelector((state) => state.machine.status);
+export const MachineAndLicenseLists = ({ handleToggleTabIndex }: Props) => {
+  const machineItems = useAppSelector(selectAllMachines);
+  const status = useAppSelector((state) => state.machines.status);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchMachines());
-  }, []);
+  }, [dispatch]);
 
   if (status === 'rejected') {
-    return (
-      <>
-        <ErrorPage></ErrorPage>
-      </>
-    );
+    return <ErrorPage></ErrorPage>;
   }
-
   return (
     <>
       <StyledTabs

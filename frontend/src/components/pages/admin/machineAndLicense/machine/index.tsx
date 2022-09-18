@@ -1,32 +1,29 @@
 import styled from 'styled-components';
 import { Header } from '../../../../shared/layout/header';
 import { MachineForm } from './components/machineForm';
-import { useLocation } from 'react-router-dom';
-import { format } from 'date-fns';
+import { useLocation, useParams } from 'react-router-dom';
+import { useAppSelector } from '../../../../../hooks';
+import { selectMachineById } from '../../../../../store/machineSlice';
+import { Machine } from '../../../../../features/types';
 
 export const MachinePage = () => {
   const location = useLocation();
-
-  //TODO: 更新と登録の関数を作成して、MachineFormに渡す
-  //型は同じ、APIを変える
+  const urlParams = useParams<{ id: string }>();
+  const paramsId = Number(urlParams.id);
   const initMachine = {
+    id: 0,
     category: '種別を選択してください',
     symbol: '',
     name: '',
     purchasedAt: Date(),
-    user: { userId: 0, firstName: '', lastName: '' },
+    updatedAt: '',
+    user: { id: 0, firstName: '', lastName: '' },
     usageStatus: '現在のステータスを選択してください',
   };
-
-  //TODO:機器の状態をストアから持ってくる
-  const userMachine = {
-    category: 'PC',
-    symbol: '1122ITEST',
-    name: 'MacBook',
-    purchasedAt: format(new Date(2022, 3 - 1, 2), 'yyyy-MM-dd'),
-    user: { userId: 1, firstName: 'tezuka', lastName: 'masato' },
-    usageStatus: '使用中',
-  };
+  const machineItem = useAppSelector((state) =>
+    selectMachineById(state, paramsId),
+  );
+  if (!machineItem) return null;
 
   return (
     <>
@@ -35,13 +32,14 @@ export const MachinePage = () => {
         {location.pathname === '/admin/machine-license/machine/create' && (
           <MachineForm
             buttonText="登録"
-            userMachine={initMachine}
+            machineItem={initMachine}
           ></MachineForm>
         )}
-        {location.pathname === '/admin/machine-license/machine/edit' && (
+        {location.pathname ===
+          `/admin/machine-license/machine/edit/${urlParams.id}` && (
           <MachineForm
             buttonText="更新"
-            userMachine={userMachine}
+            machineItem={machineItem}
           ></MachineForm>
         )}
       </Container>
