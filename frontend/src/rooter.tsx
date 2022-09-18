@@ -29,7 +29,7 @@ export const AuthRooter = () => {
               ></Route>
               <Route path="machine">
                 <Route path="create" element={<MachinePage />}></Route>
-                <Route path="edit" element={<MachinePage />}></Route>
+                <Route path="edit/:id" element={<MachinePage />}></Route>
               </Route>
               <Route path="license">
                 <Route path="create" element={<LicensePage />}></Route>
