@@ -3,19 +3,16 @@ import { UserModule } from 'src/user/user.module';
 import { AuthService } from './auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from 'src/entity/user.entity';
 import { ConfigModule } from '@nestjs/config';
 import * as dotenv from 'dotenv';
+import { PrismaService } from 'src/prisma.servise';
 dotenv.config();
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
     forwardRef(() => UserModule),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
@@ -24,7 +21,7 @@ dotenv.config();
     }),
     ConfigModule.forRoot(),
   ],
-  providers: [AuthService, JwtStrategy, JwtAuthGuard],
+  providers: [AuthService, JwtStrategy, JwtAuthGuard, PrismaService],
   controllers: [AuthController],
   exports: [AuthService, JwtStrategy, JwtAuthGuard],
 })
