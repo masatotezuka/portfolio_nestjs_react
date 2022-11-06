@@ -6,6 +6,7 @@ import { AuthModule } from 'src/auth/auth.module';
 import { AuthService } from 'src/auth/auth.service';
 import { Organization } from 'src/entity/organization.entity';
 import { User } from 'src/entity/user.entity';
+import { PrismaService } from 'src/prisma.servise';
 import { SendgridModule } from 'src/sendgrid/sendgrid.module';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
@@ -18,7 +19,7 @@ import { UserService } from './user.service';
     SendgridModule.register(process.env.SENDGRID_API_KEY),
   ],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, PrismaService],
   exports: [UserService],
 })
 export class UserModule {}
