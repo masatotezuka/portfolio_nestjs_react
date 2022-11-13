@@ -5,9 +5,6 @@ import {
   forwardRef,
   Inject,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Organization } from 'src/entity/organization.entity';
-import { Repository } from 'typeorm';
 import {
   CreateAdminDto,
   CreateUserDto,
@@ -28,13 +25,8 @@ import { PrismaService } from 'src/prisma.servise';
 export class UserService {
   constructor(
     private prisma: PrismaService,
-
     @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
-
-    @InjectRepository(Organization)
-    private organizationRepository: Repository<Organization>,
-
     private sendgrid: SendgridEmitter,
   ) {}
 
