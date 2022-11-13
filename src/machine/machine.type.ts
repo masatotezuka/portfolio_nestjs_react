@@ -1,6 +1,6 @@
 import { User } from 'src/user/user.type';
 
-export type MachineItems = {
+export type MachineItem = {
   id: number;
   symbol: string;
   name: string;

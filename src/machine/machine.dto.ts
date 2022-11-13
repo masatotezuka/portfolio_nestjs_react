@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsDate, IsNotEmpty } from 'class-validator';
+import { IsDate, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateMachineDto {
   @IsNotEmpty()
@@ -15,6 +15,8 @@ export class CreateMachineDto {
   @Type(() => Date)
   purchasedAt: Date | undefined;
 
+  @IsNumber()
+  @Type(() => Number)
   userId: number;
 
   @IsNotEmpty()
@@ -34,8 +36,12 @@ export class UpdateMachineDto {
   @IsNotEmpty()
   name: string;
 
-  purchasedAt: Date | string | undefined;
+  @IsDate()
+  @Type(() => Date)
+  purchasedAt: Date | undefined;
 
+  @IsNumber()
+  @Type(() => Number)
   userId: number;
 
   @IsNotEmpty()
