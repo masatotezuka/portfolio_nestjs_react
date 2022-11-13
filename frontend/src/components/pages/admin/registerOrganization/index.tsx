@@ -6,6 +6,16 @@ import { Admin } from '../../../../features/types';
 import { signUp } from '../../../../features/api';
 import { useNavigate } from 'react-router-dom';
 import { useCookie } from '../../../../hooks/useCookie';
+import { toast } from 'react-toastify';
+
+const ToastMessage = () => {
+  return (
+    <p>
+      管理者登録が完了しました。
+      <br /> まずは「社員管理」から社員登録してください。
+    </p>
+  );
+};
 
 export const RegisterOrganizationPage = () => {
   const {
@@ -14,13 +24,18 @@ export const RegisterOrganizationPage = () => {
     formState: { errors },
   } = useForm<Admin>();
   const navigate = useNavigate();
-  const { setAccessToken } = useCookie();
+  const { setAccessToken, setAdminId } = useCookie();
 
   const onSubmit: SubmitHandler<Admin> = async (data) => {
-    const token = await signUp(data);
-    setAccessToken(token);
-    navigate('/admin');
-    window.alert('まずは社員管理から社員を登録してください。');
+    try {
+      const { accessToken, userId } = await signUp(data);
+      setAccessToken(accessToken);
+      setAdminId(userId);
+      toast.success(<ToastMessage />);
+      navigate('/admin');
+    } catch (error) {
+      toast.error('入力された情報に不備があります。');
+    }
   };
 
   return (
@@ -36,8 +51,8 @@ export const RegisterOrganizationPage = () => {
                   text="組織名"
                   inputWidth={'300px'}
                   labelWidth={'130px'}
-                  register={register('organizationName', { required: true })}
-                  errors={errors.organizationName?.type}
+                  register={register('adminName', { required: true })}
+                  errors={errors.adminName?.type}
                 ></LabeledInputText>
               </InputContainer>
               <InputContainer>
@@ -116,7 +131,7 @@ const LabeledInputTextContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  margin-top: 30px;
+  margin: 30px auto;
   width: 250px;
   height: 50px;
 `;

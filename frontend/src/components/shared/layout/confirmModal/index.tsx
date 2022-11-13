@@ -27,7 +27,7 @@ export const ConfirmModal = ({
               </ButtonContainer>
               <ButtonContainer>
                 <Button
-                text="いいえ"
+                  text="いいえ"
                   onClick={() => handleCloseModal()}
                   gray
                 ></Button>
@@ -54,13 +54,15 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
   position: fixed;
-  height: 200px;
+  /* max-width: 400px; */
+  width: 400px;
+  height: 150px;
   top: 150px;
-  left: 25%;
-  right: 25%;
+  left: 50%;
   z-index: 5;
-  padding: 20px 50px;
+  padding: 20px 40px;
   background-color: #ffffff;
+  transform: translate(-50%);
 `;
 const Title = styled.p`
   font-size: 16px;
@@ -68,14 +70,12 @@ const Title = styled.p`
   margin: 20px 0px;
 `;
 
-
 const ButtonWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  padding: 30px 100px;
+  justify-content: space-around;
 `;
 
 const ButtonContainer = styled.div`
   height: 50px;
-  width: 180px;
+  width: 120px;
 `;

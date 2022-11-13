@@ -1,7 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import machineReducer from './machineSlice';
+import employeeReducer from './employeeSlice';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: { employee: employeeReducer, machines: machineReducer },
 });
 
 export type AppDispatch = typeof store.dispatch;

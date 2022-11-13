@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { Card } from '../../../../shared/parts/card/card';
 import { Header } from '../../../../shared/layout/header';
-import { Lists } from './components/lists';
+import { MachineAndLicenseLists } from './components/lists';
 
 export const MachineAndLicenseListsPage = () => {
   const [tabIndex, setTabIndex] = useState<number>(0);
@@ -13,7 +13,7 @@ export const MachineAndLicenseListsPage = () => {
     <>
       <Header></Header>
       <Container>
-        <Lists handleToggleTabIndex={handleToggleTabIndex}></Lists>
+        <MachineAndLicenseLists handleToggleTabIndex={handleToggleTabIndex}></MachineAndLicenseLists>
         <CardContainer>
           {tabIndex === 0 ? (
             <Card

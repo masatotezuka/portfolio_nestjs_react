@@ -1,11 +1,16 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useAppSelector } from '../../../../../../../hooks';
+import { selectMachineDataList } from '../../../../../../../store/machineSlice';
 
 export const MachineTable = () => {
+  const machineItems = useAppSelector(selectMachineDataList);
   return (
     <>
       <StyledMachineTable>
         <thead>
           <tr>
+            <th>機器ID</th>
             <th>種別</th>
             <th>機器名</th>
             <th>購入日</th>
@@ -15,14 +20,23 @@ export const MachineTable = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-          </tr>
+          {machineItems.map((item) => {
+            return (
+              <tr key={item.id}>
+                <td>
+                  <Link to={`/admin/machine-license/machine/edit/${item.id}`}>
+                    {item.symbol}
+                  </Link>
+                </td>
+                <td>{item.category} </td>
+                <td>{item.name}</td>
+                <td>{item.purchasedAt}</td>
+                <td>{item.userName}</td>
+                <td>{item.updatedAt} </td>
+                <td>{item.usageStatus}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </StyledMachineTable>
     </>

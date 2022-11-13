@@ -9,10 +9,21 @@ import { MailSettingConfirm } from './components/pages/admin/mail/mailSettingCon
 import { EmployeeStatus } from './components/pages/admin/employeeStatus';
 import { ChangePasswordPage } from './components/pages/admin/changePassword';
 import { useAuth } from './hooks/useAuth';
+import { useEffect } from 'react';
+import { useAppDispatch } from './hooks';
+import { fetchMachines } from './store/machineSlice';
+import { fetchEmployees } from './store/employeeSlice';
 
 export const AuthRooter = () => {
   const { check } = useAuth();
+  const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(fetchMachines());
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchEmployees());
+  }, [dispatch]);
   if (!check.checked) {
     return <div>Loading...</div>;
   }
@@ -29,7 +40,7 @@ export const AuthRooter = () => {
               ></Route>
               <Route path="machine">
                 <Route path="create" element={<MachinePage />}></Route>
-                <Route path="edit" element={<MachinePage />}></Route>
+                <Route path="edit/:id" element={<MachinePage />}></Route>
               </Route>
               <Route path="license">
                 <Route path="create" element={<LicensePage />}></Route>

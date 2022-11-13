@@ -6,7 +6,8 @@ import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import ErrorBoundary from './components/shared/layout/errorBoundary';
-
+import { StyledToastContainer } from './components/shared/parts/toast';
+import 'react-toastify/dist/ReactToastify.css';
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
@@ -15,6 +16,7 @@ root.render(
     <React.StrictMode>
       <Provider store={store}>
         <BrowserRouter>
+          <StyledToastContainer />
           <App />
         </BrowserRouter>
       </Provider>

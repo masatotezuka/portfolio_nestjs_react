@@ -1,5 +1,7 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import styled from 'styled-components';
+import { useAppSelector } from '../../../../../../../hooks';
+import { ErrorPage } from '../../../../../common/errorPage';
 import { LicenseTable } from '../table/licenseTable';
 import { MachineTable } from '../table/machineTable';
 
@@ -7,7 +9,12 @@ type Props = {
   handleToggleTabIndex: (index: number) => void;
 };
 
-export const Lists = ({ handleToggleTabIndex }: Props) => {
+export const MachineAndLicenseLists = ({ handleToggleTabIndex }: Props) => {
+  // const machineItems = useAppSelector(selectAllMachines);
+  const status = useAppSelector((state) => state.machines.status);
+  if (status === 'rejected') {
+    return <ErrorPage></ErrorPage>;
+  }
   return (
     <>
       <StyledTabs
