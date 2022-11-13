@@ -8,7 +8,7 @@ export type Admin = {
   lastName: string;
   email: string;
   password: string;
-  organizationName: string;
+  adminName: string;
 };
 
 export type RequestPasswordReset = {
@@ -26,12 +26,33 @@ export type Machine = {
   symbol: string;
   category: string;
   name: string;
-  purchasedAt?: string;
-  updatedAt: string;
-  user?: Employee;
+  purchasedAt?: Date;
+  updatedAt: Date;
+  userMachines?: UserMachine;
   usageStatus: string;
 };
 
+export type MachineData = {
+  id: number;
+  symbol: string;
+  category: string;
+  name: string;
+  purchasedAt?: string;
+  updatedAt: string;
+  userName:string;
+  usageStatus: string;
+};
+type UserMachine = {
+  id: number;
+  machineId: number;
+  user: User;
+};
+type User = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email?: string;
+};
 export type Employee = {
   id: number;
   firstName: string;
@@ -44,7 +65,17 @@ export type CreateMachine = {
   symbol: string;
   category: string;
   name: string;
-  purchasedAt: Date | string;
+  purchasedAt: Date;
+  userId?: number;
+  usageStatus: string;
+};
+
+export type UpdateMachine = {
+  id: number;
+  symbol: string;
+  category: string;
+  name: string;
+  purchasedAt: Date;
   userId?: number;
   usageStatus: string;
 };

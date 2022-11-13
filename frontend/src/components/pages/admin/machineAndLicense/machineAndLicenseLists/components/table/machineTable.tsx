@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Machine } from '../../../../../../../features/types';
+import { useAppSelector } from '../../../../../../../hooks';
+import { selectMachineDataList } from '../../../../../../../store/machineSlice';
 
-type Props = {
-  machineItems: Machine[];
-};
-
-export const MachineTable = ({ machineItems }: Props) => {
+export const MachineTable = () => {
+  const machineItems = useAppSelector(selectMachineDataList);
   return (
     <>
       <StyledMachineTable>
@@ -23,7 +21,6 @@ export const MachineTable = ({ machineItems }: Props) => {
         </thead>
         <tbody>
           {machineItems.map((item) => {
-            const updatedAt = item.updatedAt.substring(0, 10);
             return (
               <tr key={item.id}>
                 <td>
@@ -33,11 +30,9 @@ export const MachineTable = ({ machineItems }: Props) => {
                 </td>
                 <td>{item.category} </td>
                 <td>{item.name}</td>
-                <td>{item.purchasedAt?.toString()}</td>
-                <td>
-                  {item.user ? item.user.firstName + item.user.lastName : ''}
-                </td>
-                <td>{updatedAt} </td>
+                <td>{item.purchasedAt}</td>
+                <td>{item.userName}</td>
+                <td>{item.updatedAt} </td>
                 <td>{item.usageStatus}</td>
               </tr>
             );

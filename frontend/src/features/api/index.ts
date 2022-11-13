@@ -6,6 +6,7 @@ import {
   RequestPasswordReset,
   VerifyPassword,
   CreateMachine,
+  UpdateMachine,
   Machine,
   Employee,
 } from '../types';
@@ -24,57 +25,66 @@ axios.interceptors.request.use((config) => {
 });
 
 const adminId = getAdminIdFromCookie();
-
 //返り値の型指定をするか
 export const login = async (
   data: Login,
 ): Promise<{ accessToken: string; userId: number }> => {
-  const response = await axios.post(`${BASE_URL}auth/login`, data);
+  const response = await axios.post(`${BASE_URL}/auth/login`, data);
   return response.data;
 };
 
 export const signUp = async (data: Admin) => {
-  const response = await axios.post(`${BASE_URL}users/admin`, data);
-  return response.data.accessToken;
+  const response = await axios.post(`${BASE_URL}/users/admin`, data);
+  return response.data;
 };
 
 export const requestPasswordReset = async (data: RequestPasswordReset) => {
-  return await axios.put(`${BASE_URL}users/password-reset/request`, data);
+  return await axios.put(`${BASE_URL}/users/password-reset/request`, data);
 };
 
 export const verifyPassword = async (data: VerifyPassword) => {
   return await axios.patch(
-    `${BASE_URL}users/password-reset/verification`,
+    `${BASE_URL}/users/password-reset/verification`,
     data,
   );
 };
 
 export const verifyAccessToken = async () => {
-  const response = await axios.get(`${BASE_URL}auth/verification`);
+  const response = await axios.get(`${BASE_URL}/auth/verification`);
   return response.statusText;
+};
+
+//Machine
+export const fetchAdminMachinesByUserId = async (): Promise<Machine[]> => {
+  const response = await axios.get(`${BASE_URL}/machines/${adminId}`);
+  return response.data;
 };
 
 export const createAdminMachine = async (
   data: CreateMachine,
 ): Promise<Machine> => {
-  const response = await axios.post(`${BASE_URL}machines/${adminId}`, data);
+  const response = await axios.post(`${BASE_URL}/machines/${adminId}`, data);
   return response.data;
 };
 
-export const fetchAdminMachinesByUserId = async (): Promise<Machine[]> => {
-  const response = await axios.get(`${BASE_URL}machines/${adminId}`);
+export const updateAdminMachine = async (
+  data: UpdateMachine,
+): Promise<Machine> => {
+  console.log(data);
+
+  const response = await axios.patch(`${BASE_URL}/machines/${adminId}`, data);
   return response.data;
 };
 
+//Employee
 export const fetchEmployeesAdmin = async () => {
-  const response = await axios.get(`${BASE_URL}users`);
+  const response = await axios.get(`${BASE_URL}/users`);
   return response.data;
 };
 
 export const createEmployeeAdmin = async (data: Employee) => {
   try {
-    const response = await axios.post(`${BASE_URL}users`, data);
-    console.log('success');
+    const response = await axios.post(`${BASE_URL}/users`, data);
     return response.data;
   } catch (error) {
     return error;
@@ -82,11 +92,11 @@ export const createEmployeeAdmin = async (data: Employee) => {
 };
 
 export const deleteEmployeeAdmin = async (userId: number) => {
-  const response = await axios.delete(`${BASE_URL}users/${userId}`);
+  const response = await axios.delete(`${BASE_URL}/users/${userId}`);
   return response.data;
 };
 
 export const updateEmployeeAdmin = async (data: Employee) => {
-  const response = await axios.patch(`${BASE_URL}users`, data);
+  const response = await axios.patch(`${BASE_URL}/users`, data);
   return response.data;
 };

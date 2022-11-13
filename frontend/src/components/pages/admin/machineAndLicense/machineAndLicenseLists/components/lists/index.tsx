@@ -1,11 +1,6 @@
-import { useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../../../../../../hooks';
-import {
-  fetchMachines,
-  selectAllMachines,
-} from '../../../../../../../store/machineSlice';
+import { useAppSelector } from '../../../../../../../hooks';
 import { ErrorPage } from '../../../../../common/errorPage';
 import { LicenseTable } from '../table/licenseTable';
 import { MachineTable } from '../table/machineTable';
@@ -15,14 +10,8 @@ type Props = {
 };
 
 export const MachineAndLicenseLists = ({ handleToggleTabIndex }: Props) => {
-  const machineItems = useAppSelector(selectAllMachines);
+  // const machineItems = useAppSelector(selectAllMachines);
   const status = useAppSelector((state) => state.machines.status);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchMachines());
-  }, [dispatch]);
-
   if (status === 'rejected') {
     return <ErrorPage></ErrorPage>;
   }
@@ -42,7 +31,7 @@ export const MachineAndLicenseLists = ({ handleToggleTabIndex }: Props) => {
           </Tab>
         </TabList>
         <TabPanel>
-          <MachineTable machineItems={machineItems}></MachineTable>
+          <MachineTable></MachineTable>
         </TabPanel>
         <TabPanel>
           <LicenseTable></LicenseTable>
