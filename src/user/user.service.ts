@@ -5,10 +5,6 @@ import {
   forwardRef,
   Inject,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/entity/user.entity';
-import { Organization } from 'src/entity/organization.entity';
-import { Repository } from 'typeorm';
 import {
   CreateAdminDto,
   CreateUserDto,
@@ -22,82 +18,74 @@ import { addHours } from 'date-fns';
 import { SendgridEmitter } from 'src/sendgrid/sendgrid.emitter';
 import { OnEvent } from '@nestjs/event-emitter';
 import { ResetPassword } from 'src/sendgrid/mails/resetPassword.mail';
+import { User, Admin } from '@prisma/client';
+import { PrismaService } from 'src/prisma.servise';
 
 @Injectable()
 export class UserService {
   constructor(
+    private prisma: PrismaService,
     @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
-
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
-    @InjectRepository(Organization)
-    private organizationRepository: Repository<Organization>,
-
     private sendgrid: SendgridEmitter,
   ) {}
 
   async createAdmin(createAdminDto: CreateAdminDto) {
-    const { firstName, lastName, email, password, organizationName } =
-      createAdminDto;
+    const { firstName, lastName, email, password, adminName } = createAdminDto;
 
-    if (!firstName || !lastName || !email || !password || !organizationName) {
+    if (!firstName || !lastName || !email || !password || !adminName)
       throw new HttpException('invalid value', HttpStatus.BAD_REQUEST);
-    }
 
-    const result = await this.userRepository.findOne({
-      select: { email: true },
+    const result = await this.prisma.user.findUnique({
       where: { email: email },
     });
-    if (result) {
+    if (result)
       throw new HttpException('user already exists', HttpStatus.BAD_REQUEST);
-    }
+
     const salt = await bcrypt.genSalt();
     const hashPassword = bcrypt.hashSync(password, salt);
-
-    const user = this.userRepository.create({
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: hashPassword,
-      isPasswordUpdated: true,
-      role: 1,
+    await this.prisma.user.create({
+      data: {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: hashPassword,
+        isPasswordUpdated: true,
+        role: 1,
+        admin: { create: { name: adminName } },
+      },
     });
-    const organization = this.organizationRepository.create({
-      name: organizationName,
-    });
-
-    user.organization = organization;
-    await this.organizationRepository.save(organization);
-    await this.userRepository.save(user);
-
     return this.authService.login({ email, password });
   }
 
-  async findOne(email: string): Promise<User | undefined> {
-    return this.userRepository.findOne({
+  async findUser(email: string): Promise<
+    | (User & {
+        admin: Admin;
+      })
+    | undefined
+  > {
+    const user = await this.prisma.user.findUnique({
       where: { email: email },
-      relations: { organization: true },
+      include: { admin: true },
     });
+    return user;
   }
 
   async createVerificationToken(email: string) {
-    if (!email) {
+    if (!email)
       throw new HttpException('invalid value', HttpStatus.BAD_REQUEST);
-    }
-
-    const user = await this.findOne(email);
-
-    if (!user) {
-      throw new HttpException('not found user', HttpStatus.NOT_FOUND);
-    }
-
+    const user = await this.findUser(email);
+    if (!user) throw new HttpException('not found user', HttpStatus.NOT_FOUND);
     const verificationTokenExpiredAt = addHours(new Date(), 1);
 
-    user.verificationToken = uuid();
-    user.verificationTokenExpiredAt = verificationTokenExpiredAt;
-    await this.userRepository.save(user);
-
+    await this.prisma.user.update({
+      where: { email: email },
+      data: {
+        verificationToken: uuid(),
+        verificationTokenExpiredAt: verificationTokenExpiredAt,
+      },
+    });
+    //URLを定数に置き換える必要あり
     const verificationTokenUrl = `http://localhost:3000/password-reset/verification/${user.verificationToken}`;
 
     this.sendgrid.sendResetPassword(
@@ -109,14 +97,15 @@ export class UserService {
   }
 
   @OnEvent(ResetPassword.type)
-  sendMail(msg: ResetPassword) {}
+  sendMail(msg: ResetPassword) {
+    console.log('send');
+  }
 
-  async verifyPassword(verifyPasswordDto: VerifyPasswordDto) {
-    const user = await this.userRepository.findOne({
-      where: {
-        verificationToken: verifyPasswordDto.token,
-      },
+  async verifyPassword({ token, newPassword }: VerifyPasswordDto) {
+    const user = await this.prisma.user.findUnique({
+      where: { verificationToken: token },
     });
+
     if (!user) {
       throw new HttpException('not found user', HttpStatus.NOT_FOUND);
     }
@@ -126,61 +115,66 @@ export class UserService {
     }
 
     const salt = await bcrypt.genSalt();
-    const hashPassword = bcrypt.hashSync(verifyPasswordDto.newPassword, salt);
+    const hashPassword = bcrypt.hashSync(newPassword, salt);
 
     user.verificationToken = null;
     user.verificationTokenExpiredAt = null;
     user.password = hashPassword;
-    await this.userRepository.save(user);
+    await this.prisma.user.update({
+      where: { verificationToken: token },
+      data: {
+        password: hashPassword,
+        verificationToken: null,
+        verificationTokenExpiredAt: null,
+      },
+    });
     return;
   }
 
-  async fetchUser() {
-    const user = await this.userRepository.find({
-      select: { id: true, firstName: true, lastName: true, email: true },
+  async fetchUser(): Promise<User[] | undefined> {
+    const user = await this.prisma.user.findMany({
       where: { role: 2, deletedAt: null },
     });
-
     return user;
   }
 
-  async createUser(createUserDto: CreateUserDto): Promise<User> {
-    const result = await this.findOne(createUserDto.email);
+  async createUser({
+    firstName,
+    lastName,
+    email,
+  }: CreateUserDto): Promise<User | undefined> {
+    const result = await this.findUser(email);
 
     if (result) {
       throw new HttpException('user already exists', HttpStatus.BAD_REQUEST);
     }
 
     const salt = await bcrypt.genSalt();
-    const hashPassword = bcrypt.hashSync(createUserDto.email, salt);
-
-    const user = this.userRepository.create({
-      firstName: createUserDto.firstName,
-      lastName: createUserDto.lastName,
-      email: createUserDto.email,
-      password: hashPassword,
-      isPasswordUpdated: false,
-      role: 2,
+    const hashPassword = bcrypt.hashSync(email, salt);
+    const newUser = this.prisma.user.create({
+      data: {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: hashPassword,
+        isPasswordUpdated: false,
+        role: 2,
+      },
     });
-    const newUser = await this.userRepository.save(user);
-
     return newUser;
   }
 
-  async softDelete(userId: number) {
-    const user = this.userRepository.create({ id: userId });
-    await this.userRepository.softDelete(user);
-    return userId;
-  }
-
-  async updateUser(updateUserDto: UserDto) {
-    const user = this.userRepository.create({
-      id: updateUserDto.id,
-      firstName: updateUserDto.firstName,
-      lastName: updateUserDto.lastName,
-      email: updateUserDto.email,
+  async updateUser({ id, firstName, lastName, email }: UserDto) {
+    const user = this.prisma.user.update({
+      where: { id: id },
+      data: { firstName: firstName, lastName: lastName, email: email },
     });
-    await this.userRepository.save(user);
     return user;
+  }
+  async softDeleteUser(userId: number) {
+    await this.prisma.user.delete({
+      where: { id: userId },
+    });
+    return userId;
   }
 }

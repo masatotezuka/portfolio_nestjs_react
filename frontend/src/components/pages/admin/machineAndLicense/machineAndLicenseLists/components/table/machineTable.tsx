@@ -1,10 +1,10 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { MachineItem } from '../../../../../../../features/types';
-import { format } from 'date-fns';
-type Props = {
-  machineItems: MachineItem[];
-};
-export const MachineTable = ({ machineItems }: Props) => {
+import { useAppSelector } from '../../../../../../../hooks';
+import { selectMachineDataList } from '../../../../../../../store/machineSlice';
+
+export const MachineTable = () => {
+  const machineItems = useAppSelector(selectMachineDataList);
   return (
     <>
       <StyledMachineTable>
@@ -21,17 +21,18 @@ export const MachineTable = ({ machineItems }: Props) => {
         </thead>
         <tbody>
           {machineItems.map((item) => {
-            const updatedAt = item.updatedAt.substring(0, 10);
             return (
               <tr key={item.id}>
-                <td>{item.symbol}</td>
+                <td>
+                  <Link to={`/admin/machine-license/machine/edit/${item.id}`}>
+                    {item.symbol}
+                  </Link>
+                </td>
                 <td>{item.category} </td>
                 <td>{item.name}</td>
-                <td>{item.purchasedAt?.toString()}</td>
-                <td>
-                  {item.user ? item.user.firstName + item.user.lastName : ''}
-                </td>
-                <td>{updatedAt} </td>
+                <td>{item.purchasedAt}</td>
+                <td>{item.userName}</td>
+                <td>{item.updatedAt} </td>
                 <td>{item.usageStatus}</td>
               </tr>
             );

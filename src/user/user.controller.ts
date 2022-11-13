@@ -11,7 +11,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
-import { User } from 'src/entity/user.entity';
 import {
   CreateAdminDto,
   CreateUserDto,
@@ -19,7 +18,7 @@ import {
   VerifyPasswordDto,
 } from './user.dto';
 import { UserService } from './user.service';
-
+import { User } from '@prisma/client';
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -50,7 +49,9 @@ export class UserController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
+  async createUser(
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<User | undefined> {
     return await this.userService.createUser(createUserDto);
   }
 
@@ -59,12 +60,12 @@ export class UserController {
   async deleteUser(
     @Param('userId', ParseIntPipe) userId: number,
   ): Promise<number> {
-    return await this.userService.softDelete(userId);
+    return await this.userService.softDeleteUser(userId);
   }
 
   @Patch()
   @UseGuards(JwtAuthGuard)
-  async updateUser(@Body()updateUserDto: UserDto): Promise<UserDto> {
+  async updateUser(@Body() updateUserDto: UserDto): Promise<UserDto> {
     return await this.userService.updateUser(updateUserDto);
   }
 }

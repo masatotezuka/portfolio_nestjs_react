@@ -1,11 +1,6 @@
-import { useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../../../../../../hooks';
-import {
-  fetchMachines,
-  machineItemsSelector,
-} from '../../../../../../../store/machineSlice';
+import { useAppSelector } from '../../../../../../../hooks';
 import { ErrorPage } from '../../../../../common/errorPage';
 import { LicenseTable } from '../table/licenseTable';
 import { MachineTable } from '../table/machineTable';
@@ -14,23 +9,12 @@ type Props = {
   handleToggleTabIndex: (index: number) => void;
 };
 
-export const Lists = ({ handleToggleTabIndex }: Props) => {
-  const machineItems = useAppSelector(machineItemsSelector);
-  const status = useAppSelector((state) => state.machine.status);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchMachines());
-  }, []);
-
+export const MachineAndLicenseLists = ({ handleToggleTabIndex }: Props) => {
+  // const machineItems = useAppSelector(selectAllMachines);
+  const status = useAppSelector((state) => state.machines.status);
   if (status === 'rejected') {
-    return (
-      <>
-        <ErrorPage></ErrorPage>
-      </>
-    );
+    return <ErrorPage></ErrorPage>;
   }
-
   return (
     <>
       <StyledTabs
@@ -47,7 +31,7 @@ export const Lists = ({ handleToggleTabIndex }: Props) => {
           </Tab>
         </TabList>
         <TabPanel>
-          <MachineTable machineItems={machineItems}></MachineTable>
+          <MachineTable></MachineTable>
         </TabPanel>
         <TabPanel>
           <LicenseTable></LicenseTable>

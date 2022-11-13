@@ -1,187 +1,102 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { MachineHistory } from 'src/entity/machine-history.entity';
-import { Machine } from 'src/entity/machine.entity';
-import { Organization } from 'src/entity/organization.entity';
-import { UserMachine } from 'src/entity/user-machine.entity';
-import { User } from 'src/entity/user.entity';
-import { DataSource, Repository } from 'typeorm';
-import { CreateMachineDto } from './machine.dto';
-import { MachineItems } from './machine.type';
-
+import { Machine, UserMachine, User } from '@prisma/client';
+import { PrismaService } from 'src/prisma.servise';
+import { CreateMachineDto, UpdateMachineDto } from './machine.dto';
 @Injectable()
 export class MachineService {
-  constructor(
-    @InjectRepository(Machine)
-    private machineRepository: Repository<Machine>,
-
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
-
-    @InjectRepository(MachineHistory)
-    private machineHistoryRepository: Repository<MachineHistory>,
-
-    @InjectRepository(UserMachine)
-    private userMachineRepository: Repository<UserMachine>,
-
-    @InjectRepository(Organization)
-    private organizationRepository: Repository<Organization>,
-
-    private AppDataSource: DataSource,
-  ) {}
-
-  async fetchMachinesByUserId(adminId: number): Promise<MachineItems[]> {
-    const results = await this.machineRepository.find({
-      select: {
-        id: true,
-        symbol: true,
-        name: true,
-        category: true,
-        purchasedAt: true,
-        machineHistories: { usageStatus: true, updateAt: true },
-        userMachines: {
-          id: true,
-          user: { id: true, firstName: true, lastName: true },
-        },
-        organization: {
-          id: true,
-        },
-      },
-      relations: { machineHistories: true, userMachines: { user: true } },
-      where: { organization: { id: adminId } },
-    });
-
-    const response = results.map((result) => {
-      if (!result.userMachines[0]) {
-        return {
-          id: result.id,
-          symbol: result.symbol,
-          name: result.name,
-          category: result.category,
-          purchasedAt: result.purchasedAt,
-          usageStatus: result.machineHistories[0].usageStatus,
-          updatedAt: result.machineHistories[0].updateAt,
-          user: {
-            id: 0,
-            firstName: '',
-            lastName: '',
-          },
-        };
-      }
-      return {
-        id: result.id,
-        symbol: result.symbol,
-        name: result.name,
-        category: result.category,
-        purchasedAt: result.purchasedAt,
-        usageStatus: result.machineHistories[0].usageStatus,
-        updatedAt: result.machineHistories[0].updateAt,
-        user: {
-          id: result.userMachines[0].user.id,
-          firstName: result.userMachines[0].user.firstName,
-          lastName: result.userMachines[0].user.lastName,
-        },
+  constructor(private prisma: PrismaService) {}
+  async fetchMachinesByAdminId(adminId: number): Promise<
+    (Machine & {
+      userMachines: UserMachine & {
+        user: User;
       };
+    })[]
+  > {
+    const results = await this.prisma.machine.findMany({
+      where: { adminId },
+      include: { userMachines: { include: { user: true } } },
     });
-    console.log(response);
-
-    return response;
+    return results;
   }
 
   async createMachine(
-    createMachineDto: CreateMachineDto,
+    {
+      symbol,
+      category,
+      name,
+      purchasedAt,
+      userId,
+      usageStatus,
+    }: CreateMachineDto,
     adminId: number,
-  ): Promise<MachineItems> {
-    const { symbol, category, name, purchasedAt, userId, usageStatus } =
-      createMachineDto;
-
-    const machine = this.machineRepository.create({
-      symbol: symbol,
-      category: category,
-      name: name,
-      purchasedAt: purchasedAt,
-    });
-
-    const organization = this.organizationRepository.create({
-      id: adminId,
-    });
-    const machineHistory = this.machineHistoryRepository.create({
-      usageStatus: usageStatus,
-    });
-    const userMachine = this.userMachineRepository.create();
-    machine.organization = organization;
-    machineHistory.machine = machine;
-    userMachine.machine = machine;
-
-    const result = await this.AppDataSource.transaction(
-      async (transactionalEntityManager) => {
-        const machineRepository =
-          transactionalEntityManager.getRepository(Machine);
-        const userMachineRepository =
-          transactionalEntityManager.getRepository(UserMachine);
-        const machineHistoryRepository =
-          transactionalEntityManager.getRepository(MachineHistory);
-
-        const newMachine = await machineRepository.save(machine);
-
-        if (userId) {
-          const user = await this.userRepository.findOne({
-            where: {
-              id: userId,
-            },
-          });
-          machineHistory.user = user;
-          userMachine.user = user;
-          userMachine.machine = machine;
-          await userMachineRepository.save(userMachine);
-        }
-        await machineHistoryRepository.save(machineHistory);
-        return await machineRepository.findOne({
-          select: {
-            id: true,
-            symbol: true,
-            name: true,
-            category: true,
-            purchasedAt: true,
-            machineHistories: { usageStatus: true, updateAt: true },
-            userMachines: {
-              id: true,
-              user: { id: true, firstName: true, lastName: true },
-            },
-          },
-          relations: { machineHistories: true, userMachines: { user: true } },
-          where: { id: newMachine.id },
-        });
-      },
-    );
-
-    if (!result.userMachines[0]) {
-      const response = {
-        id: result.id,
-        symbol: result.symbol,
-        name: result.name,
-        category: result.category,
-        purchasedAt: result.purchasedAt,
-        usageStatus: result.machineHistories[0].usageStatus,
-        updatedAt: result.machineHistories[0].updateAt,
+  ): Promise<
+    Machine & {
+      userMachines: UserMachine & {
+        user: User;
       };
-      return response;
     }
+  > {
+    return await this.prisma.$transaction(async (tx) => {
+      const machine = await tx.machine.create({
+        data: {
+          symbol,
+          category,
+          name,
+          purchasedAt: purchasedAt,
+          adminId: adminId,
+          machineHistories: {
+            create: [{ usageStatus: usageStatus, userId: userId }],
+          },
+        },
+        include: { machineHistories: true },
+      });
 
-    const response = {
-      id: result.id,
-      symbol: result.symbol,
-      name: result.name,
-      category: result.category,
-      purchasedAt: result.purchasedAt,
-      usageStatus: result.machineHistories[0].usageStatus,
-      updatedAt: result.machineHistories[0].updateAt,
-      user: {
-        id: result.userMachines[0].user.id,
-        firstName: result.userMachines[0].user.firstName,
-        lastName: result.userMachines[0].user.lastName,
-      },
-    };
-    return response;
+      if (userId)
+        await tx.userMachine.create({
+          data: { userId: userId, machineId: machine.id },
+        });
+
+      const response = await tx.machine.findUnique({
+        where: { id: machine.id },
+        include: { userMachines: { include: { user: true } } },
+      });
+      return response;
+    });
+  }
+  async updateMachine({
+    id,
+    symbol,
+    category,
+    name,
+    purchasedAt,
+    userId,
+    usageStatus,
+  }: UpdateMachineDto) {
+    await this.prisma.$transaction(async (tx) => {
+      await tx.machine.update({
+        where: { id },
+        data: {
+          symbol,
+          category,
+          name,
+          purchasedAt,
+        },
+      });
+      if (userId) {
+        await tx.userMachine.update({ where: { id }, data: { userId } });
+        await tx.machineHistory.create({
+          data: { machineId: id, userId, usageStatus },
+        });
+      } else {
+        await tx.machineHistory.create({
+          data: { machineId: id, usageStatus },
+        });
+      }
+      const response = await tx.machine.findUnique({
+        where: { id },
+        include: { userMachines: { include: { user: true } } },
+      });
+      return response;
+    });
   }
 }

@@ -3,7 +3,7 @@ import machineReducer from './machineSlice';
 import employeeReducer from './employeeSlice';
 
 export const store = configureStore({
-  reducer: { employee: employeeReducer, machine: machineReducer },
+  reducer: { employee: employeeReducer, machines: machineReducer },
 });
 
 export type AppDispatch = typeof store.dispatch;

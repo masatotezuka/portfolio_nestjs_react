@@ -3,75 +3,88 @@ import { LabeledInputText } from '../../../../../shared/parts/inputText/labeledI
 import { SelectBox } from '../../../../../shared/parts/selectBox/selectBox';
 import { Button } from '../../../../../shared/parts/button/button';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { CreateMachine } from '../../../../../../features/types';
+import {
+  CreateMachine,
+  Machine,
+  UpdateMachine,
+} from '../../../../../../features/types';
 import {
   categoryOptions,
   usageStatusOptions,
 } from '../../../../../../features/constants/formOptions';
-import { createMachine } from '../../../../../../store/machineSlice';
-import { useAppDispatch, useAppSelector } from '../../../../../../hooks';
-import { useEffect } from 'react';
 import {
-  employeeFormOptionsSelector,
-  fetchEmployees,
-} from '../../../../../../store/employeeSlice';
+  createMachine,
+  updateMachine,
+} from '../../../../../../store/machineSlice';
+import { useAppDispatch, useAppSelector } from '../../../../../../hooks';
+import { employeeFormOptionsSelector } from '../../../../../../store/employeeSlice';
 import { toast } from 'react-toastify';
 
 type Props = {
   buttonText: string;
-  userMachine: UserMachine;
+  machineItem: Machine;
+  selectedMode: string;
 };
 
-type UserMachine = {
-  id?: number;
-  symbol: string;
-  category: string;
-  name: string;
-  purchasedAt: Date | string;
-  user: User;
-  usageStatus: string;
-};
-
-type User = {
-  userId?: number;
-  firstName: string;
-  lastName: string;
-  email?: string;
-};
-
-export const MachineForm = ({ buttonText, userMachine }: Props) => {
-  const userName = userMachine.user.firstName + userMachine.user.lastName;
+export const MachineForm = ({
+  buttonText,
+  machineItem,
+  selectedMode,
+}: Props) => {
+  const dispatch = useAppDispatch();
+  const employeeOptions = useAppSelector(employeeFormOptionsSelector);
+  const userName =
+    machineItem.userMachines?.user.lastName &&
+    machineItem.userMachines?.user.firstName
+      ? machineItem.userMachines.user.lastName +
+        machineItem.userMachines.user.firstName
+      : '';
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<CreateMachine>({
+  } = useForm<CreateMachine & UpdateMachine>({
     defaultValues: {
-      name: userName,
-      purchasedAt: userMachine.purchasedAt,
+      id: machineItem.id,
+      symbol: machineItem.symbol,
+      name: machineItem.name,
+      purchasedAt: machineItem.purchasedAt,
     },
   });
 
-  const employeeOptions = useAppSelector(employeeFormOptionsSelector);
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchEmployees());
-  }, []);
-
-  const onSubmit: SubmitHandler<CreateMachine> = (data) => {
+  const onCreateMachineSubmit: SubmitHandler<CreateMachine> = async (data) => {
     try {
-      dispatch(createMachine(data));
+      console.log(data.purchasedAt);
+
+      await dispatch(createMachine(data)).unwrap();
       toast.success('登録完了');
       reset();
     } catch (error) {
-      toast.error('予期せぬエラーが起こりましt。');
+      toast.error('予期せぬエラーが起こりました。');
+    }
+  };
+
+  const onUpdateMachineSubmit: SubmitHandler<UpdateMachine> = async (data) => {
+    try {
+      await dispatch(updateMachine(data)).unwrap();
+      toast.success('更新完了');
+      reset();
+    } catch (error) {
+      toast.error('予期せぬエラーが起こりました。');
     }
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={
+          selectedMode === 'edit'
+            ? handleSubmit(onUpdateMachineSubmit)
+            : handleSubmit(onCreateMachineSubmit)
+        }
+      >
+        <input type="hidden" {...register('id')} />
         <InputContainer>
           <LabeledInputText
             type="text"
@@ -87,7 +100,7 @@ export const MachineForm = ({ buttonText, userMachine }: Props) => {
           <Text>種別（必須）</Text>
           <SelectBox
             options={categoryOptions}
-            firstDisplayName={userMachine.category}
+            firstDisplayName={machineItem.category}
             name="machine_category"
             width="314px"
             register={register('category', { required: true })}
@@ -131,7 +144,7 @@ export const MachineForm = ({ buttonText, userMachine }: Props) => {
           <Text>ステータス（必須）</Text>
           <SelectBox
             options={usageStatusOptions}
-            firstDisplayName={userMachine.usageStatus}
+            firstDisplayName={machineItem.usageStatus}
             name="machine_usage_status"
             width="314px"
             register={register('usageStatus', { required: true })}

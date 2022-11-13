@@ -24,12 +24,13 @@ export const RegisterOrganizationPage = () => {
     formState: { errors },
   } = useForm<Admin>();
   const navigate = useNavigate();
-  const { setAccessToken } = useCookie();
+  const { setAccessToken, setAdminId } = useCookie();
 
   const onSubmit: SubmitHandler<Admin> = async (data) => {
     try {
-      const token = await signUp(data);
-      setAccessToken(token);
+      const { accessToken, userId } = await signUp(data);
+      setAccessToken(accessToken);
+      setAdminId(userId);
       toast.success(<ToastMessage />);
       navigate('/admin');
     } catch (error) {
@@ -50,8 +51,8 @@ export const RegisterOrganizationPage = () => {
                   text="組織名"
                   inputWidth={'300px'}
                   labelWidth={'130px'}
-                  register={register('organizationName', { required: true })}
-                  errors={errors.organizationName?.type}
+                  register={register('adminName', { required: true })}
+                  errors={errors.adminName?.type}
                 ></LabeledInputText>
               </InputContainer>
               <InputContainer>
